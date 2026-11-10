@@ -12,9 +12,9 @@ def fake(tmp_path, name, script):
     return str(p)
 
 
-def setup(tmp_path, monkeypatch, script, tool="MY_SKILLS_CODEX"):
+def setup(tmp_path, monkeypatch, script, tool="JIPDA_CODEX"):
     log = tmp_path / "log.jsonl"
-    monkeypatch.setenv("MY_SKILLS_LOG", str(log))
+    monkeypatch.setenv("JIPDA_LOG", str(log))
     monkeypatch.setenv(tool, fake(tmp_path, "bin", script))
     root = tmp_path / "repo"
     root.mkdir()
@@ -30,8 +30,8 @@ def test_codex_ok_and_logged(tmp_path, monkeypatch):
 
 
 def test_missing_binary(tmp_path, monkeypatch):
-    monkeypatch.setenv("MY_SKILLS_LOG", str(tmp_path / "l"))
-    monkeypatch.setenv("MY_SKILLS_CODEX", str(tmp_path / "nope"))
+    monkeypatch.setenv("JIPDA_LOG", str(tmp_path / "l"))
+    monkeypatch.setenv("JIPDA_CODEX", str(tmp_path / "nope"))
     r = ext.ask_codex("q", [], tmp_path)
     assert r.status == "unavailable" and "not found" in r.reason
 
@@ -74,7 +74,7 @@ def test_data_files_skipped(tmp_path, monkeypatch):
 
 
 def test_deepseek_ok(tmp_path, monkeypatch):
-    root, log = setup(tmp_path, monkeypatch, 'echo "model=$2 prompt=$3"', tool="MY_SKILLS_ASIDE")
+    root, log = setup(tmp_path, monkeypatch, 'echo "model=$2 prompt=$3"', tool="JIPDA_ASIDE")
     r = ext.ask_deepseek("find papers", root)
     assert r.status == "ok" and "deepseek/deepseek-v4-pro" in r.text and "find papers" in r.text
     assert json.loads(log.read_text())["tool"] == "deepseek"
@@ -115,14 +115,14 @@ def test_memory_ban_text(tmp_path, monkeypatch):
     mem = tmp_path / "memory"
     mem.mkdir()
     (mem / "rule.md").write_text("대회 데이터는 외부 AI 업로드 금지", encoding="utf-8")
-    monkeypatch.setenv("MY_SKILLS_MEMORY_DIR", str(mem))
+    monkeypatch.setenv("JIPDA_MEMORY_DIR", str(mem))
     assert ext.ask_deepseek("q", root).status == "banned"
     assert ext.ask_codex("q", [], root).status == "banned"
     assert not marker.exists()
 
 
 def test_memory_dir_default_encoding(tmp_path, monkeypatch):
-    monkeypatch.delenv("MY_SKILLS_MEMORY_DIR", raising=False)
+    monkeypatch.delenv("JIPDA_MEMORY_DIR", raising=False)
     monkeypatch.setenv("HOME", str(tmp_path))
     d = ext.memory_dir(Path("/Users/a/proj"))
     assert d == tmp_path / ".claude/projects/-Users-a-proj/memory"

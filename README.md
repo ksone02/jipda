@@ -1,25 +1,25 @@
-# my-skills
+# jipda
 
-개발과 연구를 같이 하는 사람을 위한 Claude Code 스킬 묶음이에요. Superpowers를 대신하려고 만들었어요.
+개발과 연구를 같이 하는 사람을 위한 Claude Code 스킬 묶음이에요. 이름은 "짚다"에서 왔어요. 하나씩 짚어 확인하고 나아가요.
 
 - 슬래시 없이 말로 해도 스킬이 뜨고, 구현 흐름의 스킬은 말하지 않아도 작업 시작 전에 떠요. 작은 수정에는 뜨지 않게 설명에 조건을 적었고, 비싼 `build`와 `review`는 시작 전에 확인받아요.
 - 피드백은 두 종류예요. 싼 대조 검사는 자주, 비싼 전문가 검토는 기획 직후와 설계 직후에만 해요.
 - 검색은 DeepSeek, 검증은 Codex에 맡기고, 안 되면 Claude로 넘어가요.
 
-설계 문서: [docs/superpowers/specs/2026-11-01-skillset-design.md](docs/superpowers/specs/2026-11-01-skillset-design.md)
+설계 문서: [docs/specs/2026-11-01-skillset-design.md](docs/specs/2026-11-01-skillset-design.md)
 
 ## 설치
 
 ```text
-/plugin marketplace add ~/Desktop/develop/my-skills
-/plugin install my-skills@my-skills
+/plugin marketplace add ksone02/jipda
+/plugin install jipda@jipda
 ```
 
-GitHub에 올린 뒤에는 `/plugin install my-skills --marketplace ksone02/my-skills` 한 줄로 설치할 수 있어요.
+내려받은 저장소로 설치하려면 첫 줄의 `ksone02/jipda` 대신 그 폴더 경로를 넣어요.
 
 ### 상시 원칙 (선택, 권장)
 
-스킬을 부르지 않아도 지킬 원칙 8줄을 `~/.claude/CLAUDE.md`에 넣어요. 넣기 전에 [rules/always.md](rules/always.md)를 읽어 보세요.
+스킬을 부르지 않아도 지킬 원칙 7줄을 `~/.claude/CLAUDE.md`에 넣어요. 넣기 전에 [rules/always.md](rules/always.md)를 읽어 보세요.
 
 ```sh
 python3 scripts/always.py install   # 넣기 (두 번 해도 하나만 남아요)
@@ -33,9 +33,8 @@ python3 scripts/always.py remove    # 빼기 (블록 바깥은 그대로)
 | `shape` | 흐릿한 아이디어를 질문으로 구체화해 완료 조건 목록이 있는 명세로 만들어요 |
 | `plan` | 명세를 위험한 것부터 배치한 작업 단위로 나눠요 |
 | `build` | 하위 에이전트로 구현하고 작업마다 검토해요 |
-| `check` | 완료 조건을 대조하고 실행으로 증명해요 (Codex → Claude) |
+| `check` | 완료 조건을 대조하고 실행으로 증명한 뒤 작업을 닫아요 (Codex → Claude) |
 | `review` | 분야 전문가 역할 여러 명이 한 번에 검토해요 (퀀트, 웹, 데이터 연구) |
-| `finish` | 결과물을 다시 확인하고 정리해요 |
 | `research` | 조사 계획 → 넓게 → 방향 고르기 → 깊게 → 파일 하나 |
 | `experiment` | 지표 하나를 반복 실험으로 올려요. 시도마다 기록하고 남기거나 되돌려요 |
 | `handoff` | 멈추기, 이어 가기, 결정 기록 |
@@ -46,7 +45,7 @@ python3 scripts/always.py remove    # 빼기 (블록 바깥은 그대로)
 | `docs` | 코드를 읽고 문서를 쓰거나, 문서와 코드가 어긋난 곳을 고쳐요 |
 | `unslop` | 글의 AI 티를 지워요. 한국어 긴 글은 humanize-korean으로 마무리해요 |
 
-부를 때는 `/my-skills:<스킬> <인자>`예요. 예: `/my-skills:research 파이썬 백테스트 라이브러리 비교`.
+부를 때는 `/jipda:<스킬> <인자>`예요. 예: `/jipda:research 파이썬 백테스트 라이브러리 비교`.
 
 ## 외부 도구
 
@@ -66,7 +65,7 @@ python3 scripts/always.py remove    # 빼기 (블록 바깥은 그대로)
 uv sync
 uv run pytest                                       # 스크립트와 스킬 형식 시험
 uv run --with playwright==1.49.1 pytest             # 화면 측정 시험까지
-claude --plugin-dir . plugin details my-skills      # 스킬 목록과 토큰 비용
+claude --plugin-dir . plugin details jipda      # 스킬 목록과 토큰 비용
 ```
 
 행동 시험은 [evals/](evals/README.md)에 있어요.

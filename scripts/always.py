@@ -7,8 +7,8 @@ import sys
 import tempfile
 from pathlib import Path
 
-START = "<!-- my-skills:always:start -->"
-END = "<!-- my-skills:always:end -->"
+START = "<!-- jipda:always:start -->"
+END = "<!-- jipda:always:end -->"
 BLOCK_RE = re.compile(r"\n?\n?" + re.escape(START) + r".*?" + re.escape(END) + r"\n?", re.S)
 DEFAULT_RULES = Path(__file__).resolve().parents[1] / "rules" / "always.md"
 

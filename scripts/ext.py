@@ -29,7 +29,7 @@ class Result:
 
 
 def _log(tool: str, r: Result, skipped: list[str]) -> None:
-    path = Path(os.environ.get("MY_SKILLS_LOG", ROOT / "evals" / "results" / "ext-calls.jsonl"))
+    path = Path(os.environ.get("JIPDA_LOG", ROOT / "evals" / "results" / "ext-calls.jsonl"))
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
         row = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "tool": tool, "status": r.status, "reason": r.reason,
@@ -67,7 +67,7 @@ def _run(cmd: list[str], stdin: str | None, cwd: Path, timeout: int, out_file: P
 
 def memory_dir(root: Path) -> Path:
     """Claude Code 프로젝트 메모리 폴더(~/.claude/projects/<경로의 / 를 - 로>/memory)."""
-    override = os.environ.get("MY_SKILLS_MEMORY_DIR")
+    override = os.environ.get("JIPDA_MEMORY_DIR")
     if override:
         return Path(override)
     encoded = str(root.resolve() if root.exists() else root).replace("/", "-")
@@ -93,7 +93,7 @@ def ask_codex(prompt: str, files: list[Path], root: Path, timeout: int = DEFAULT
         return r
     allowed = [d.path for d in decisions if d.allowed]
     full = prompt + ("\n\n파일:\n" + "\n".join(f"- {a}" for a in allowed) if allowed else "")
-    binary = os.environ.get("MY_SKILLS_CODEX", "codex")
+    binary = os.environ.get("JIPDA_CODEX", "codex")
     with tempfile.TemporaryDirectory() as td:
         # 저장소 전체가 아니라 허용된 파일 사본만 보이게 한다(-C 로 사본 폴더에서 실행)
         work = Path(td) / "work"
@@ -114,7 +114,7 @@ def ask_deepseek(prompt: str, root: Path, model: str = "deepseek/deepseek-v4-pro
         r = Result("banned", "", "external AI banned in project", 0.0)
         _log("deepseek", r, [])
         return r
-    binary = os.environ.get("MY_SKILLS_ASIDE", "aside")
+    binary = os.environ.get("JIPDA_ASIDE", "aside")
     r = _run([binary, "-m", model, prompt], None, root, timeout)
     _log("deepseek", r, [])
     return r

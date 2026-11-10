@@ -1,6 +1,6 @@
 # 부르기 시험
 
-임시 저장소에서 새 세션에 한 줄씩 보내요. 왼쪽 말에는 그 스킬이 떠야 하고, 오른쪽 말에는 my-skills 스킬이 뜨면 안 돼요.
+임시 저장소에서 새 세션에 한 줄씩 보내요. 왼쪽 말에는 그 스킬이 떠야 하고, 오른쪽 말에는 jipda 스킬이 뜨면 안 돼요.
 
 결과는 `evals/results/routing-<날짜>.md`에 남겨요.
 
@@ -11,7 +11,7 @@
 | build | docs/plan.md 계획대로 구현해줘 |
 | check | docs/spec.md 완료 조건대로 다 됐는지 검증해줘 |
 | review | docs/spec.md 전문가 검토해줘 |
-| finish | 이 작업 마무리해줘 |
+| check | 이 작업 마무리해줘 |
 | research | 파이썬 백테스트 라이브러리 비교 조사해줘 |
 | experiment | calc.py 속도 지표 올려줘. 실험 돌려줘 |
 | handoff | 여기까지 하고 멈출게. 다음 세션에서 이어가게 정리해줘 |

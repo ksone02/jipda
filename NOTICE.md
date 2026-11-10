@@ -1,6 +1,6 @@
 # NOTICE
 
-이 저장소의 일부 문장과 절차는 아래 저장소를 참고하거나 옮겨 와 고쳤어요. 각 파일 맨 아래 `출처:` 줄에 어디서 왔는지 적었어요.
+이 저장소의 일부 문장과 절차는 아래 저장소를 참고하거나 옮겨 와 고쳤어요. 파일마다 어디서 왔는지는 아래 "파일별 출처"에 적었어요.
 
 | 저장소 | 저작권 | 라이선스 |
 |---|---|---|
@@ -20,3 +20,33 @@
 | EveryInc/compound-engineering-plugin | Copyright (c) 2025 Every | MIT |
 
 taste-skill과 humanize-korean(epoko77-ai/im-not-ai)은 코드를 옮기지 않고 설치된 것을 불러 써요.
+
+## 파일별 출처
+
+| 파일 | 출처 |
+|---|---|
+| `rules/always.md` | obra/superpowers verification-before-completion, cursor/plugins pstack principles. |
+| `rules/core.md` | mattpocock/skills diagnosing-bugs, pstack principle-attack-the-premise·principle-explain-the-number·prototype·investigation, addyosmani/agent-skills source-driven-development. |
+| `rules/models.md` | obra/superpowers subagent-driven-development Model Selection. |
+| `rules/review-layers.md` | toss/apps-in-toss-harness render-rules, Nutlope/hallmark Floor·Reflex·Finish, obra/superpowers subagent-driven-development. |
+| `rules/ui.md` | pbakaus/impeccable craft-floor·modes, Nutlope/hallmark Floor, leonxlnx/taste-skill, 사용자 메모리. |
+| `rules/writing-en.md` | blader/humanizer (MIT), based on Wikipedia "Signs of AI writing". |
+| `rules/writing-ko.md` | toss/apps-in-toss-harness ux-writing, 사용자 메모리. |
+| `skills/build/SKILL.md` | obra/superpowers subagent-driven-development (MIT). |
+| `skills/check/SKILL.md` | obra/superpowers verification-before-completion·receiving-code-review, pstack prove-it-works·interrogate, github/spec-kit analyze., obra/superpowers finishing-a-development-branch. |
+| `skills/copy/SKILL.md` | toss/apps-in-toss-harness ux-writing (BSD-3). |
+| `skills/design/SKILL.md` | pbakaus/impeccable, leonxlnx/taste-skill, Nutlope/hallmark, toss/apps-in-toss-harness design. |
+| `skills/design/references/operate-mode.md` | pbakaus/impeccable Operate mode (Apache-2.0), 사용자 대시보드 작업 경험. |
+| `skills/diagnose/SKILL.md` | mattpocock/skills diagnosing-bugs (MIT), obra/superpowers systematic-debugging (MIT). |
+| `skills/diagnose/references/techniques.md` | obra/superpowers systematic-debugging (root-cause-tracing, defense-in-depth, condition-based-waiting, find-polluter). |
+| `skills/docs/SKILL.md` | garrytan/gstack document-generate, document-release (MIT). Diátaxis 분류를 참고했어요. |
+| `skills/experiment/SKILL.md` | pstack hillclimb·principle-explain-the-number·benchmark-checklist (MIT). |
+| `skills/finish/SKILL.md` | obra/superpowers finishing-a-development-branch. |
+| `skills/guard/SKILL.md` | garrytan/gstack careful·guard, toss/apps-in-toss-unity-sdk PreToolUse 훅. |
+| `skills/handoff/SKILL.md` | pstack pause-safely·session-pickup·show-me-your-work (MIT), addyosmani/agent-skills documentation-and-adrs (MIT). |
+| `skills/plan/SKILL.md` | obra/superpowers writing-plans, toss/es-toolkit pr-review. |
+| `skills/research/SKILL.md` | mattpocock/skills research, pstack swarm(각도 나누기). |
+| `skills/review/SKILL.md` | garrytan/gstack plan reviews, EveryInc/compound-engineering-plugin, pstack interrogate, toss/apps-in-toss-harness render-rules. |
+| `skills/shape/SKILL.md` | mattpocock/skills grill-me, obra/superpowers brainstorming, toss/apps-in-toss-harness plan, pstack in-your-own-words. |
+| `skills/shape/references/ideation.md` | toss/apps-in-toss-harness plan/references/ideation.md (BSD-3). |
+| `skills/unslop/SKILL.md` | blader/humanizer (MIT), epoko77-ai/im-not-ai(humanize-korean) 호출, toss/apps-in-toss-harness ux-writing. |

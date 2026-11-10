@@ -3,6 +3,6 @@ __pycache__/
 .pytest_cache/
 .superpowers/
 .measure/
-.my-skills/
+.jipda/
 evals/results/*
 !evals/results/.gitkeep

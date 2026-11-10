@@ -28,5 +28,3 @@
 ## 검토자에게 주는 규칙
 - 과잉 지적 금지: 1·2층에 들지 않으면 쓰지 않아요.
 - 검토를 맡길 때 "이건 지적하지 마"처럼 미리 판단을 주지 않아요. 판단은 결과를 받은 뒤 메인이 해요.
-
-출처: toss/apps-in-toss-harness render-rules, Nutlope/hallmark Floor·Reflex·Finish, obra/superpowers subagent-driven-development.

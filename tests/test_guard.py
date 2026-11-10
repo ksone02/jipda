@@ -11,7 +11,7 @@ def run(tmp_path, stdin, on=True):
     if on:
         state.touch()
     p = subprocess.run([sys.executable, str(GUARD)], input=stdin, capture_output=True, text=True,
-                       env={"MY_SKILLS_GUARD_FILE": str(state), "PATH": "/usr/bin:/bin"})
+                       env={"JIPDA_GUARD_FILE": str(state), "PATH": "/usr/bin:/bin"})
     return p.returncode, p.stdout.strip()
 
 
@@ -28,7 +28,7 @@ def test_on_risky_asks(tmp_path):
     assert code == 0
     h = json.loads(out)["hookSpecificOutput"]
     assert h["hookEventName"] == "PreToolUse" and h["permissionDecision"] == "ask"
-    assert h["permissionDecisionReason"].startswith("my-skills guard:")
+    assert h["permissionDecisionReason"].startswith("jipda guard:")
 
 
 def test_on_safe_silent(tmp_path):

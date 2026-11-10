@@ -2,8 +2,8 @@ from pathlib import Path
 
 import always
 
-START = "<!-- my-skills:always:start -->"
-END = "<!-- my-skills:always:end -->"
+START = "<!-- jipda:always:start -->"
+END = "<!-- jipda:always:end -->"
 
 
 def rules(tmp_path: Path, body: str = "- a\n- b") -> Path:

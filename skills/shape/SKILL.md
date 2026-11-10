@@ -29,15 +29,11 @@ description: 아직 흐릿한 아이디어를 질문으로 구체화해 완료 �
 6. 크기를 판정해 한 줄로 말해요(사용자가 바꿀 수 있어요).
    - 한 파일, 뻔한 수정 → 바로 고치고 `check`
    - 작은 변경 → `build` → `check`
-   - 프로젝트 → `review` → `plan` → `review` → `build` → `check` → `finish`
+   - 프로젝트 → `review` → `plan` → `review` → `build` → `check`
 
 ## 하지 않는 것
 - 코드 작성, 설계, 작업 쪼개기(그건 `plan`).
 - 다음 스킬을 직접 부르기. 한 줄로 알려 주기만 해요.
-
-## 하지 말아야 할 것
 - 여러 질문을 한 메시지에 몰아서 묻기.
 - 사용자가 말하지 않은 것을 `[결정]`으로 적기.
 - 실행해 보면 알 수 있는 것을 사용자에게 묻기([core.md](../../rules/core.md)의 "물어보는 대신 확인한다").
-
-출처: mattpocock/skills grill-me, obra/superpowers brainstorming, toss/apps-in-toss-harness plan, pstack in-your-own-words.

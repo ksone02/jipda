@@ -19,7 +19,7 @@ RISKY = [
 
 
 def state_file() -> Path:
-    return Path(os.environ.get("MY_SKILLS_GUARD_FILE", Path.home() / ".claude" / "my-skills-guard.on"))
+    return Path(os.environ.get("JIPDA_GUARD_FILE", Path.home() / ".claude" / "jipda-guard.on"))
 
 
 def check(command: str) -> str | None:
@@ -41,7 +41,7 @@ def main() -> int:
         print(json.dumps({"hookSpecificOutput": {
             "hookEventName": "PreToolUse",
             "permissionDecision": "ask",
-            "permissionDecisionReason": f"my-skills guard: {label}",
+            "permissionDecisionReason": f"jipda guard: {label}",
         }}, ensure_ascii=False))
     return 0
 

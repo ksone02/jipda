@@ -21,25 +21,21 @@ description: 계획 문서를 하위 에이전트에 맡겨 구현하고 작업�
 
 1. **진행 기록을 먼저 열어요.** 이미 있으면 `T<n>: complete` 줄이 있는 작업은 다시 하지 않아요. 요약(컴팩트) 뒤에는 기억보다 이 파일과 `git log`를 믿어요.
 2. **작업을 묶어요.** 같은 모양의 작은 수정(같은 변경을 여러 파일에)은 한 번에 보내요. 판단·시험·검토가 따로 필요한 작업은 따로 보내요.
-3. **구현자 하위 에이전트를 띄워요.** 모델은 [models.md](../../rules/models.md) 등급표대로 Agent 도구의 `model`에 꼭 적어요(계획에 코드가 다 있으면 haiku, 설명만 있으면 sonnet). 작업 설명서는 [implementer-brief.md](references/implementer-brief.md) 형식의 파일(`.git/my-skills/brief-T<n>.md`)로 줘요. 임시 파일을 `.git/` 안에 두는 건 실수로 커밋되지 않게 하려는 거예요.
+3. **구현자 하위 에이전트를 띄워요.** 모델은 [models.md](../../rules/models.md) 등급표대로 Agent 도구의 `model`에 꼭 적어요(계획에 코드가 다 있으면 haiku, 설명만 있으면 sonnet). 작업 설명서는 [implementer-brief.md](references/implementer-brief.md) 형식의 파일(`.git/jipda/brief-T<n>.md`)로 줘요. 임시 파일을 `.git/` 안에 두는 건 실수로 커밋되지 않게 하려는 거예요.
 4. **상태 보고를 받아요.** 구현자는 넷 중 하나로 답해요.
    - `완료`: 시험까지 통과
    - `걱정 있음`: 했지만 맞는지 의심되는 곳이 있음(어디인지 적음)
    - `막힘`: 못 함(이유)
    - `맥락 필요`: 정보가 모자람(무엇이)
    막힘·맥락 필요면 메인이 답하고 같은 구현자를 이어서 써요. 메인이 직접 고치지 않아요(맥락이 섞이고 검토를 건너뛰게 돼요).
-5. **작업마다 검토해요.** `mkdir -p .git/my-skills && git diff <시작커밋>..HEAD > .git/my-skills/review-T<n>.diff`로 diff를 파일로 만들고, 검토자 하위 에이전트(sonnet 이상, [task-reviewer.md](references/task-reviewer.md))에게 설명서·보고·diff 경로를 줘요. 판정은 두 가지 모두 받아요: 명세대로인가, 품질은 괜찮은가. 결과는 [review-layers.md](../../rules/review-layers.md)의 3층으로 처리해요.
+5. **작업마다 검토해요.** `mkdir -p .git/jipda && git diff <시작커밋>..HEAD > .git/jipda/review-T<n>.diff`로 diff를 파일로 만들고, 검토자 하위 에이전트(sonnet 이상, [task-reviewer.md](references/task-reviewer.md))에게 설명서·보고·diff 경로를 줘요. 판정은 두 가지 모두 받아요: 명세대로인가, 품질은 괜찮은가. 결과는 [review-layers.md](../../rules/review-layers.md)의 3층으로 처리해요.
 6. **수정은 3회까지.** 1층 지적이 남으면 구현자에게 돌려보내요. 3회를 넘으면 멈추고 남은 지적을 "보류 + 이유"로 기록한 뒤 사용자에게 한 번에 보고해요. 4회째부터는 한 등급 위 모델(sonnet → opus)로 바꿔요.
 7. 작업 완료 줄을 기록하고 다음 작업으로 가요. 모두 끝나면 `check`를 한 줄로 안내해요.
 
 ## 하지 않는 것
 - 계획에 없는 기능 추가.
 - 커밋 외의 바깥 동작(푸시, 배포, PR).
-
-## 하지 말아야 할 것
 - 모델을 적지 않고 하위 에이전트 띄우기(비싼 세션 모델을 물려받아요, [models.md](../../rules/models.md)).
 - 검토자에게 "이건 지적하지 마"처럼 미리 판단 주기.
 - 검토에서 1층 지적이 남았는데 다음 작업으로 넘어가기.
 - 구현자의 "시험 통과" 보고만 믿고 완료 처리하기(직접 시험 명령을 돌려 확인).
-
-출처: obra/superpowers subagent-driven-development (MIT).

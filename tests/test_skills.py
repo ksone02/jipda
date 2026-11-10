@@ -7,9 +7,9 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_SECTIONS = ["목적", "입력", "산출물", "실행 순서", "하지 않는 것", "하지 말아야 할 것"]
+REQUIRED_SECTIONS = ["목적", "입력", "산출물", "실행 순서", "하지 않는 것"]
 MAX_WORDS = 1500
-EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "finish", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs"]
+EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs"]
 
 
 def skill_dirs() -> list[Path]:
@@ -111,7 +111,7 @@ def test_expected_skills_present():
 def test_plugin_manifest():
     plugin = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())
     market = json.loads((ROOT / ".claude-plugin/marketplace.json").read_text())
-    assert plugin["name"] == "my-skills"
+    assert plugin["name"] == "jipda"
     assert market["plugins"][0]["source"] == "./"
 
 
@@ -183,20 +183,21 @@ def test_handoff_sections():
 
 
 def test_guard_state_path():
-    assert "my-skills-guard.on" in body("guard")
+    assert "jipda-guard.on" in body("guard")
 
 
 def test_ext_calls_have_bash_timeout():
+    models = (ROOT / "rules/models.md").read_text(encoding="utf-8")
+    assert "--timeout 540" in models and "600000" in models
     for name in ("check", "research", "review"):
-        b = body(name)
-        assert "--timeout 540" in b and "600000" in b, name
+        assert "외부 모델 부르기" in body(name), name
 
 
 def test_review_uses_skill_relative_ext():
     b = body("review")
-    assert "<이 스킬 폴더>/../../scripts/ext.py codex" in b and "Codex 사용 불가, Claude로 검증" in b
+    assert "`ext.py codex`" in b and "Codex 사용 불가, Claude로 검증" in b
 
 
 def test_scratch_inside_git_dir():
-    for name in ("build", "finish"):
-        assert ".git/my-skills" in body(name) and ".my-skills/" not in body(name).replace(".git/my-skills/", ""), name
+    for name in ("build", "check"):
+        assert ".git/jipda" in body(name) and ".jipda/" not in body(name).replace(".git/jipda/", ""), name

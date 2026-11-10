@@ -33,9 +33,5 @@ description: 일을 안전하게 멈추고(pause), 다음 세션에서 이어 �
 
 ## 하지 않는 것
 - 사용자가 정하지 않은 것을 결정으로 기록하기.
-
-## 하지 말아야 할 것
 - 확인하지 않은 일을 "확인된 것"에 쓰기.
 - 멈추려고 푸시하거나 브랜치를 지우기.
-
-출처: pstack pause-safely·session-pickup·show-me-your-work (MIT), addyosmani/agent-skills documentation-and-adrs (MIT).
