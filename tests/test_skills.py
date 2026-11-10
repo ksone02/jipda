@@ -111,7 +111,7 @@ def test_expected_skills_present():
 def test_plugin_manifest():
     plugin = json.loads((ROOT / ".claude-plugin/plugin.json").read_text())
     market = json.loads((ROOT / ".claude-plugin/marketplace.json").read_text())
-    assert plugin["name"] == "my-skills"
+    assert plugin["name"] == "jipda"
     assert market["plugins"][0]["source"] == "./"
 
 
@@ -183,7 +183,7 @@ def test_handoff_sections():
 
 
 def test_guard_state_path():
-    assert "my-skills-guard.on" in body("guard")
+    assert "jipda-guard.on" in body("guard")
 
 
 def test_ext_calls_have_bash_timeout():
@@ -200,4 +200,4 @@ def test_review_uses_skill_relative_ext():
 
 def test_scratch_inside_git_dir():
     for name in ("build", "check"):
-        assert ".git/my-skills" in body(name) and ".my-skills/" not in body(name).replace(".git/my-skills/", ""), name
+        assert ".git/jipda" in body(name) and ".jipda/" not in body(name).replace(".git/jipda/", ""), name

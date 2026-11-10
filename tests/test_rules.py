@@ -16,9 +16,9 @@ def test_all_rule_files_exist():
 
 def test_always_block_markers():
     t = text("always")
-    assert t.count("<!-- my-skills:always:start -->") == 1
-    assert t.count("<!-- my-skills:always:end -->") == 1
-    inner = t.split("<!-- my-skills:always:start -->")[1].split("<!-- my-skills:always:end -->")[0]
+    assert t.count("<!-- jipda:always:start -->") == 1
+    assert t.count("<!-- jipda:always:end -->") == 1
+    inner = t.split("<!-- jipda:always:start -->")[1].split("<!-- jipda:always:end -->")[0]
     assert len([line for line in inner.splitlines() if line.strip()]) == 7
 
 

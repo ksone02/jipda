@@ -1,9 +1,9 @@
 {
-  "name": "my-skills",
+  "name": "jipda",
   "owner": { "name": "ksone02" },
   "plugins": [
     {
-      "name": "my-skills",
+      "name": "jipda",
       "source": "./",
       "description": "개인 개발·연구 스킬셋",
       "version": "0.1.5"
