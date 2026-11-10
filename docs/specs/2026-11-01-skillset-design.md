@@ -296,7 +296,7 @@ my-skills/
   scripts/                       always 블록 설치·제거, 브라우저 측정, 외부 모델 호출(aside, codex) 래퍼
   evals/                         아래 7
   NOTICE.md                      가져온 원본의 저작권
-  docs/superpowers/specs/        이 문서
+  docs/specs/                    이 문서
 ```
 
 ## 7. 잘 되는지 확인하는 법
