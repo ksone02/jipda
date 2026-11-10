@@ -201,3 +201,17 @@ def test_review_uses_skill_relative_ext():
 def test_scratch_inside_git_dir():
     for name in ("build", "check"):
         assert ".git/jipda" in body(name) and ".jipda/" not in body(name).replace(".git/jipda/", ""), name
+
+
+def test_build_direct_by_default():
+    b = body("build")
+    assert "기본은 메인이 직접" in b and "6개 이상" in b and "review-all.diff" in b
+
+
+def test_review_one_reviewer_by_default():
+    assert "검토자는 기본 한 명" in body("review")
+
+
+def test_check_independent_only_when_big_or_risky():
+    b = body("check")
+    assert "크거나 위험할 때만" in b and "검사자: 직접 대조" in b
