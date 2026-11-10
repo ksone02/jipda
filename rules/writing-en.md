@@ -22,5 +22,3 @@ Every sentence you keep must add something the reader does not already have. Fix
 
 ## When not to act
 - Leave quotes, code, numbers, names and the author's deliberate style alone. If a sentence is plain and true, keep it.
-
-Source: blader/humanizer (MIT), based on Wikipedia "Signs of AI writing".

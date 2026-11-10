@@ -21,8 +21,8 @@ description: 조사 계획을 먼저 확인받고, 넓게 훑은 뒤 고른 방�
 
 ## 실행 순서
 1. **조사 계획을 써서 확인받아요**([brief-template.md](references/brief-template.md)). 결정, 이미 아는 것, 결정을 바꿀 발견, 각도 4~6개(동의어, 옆 분야, 한국어·영어, 반대 입장, 원문 출처 종류). 1분 안에 읽을 분량이에요.
-2. **넓게 훑어요.** 각도마다 프롬프트 파일을 만들어 `python3 <이 스킬 폴더>/../../scripts/ext.py deepseek --root <저장소> --timeout 540 --prompt-file <파일>`을 돌려요(서로 독립이라 함께 돌려도 돼요). Bash 도구는 `timeout: 600000`으로 부르고, 스크립트에는 `--timeout 540`을 넘겨요(스크립트가 먼저 끝나야 `STATUS:` 줄이 남아요). 결과는 출처가 붙은 지도: 주요 갈래, 대표 출처, 빈 곳.
-3. **DeepSeek이 안 되면 Claude로 해요.** `STATUS: unavailable` 또는 `banned`이면 결과 첫 줄에 `DeepSeek 사용 불가, Claude로 조사 (<이유>)`를 쓰고 같은 각도를 haiku 하위 에이전트([searcher-prompt.md](references/searcher-prompt.md))에 맡겨요([models.md](../../rules/models.md)).
+2. **넓게 훑어요.** 각도마다 프롬프트 파일을 만들어 `ext.py deepseek`으로 함께 돌려요(부르는 법은 [models.md](../../rules/models.md)의 "외부 모델 부르기"). 결과는 출처가 붙은 지도: 주요 갈래, 대표 출처, 빈 곳.
+3. **DeepSeek이 안 되면 Claude로 해요.** 안 되면 결과 첫 줄에 `DeepSeek 사용 불가, Claude로 조사 (<이유>)`를 쓰고 같은 각도를 haiku 하위 에이전트([searcher-prompt.md](references/searcher-prompt.md))에 맡겨요([models.md](../../rules/models.md)).
 4. **방향을 고르게 해요.** 지도를 보여 주고 사용자가 파고들 갈래를 골라요.
 5. **깊게 봐요.** 2차 요약글이 아니라 원문: 논문 본문과 인용 추적, 공식 문서, 소스 코드, 저장소. 깊게 보기는 sonnet 하위 에이전트나 메인이 해요. 새 출처를 봐도 새 내용이 안 나오면 멈춰요.
 6. **결과 파일을 써요.** 메인 대화에는 요약만.
@@ -30,10 +30,6 @@ description: 조사 계획을 먼저 확인받고, 넓게 훑은 뒤 고른 방�
 
 ## 하지 않는 것
 - 실험 돌리기, 코드 고치기(실험은 `experiment`).
-
-## 하지 말아야 할 것
 - 검색 질문에 데이터 값이나 개인 정보 넣기([data-safety.md](../../rules/data-safety.md)).
 - 읽지 않은 링크를 출처로 쓰기.
 - 조사 계획 확인 없이 바로 깊게 들어가기.
-
-출처: mattpocock/skills research, pstack swarm(각도 나누기).

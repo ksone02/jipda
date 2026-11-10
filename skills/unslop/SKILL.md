@@ -24,9 +24,5 @@ README, 보고서, 문서, 답변 초안을 사람이 쓴 것처럼 읽히게 �
 
 ## 하지 않는 것
 - 내용 보태기, 주장 바꾸기.
-
-## 하지 말아야 할 것
 - 원문에 없던 사실이나 상투구를 넣기.
 - 코드 블록, 인용, 숫자 고치기.
-
-출처: blader/humanizer (MIT), epoko77-ai/im-not-ai(humanize-korean) 호출, toss/apps-in-toss-harness ux-writing.

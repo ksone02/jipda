@@ -24,5 +24,3 @@
 
 ## 읽기 전용 조사
 - "어떻게 동작하나", "왜 이렇게 만들었나"는 코드를 고치지 않고 파일과 줄을 근거로 답해요.
-
-출처: mattpocock/skills diagnosing-bugs, pstack principle-attack-the-premise·principle-explain-the-number·prototype·investigation, addyosmani/agent-skills source-driven-development.

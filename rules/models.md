@@ -8,6 +8,12 @@
 | 구체화, 설계, 종합 | 메인 세션 | — |
 | 반복 구현 | 아래 등급표 | — |
 
+## 외부 모델 부르기
+- 명령: `python3 <플러그인 폴더>/scripts/ext.py <codex|deepseek> --root <저장소> --timeout 540 --prompt-file <프롬프트> [파일...]`. 플러그인 폴더는 스킬 폴더의 두 단계 위예요.
+- Bash 도구는 `timeout: 600000`으로 불러요. 스크립트가 먼저 끝나야 `STATUS:` 줄이 남아요.
+- 서로 독립인 호출은 함께 돌려도 돼요.
+- 출력 첫 줄이 `STATUS: unavailable` 또는 `STATUS: banned`이면 위 표의 "안 되면"으로 넘어가고, 아래 대체 문구를 결과 첫 줄에 써요.
+
 ## 등급표
 가장 싼 모델은 여러 단계 작업에서 턴을 2~3배 써서 총비용이 더 클 수 있어요.
 - **haiku**: 계획에 쓸 코드가 다 들어 있는 옮겨 적기와 시험, 한 파일 기계적 수정, 검색 대체.
@@ -24,5 +30,3 @@
 - `Codex 사용 불가, Claude로 검증`
 - `DeepSeek 사용 불가, Claude로 조사`
 - 이유(설치 안 됨, 사용량 한도, 시간 초과, 외부 AI 금지 프로젝트)를 괄호로 붙여요.
-
-출처: obra/superpowers subagent-driven-development Model Selection.

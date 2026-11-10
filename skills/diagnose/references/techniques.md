@@ -15,5 +15,3 @@
 ## 다른 시험을 오염시키는 시험 찾기
 - 혼자 돌리면 통과하고 같이 돌리면 실패하면, 앞에 도는 시험을 절반씩 나눠 같이 돌려 보며(이분 탐색) 범인을 찾아요.
 - 범인은 보통 전역 상태, 남은 파일, 고정되지 않은 시간·시드예요.
-
-출처: obra/superpowers systematic-debugging (root-cause-tracing, defense-in-depth, condition-based-waiting, find-polluter).

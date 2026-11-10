@@ -7,9 +7,9 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_SECTIONS = ["목적", "입력", "산출물", "실행 순서", "하지 않는 것", "하지 말아야 할 것"]
+REQUIRED_SECTIONS = ["목적", "입력", "산출물", "실행 순서", "하지 않는 것"]
 MAX_WORDS = 1500
-EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "finish", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs"]
+EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs"]
 
 
 def skill_dirs() -> list[Path]:
@@ -187,16 +187,17 @@ def test_guard_state_path():
 
 
 def test_ext_calls_have_bash_timeout():
+    models = (ROOT / "rules/models.md").read_text(encoding="utf-8")
+    assert "--timeout 540" in models and "600000" in models
     for name in ("check", "research", "review"):
-        b = body(name)
-        assert "--timeout 540" in b and "600000" in b, name
+        assert "외부 모델 부르기" in body(name), name
 
 
 def test_review_uses_skill_relative_ext():
     b = body("review")
-    assert "<이 스킬 폴더>/../../scripts/ext.py codex" in b and "Codex 사용 불가, Claude로 검증" in b
+    assert "`ext.py codex`" in b and "Codex 사용 불가, Claude로 검증" in b
 
 
 def test_scratch_inside_git_dir():
-    for name in ("build", "finish"):
+    for name in ("build", "check"):
         assert ".git/my-skills" in body(name) and ".my-skills/" not in body(name).replace(".git/my-skills/", ""), name

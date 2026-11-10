@@ -24,8 +24,4 @@ description: 위험한 명령(운영 브랜치 푸시, rm -rf, 비밀키 읽기 
 
 ## 하지 않는 것
 - 명령을 완전히 막기, 다른 훅 설정 바꾸기.
-
-## 하지 말아야 할 것
 - 사용자가 시키지 않았는데 끄기.
-
-출처: garrytan/gstack careful·guard, toss/apps-in-toss-unity-sdk PreToolUse 훅.

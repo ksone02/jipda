@@ -30,10 +30,6 @@ AI가 만든 티가 나지 않고, 실제로 쓰기 편한 화면을 만들어�
 ## 하지 않는 것
 - 화면 문구만 고치는 일(그건 `copy`).
 - 기능·데이터 로직 바꾸기.
-
-## 하지 말아야 할 것
 - 측정 없이 "반응형 확인했어요"라고 쓰기.
 - 이미 있는 디자인 체계를 무시하고 새 토큰 덮어쓰기.
 - 3회를 넘겨 계속 고치기(남은 문제는 목록으로 보고).
-
-출처: pbakaus/impeccable, leonxlnx/taste-skill, Nutlope/hallmark, toss/apps-in-toss-harness design.

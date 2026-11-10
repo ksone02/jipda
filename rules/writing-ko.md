@@ -26,5 +26,3 @@
 
 ## AI 티
 - 긴 글(500자 넘음)은 마지막에 `humanize-korean`으로 다듬어요(`unslop` 스킬이 부름).
-
-출처: toss/apps-in-toss-harness ux-writing, 사용자 메모리.

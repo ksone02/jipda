@@ -34,10 +34,6 @@ description: 원인을 모르는 버그와 성능 저하를 진단해요. 고치
 
 ## 하지 않는 것
 - 관련 없는 정리나 리팩터링.
-
-## 하지 말아야 할 것
 - 장치 없이 고치고 "고쳐진 것 같다"고 하기.
 - 증상만 가리는 가드를 원인 수정이라고 부르기.
 - 비밀값을 출력에 그대로 남기기(`<REDACTED>`로 바꿔요).
-
-출처: mattpocock/skills diagnosing-bugs (MIT), obra/superpowers systematic-debugging (MIT).

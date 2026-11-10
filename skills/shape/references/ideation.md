@@ -23,5 +23,3 @@
 
 ## 3. 고르기
 남은 후보를 표로 보여 주고 사용자가 하나를 골라요.
-
-출처: toss/apps-in-toss-harness plan/references/ideation.md (BSD-3).

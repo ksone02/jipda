@@ -32,10 +32,6 @@ description: 지표 하나를 반복 실험으로 올려요. 측정 장치를 �
 ## 하지 않는 것
 - 문헌 조사(그건 `research`).
 - 여러 변경을 한 번에 쌓고 재기.
-
-## 하지 말아야 할 것
 - 코드만 보고 "좋아졌다"고 판정하기.
 - 목표 기준을 낮춰서 통과시키기.
 - 대회·외부 데이터를 외부 모델에 보내기([data-safety.md](../../rules/data-safety.md)).
-
-출처: pstack hillclimb·principle-explain-the-number·benchmark-checklist (MIT).
