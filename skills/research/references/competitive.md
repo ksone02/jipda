@@ -2,7 +2,7 @@
 
 1. **Write the decision and questions.** What will this analysis decide? Turn it into a few questions and map each to sources.
 2. **Find the real alternatives.** Ask: what would a customer do if this did not exist? Include doing nothing, a spreadsheet, and hiring a person. Drop famous names customers would never actually compare.
-3. **Pick the analysis yourself.** Match it to the decision, at most 2. Say which in one line and start; do not ask the user to choose.
+3. **Pick the analysis yourself.** Match it to the decision and use only what could change it. Say which in one line and start; do not ask the user to choose.
 
 | Question | Analysis | Output |
 |---|---|---|
