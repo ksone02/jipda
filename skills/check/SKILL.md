@@ -21,7 +21,7 @@ description: 완료 조건을 하나씩 대조하고 실행으로 증명한 뒤 
 ## 실행 순서
 1. **직접 대조해요.** 완료 조건마다 확인 방법을 그대로 실행하고 결과를 적어요. 이전 결과를 재사용하지 않아요. 확인 불가는 통과가 아니에요.
 2. **화면이 있으면 재요.** `uv run --with playwright==1.49.1 python <이 스킬 폴더>/../../scripts/measure.py <url>` 결과의 `fail`과 스크린샷을 봐요. 1층 위반은 [ui.md](../../rules/ui.md) 기준.
-3. **크거나 위험할 때만 독립 검사를 맡겨요.** 변경이 파일 5개나 200줄을 넘거나, 결제·인증·데이터 삭제·자료 이전을 건드리거나, 사용자가 요청했을 때만이에요. 그 밖에는 4번을 건너뛰고 보고 첫 줄에 `검사자: 직접 대조`라고 적어요. 맡길 때는 [independent-checker.md](references/independent-checker.md) 프롬프트와 바뀐 파일을 `ext.py codex`에 넘겨요. 부르는 법은 [models.md](../../rules/models.md)의 "외부 모델 부르기"예요.
+3. **크거나 위험할 때만 독립 검사를 맡겨요.** `git diff --numstat <기준 커밋> | awk '{f++; n+=$1+$2} END {print f+0, n+0}'`로 센 변경이 파일 5개나 200줄(추가+삭제)을 넘거나, 결제·인증·데이터 삭제·자료 이전을 건드리거나, 사용자가 요청했을 때만이에요. 그 밖에는 4번을 건너뛰고 보고 첫 줄에 `검사자: 직접 대조`라고 적어요. 맡길 때는 [independent-checker.md](references/independent-checker.md) 프롬프트와 바뀐 파일을 `ext.py codex`에 넘겨요. 부르는 법은 [models.md](../../rules/models.md)의 "외부 모델 부르기"예요.
 4. **Codex가 안 되면 Claude로 해요.** 보고 첫 줄에 `Codex 사용 불가, Claude로 검증 (<이유>)`을 쓰고, 같은 프롬프트로 새 하위 에이전트를 띄워요. 모델은 만든 쪽과 다른 등급(만든 쪽이 sonnet이면 opus, 그 밖에는 sonnet)이고, 메인 대화와 만든 쪽의 생각 과정은 주지 않아요([models.md](../../rules/models.md)).
 5. **받은 지적은 맞는지 확인해요.** 지적마다 코드를 보거나 실행해서 맞으면 남기고, 틀리면 근거를 들어 버려요.
 6. **3층으로 처리해요.** 1층은 고치고 다시 1번부터, 2층은 한 번에 묻기([review-layers.md](../../rules/review-layers.md)).

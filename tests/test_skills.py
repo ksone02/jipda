@@ -205,7 +205,8 @@ def test_scratch_inside_git_dir():
 
 def test_build_direct_by_default():
     b = body("build")
-    assert "기본은 메인이 직접" in b and "6개 이상" in b and "review-all.diff" in b
+    assert "기본은 메인이 직접" in b and "서로 독립인 작업" in b and "review-all.diff" in b
+    assert "끝에 반드시 한 번 검토" in b and "`check`로 미루지 않아요" in b and "실제 돈이나 운영 데이터" in b
 
 
 def test_review_one_reviewer_by_default():
@@ -214,4 +215,4 @@ def test_review_one_reviewer_by_default():
 
 def test_check_independent_only_when_big_or_risky():
     b = body("check")
-    assert "크거나 위험할 때만" in b and "검사자: 직접 대조" in b
+    assert "크거나 위험할 때만" in b and "검사자: 직접 대조" in b and "git diff --numstat" in b
