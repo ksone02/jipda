@@ -1,6 +1,6 @@
 ---
 name: design
-description: Builds or heavily reworks dashboard, tool, and landing screens. Measures in a real browser at three widths and critiques screenshots. Always use this first before writing UI code, even mid-feature and even if the user did not ask. Do not use for tiny tweaks such as one color or one spacing value.
+description: Builds or heavily reworks dashboard, tool, and landing screens. Measures in a real browser at three widths and critiques screenshots. Always use this first before writing UI code, even mid-feature and even if the user did not ask. Do not use for tiny tweaks or for change requests on an existing screen's details (that is `revise`).
 ---
 
 # design
