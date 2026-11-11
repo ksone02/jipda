@@ -22,7 +22,7 @@ Then, optionally, run `/jipda:setup` to choose external tools, a browser tool, m
 
 ### Standing principles (optional, recommended)
 
-Puts 6 lines in `~/.claude/CLAUDE.md` that hold even when no skill runs. Read [rules/always.md](rules/always.md) first.
+Puts 7 lines in `~/.claude/CLAUDE.md` that hold even when no skill runs. Read [rules/always.md](rules/always.md) first.
 
 ```sh
 python3 scripts/always.py install   # add (running it twice keeps one copy)

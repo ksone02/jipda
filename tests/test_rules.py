@@ -19,7 +19,7 @@ def test_always_block_markers():
     assert t.count("<!-- jipda:always:start -->") == 1
     assert t.count("<!-- jipda:always:end -->") == 1
     inner = t.split("<!-- jipda:always:start -->")[1].split("<!-- jipda:always:end -->")[0]
-    assert len([line for line in inner.splitlines() if line.strip()]) == 6
+    assert len([line for line in inner.splitlines() if line.strip()]) == 7
 
 
 def test_review_layers_sections():
