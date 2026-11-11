@@ -1,6 +1,6 @@
 ---
 name: revise
-description: Applies change requests to work that already exists, covering behavior, code structure, or design, one item or many at once. Use this without being asked when the user wants something built changed ("change this, this, and that", "restructure this", "fix the design like this", "이거 바꿔 줘", "여기 수정해 줘", "구조 좀 정리해 줘", "디자인 이렇게 고쳐 줘"). Do not use for one obvious one-line edit such as a single rename or color, for new features, or for bugs with unknown causes.
+description: Use this first, before editing, whenever the user asks to change work that already exists, covering behavior, code structure, or design, one item or many at once ("change this, this, and that", "restructure this", "fix the design like this", "이거 바꿔 줘", "여기 수정해 줘", "구조 좀 정리해 줘", "디자인 이렇게 고쳐 줘"). Do not use for one obvious one-line edit such as a single rename or color, for new features, or for bugs with unknown causes.
 ---
 
 # revise
