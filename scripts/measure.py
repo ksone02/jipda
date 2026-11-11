@@ -86,14 +86,14 @@ def _report(out: Path, viewports: list, fail: list) -> dict:
     return report
 
 
-def measure(target: str, out: Path, sync_playwright) -> dict:
+def measure(target: str, out: Path, sync_playwright, dark: bool = False) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     viewports, fail = [], []
     with sync_playwright() as p:
         browser = _launch(p)
         for w, h in VIEWPORTS:
-            size = f"{w}x{h}"
-            page = browser.new_page(viewport={"width": w, "height": h})
+            size = f"{w}x{h}" + ("-dark" if dark else "")
+            page = browser.new_page(viewport={"width": w, "height": h}, color_scheme="dark" if dark else "light")
             page.goto(_url(target), wait_until="networkidle")
             data = page.evaluate(PROBE_JS)
             shot = out / f"shot-{size}.png"
@@ -108,7 +108,8 @@ def agent_browser() -> str | None:
     return os.environ.get("JIPDA_AGENT_BROWSER") or shutil.which("agent-browser")
 
 
-def measure_agent_browser(target: str, out: Path, binary: str) -> dict:
+def measure_agent_browser(target: str, out: Path, binary: str, dark: bool = False) -> dict:
+    out = out.resolve()  # agent-browser 데몬은 작업 폴더가 달라서 상대 경로로는 다른 곳에 저장된다
     out.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ)
     if "AGENT_BROWSER_EXECUTABLE_PATH" not in env:  # 설치된 Chrome이 있으면 브라우저를 내려받지 않는다
@@ -125,8 +126,9 @@ def measure_agent_browser(target: str, out: Path, binary: str) -> dict:
 
     viewports, fail = [], []
     try:
+        ab("set", "media", "dark" if dark else "light")
         for w, h in VIEWPORTS:
-            size = f"{w}x{h}"
+            size = f"{w}x{h}" + ("-dark" if dark else "")
             ab("set", "viewport", str(w), str(h))
             ab("open", _url(target))
             ab("wait", "--load", "networkidle")
@@ -144,16 +146,17 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("target")
     ap.add_argument("--out", type=Path, default=Path(".measure"))
+    ap.add_argument("--dark", action="store_true", help="다크 모드로 잰다")
     args = ap.parse_args(argv)
     binary = agent_browser()
     if binary:
-        report = measure_agent_browser(args.target, args.out, binary)
+        report = measure_agent_browser(args.target, args.out, binary, args.dark)
     else:
         sp = load_playwright()
         if sp is None:
             print(INSTALL_HINT, file=sys.stderr)
             return 3
-        report = measure(args.target, args.out, sp)
+        report = measure(args.target, args.out, sp, args.dark)
     print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
