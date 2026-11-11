@@ -21,16 +21,16 @@ description: 계획 문서대로 구현하고 검토해요. 작은 계획은 직
 
 1. **진행 기록을 먼저 열어요.** 이미 있으면 `T<n>: complete` 줄이 있는 작업은 다시 하지 않아요. 요약(컴팩트) 뒤에는 기억보다 이 파일과 `git log`를 믿어요.
 2. **구현 방식을 정해요.** 기본은 메인이 직접 해요: 계획 순서대로 시험을 쓰고, 실패를 보고, 구현하고, 통과를 보고, 작업마다 커밋해요. 하위 에이전트에 맡기는 건 서로 독립인 작업이 많아 메인 맥락이 꽉 찰 것 같거나, 작업 하나가 서로 다른 영역의 파일을 여러 개 고치거나, 실제 돈이나 운영 데이터에 닿는 코드처럼 틀리면 되돌리기 어려운 작업뿐이에요. 맡길 때 같은 모양의 작은 수정은 한 번에 보내요. 3~6번은 맡긴 작업에만 해요.
-3. **구현자 하위 에이전트를 띄워요.** 모델은 [models.md](../../rules/models.md) 등급표대로 Agent 도구의 `model`에 꼭 적어요(계획에 코드가 다 있으면 haiku, 설명만 있으면 sonnet). 작업 설명서는 [implementer-brief.md](references/implementer-brief.md) 형식의 파일(`.git/jipda/brief-T<n>.md`)로 줘요. 임시 파일을 `.git/` 안에 두는 건 실수로 커밋되지 않게 하려는 거예요.
+3. **구현자 하위 에이전트를 띄워요.** 모델은 [models.md](../../rules/models.md) 등급표대로 Agent 도구의 `model`에 꼭 적어요(계획에 코드가 다 있으면 가벼운 모델, 설명만 있으면 보통 모델). 작업 설명서는 [implementer-brief.md](references/implementer-brief.md) 형식의 파일(`.git/jipda/brief-T<n>.md`)로 줘요. 임시 파일을 `.git/` 안에 두는 건 실수로 커밋되지 않게 하려는 거예요.
 4. **상태 보고를 받아요.** 구현자는 넷 중 하나로 답해요.
    - `완료`: 시험까지 통과
    - `걱정 있음`: 했지만 맞는지 의심되는 곳이 있음(어디인지 적음)
    - `막힘`: 못 함(이유)
    - `맥락 필요`: 정보가 모자람(무엇이)
    막힘·맥락 필요면 메인이 답하고 같은 구현자를 이어서 써요. 메인이 직접 고치지 않아요(맥락이 섞이고 검토를 건너뛰게 돼요).
-5. **작업마다 검토해요.** `mkdir -p .git/jipda && git diff <시작커밋>..HEAD > .git/jipda/review-T<n>.diff`로 diff를 파일로 만들고, 검토자 하위 에이전트(sonnet 이상, [task-reviewer.md](references/task-reviewer.md))에게 설명서·보고·diff 경로를 줘요. 판정은 두 가지 모두 받아요: 명세대로인가, 품질은 괜찮은가. 결과는 [review-layers.md](../../rules/review-layers.md)의 3층으로 처리해요.
-6. **수정은 3회까지.** 1층 지적이 남으면 구현자에게 돌려보내요. 3회를 넘으면 멈추고 남은 지적을 "보류 + 이유"로 기록한 뒤 사용자에게 한 번에 보고해요. 4회째부터는 한 등급 위 모델(sonnet → opus)로 바꿔요.
-7. **직접 한 작업은 끝에 반드시 한 번 검토해요.** 작은 계획이어도 건너뛰지 않고 `check`로 미루지 않아요. `git diff <시작커밋>..HEAD > .git/jipda/review-all.diff`로 전체 diff를 만들어 검토자 하위 에이전트 한 명(sonnet, [task-reviewer.md](references/task-reviewer.md))에게 명세·계획·diff 경로를 줘요. 1층 지적은 메인이 고치고, 수정은 3회까지예요.
+5. **작업마다 검토해요.** `mkdir -p .git/jipda && git diff <시작커밋>..HEAD > .git/jipda/review-T<n>.diff`로 diff를 파일로 만들고, 검토자 하위 에이전트(보통 모델 이상, [task-reviewer.md](references/task-reviewer.md))에게 설명서·보고·diff 경로를 줘요. 판정은 두 가지 모두 받아요: 명세대로인가, 품질은 괜찮은가. 결과는 [review-layers.md](../../rules/review-layers.md)의 3층으로 처리해요.
+6. **수정은 3회까지.** 1층 지적이 남으면 구현자에게 돌려보내요. 3회를 넘으면 멈추고 남은 지적을 "보류 + 이유"로 기록한 뒤 사용자에게 한 번에 보고해요. 4회째부터는 한 등급 위 모델로 바꿔요.
+7. **직접 한 작업은 끝에 반드시 한 번 검토해요.** 작은 계획이어도 건너뛰지 않고 `check`로 미루지 않아요. `git diff <시작커밋>..HEAD > .git/jipda/review-all.diff`로 전체 diff를 만들어 검토자 하위 에이전트 한 명(보통 모델, [task-reviewer.md](references/task-reviewer.md))에게 명세·계획·diff 경로를 줘요. 1층 지적은 메인이 고치고, 수정은 3회까지예요.
 8. 작업마다 완료 줄을 기록해요. 모두 끝나면 `check`를 한 줄로 안내해요.
 
 ## 하지 않는 것

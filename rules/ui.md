@@ -25,4 +25,4 @@
 
 ## 화면 종류
 - 대시보드·도구(기본): 훑어보기 쉬움과 일관성, 실제 사용 장면이 표현보다 우선이에요.
-- 랜딩·소개: `design --landing`이 taste-skill에 맡겨요.
+- 랜딩·소개: `design --landing`이 [landing.md](../skills/design/references/landing.md)를 따라요.

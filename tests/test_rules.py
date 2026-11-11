@@ -19,7 +19,7 @@ def test_always_block_markers():
     assert t.count("<!-- jipda:always:start -->") == 1
     assert t.count("<!-- jipda:always:end -->") == 1
     inner = t.split("<!-- jipda:always:start -->")[1].split("<!-- jipda:always:end -->")[0]
-    assert len([line for line in inner.splitlines() if line.strip()]) == 7
+    assert len([line for line in inner.splitlines() if line.strip()]) == 6
 
 
 def test_review_layers_sections():
@@ -36,8 +36,8 @@ def test_ui_numbered():
 
 def test_models_fallback_phrases():
     t = text("models")
-    assert "Codex 사용 불가, Claude로 검증" in t
-    assert "DeepSeek 사용 불가, Claude로 조사" in t
+    assert "외부 검사 사용 불가, 내부 검증으로 대체" in t
+    assert "외부 검색 사용 불가, 내부 조사로 대체" in t
 
 
 def test_no_duplicate_rule_lines():

@@ -19,7 +19,7 @@
 |---|---|
 | 끝까지 갔나 | O/X |
 | 토큰 | `python3 scripts/session_tokens.py <세션 jsonl>` (입력, 출력, 캐시 읽기, 캐시 쓰기 따로) |
-| 외부 호출 | `evals/results/ext-calls.jsonl`의 호출 수, 걸린 시간 |
+| 외부 호출 | `~/.config/jipda/ext-calls.jsonl`의 호출 수, 걸린 시간 |
 | 되물은 횟수 | 사용자에게 질문한 메시지 수 |
 | 남은 실수 | 끝난 뒤 완료 조건을 직접 확인해 실패한 개수 |
 

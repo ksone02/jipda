@@ -9,7 +9,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_SECTIONS = ["목적", "입력", "산출물", "실행 순서", "하지 않는 것"]
 MAX_WORDS = 1500
-EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs"]
+EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs", "setup"]
 
 
 def skill_dirs() -> list[Path]:
@@ -85,7 +85,7 @@ def test_subagent_model_named(d):
     _, text = read(d)
     for para in re.split(r"\n\s*\n", text):
         if "하위 에이전트" in para:
-            assert re.search(r"haiku|sonnet|opus|rules/models\.md", para), para[:80]
+            assert re.search(r"가벼운|보통|강한|rules/models\.md", para), para[:80]
 
 
 @pytest.mark.parametrize("d", SKILLS, ids=ids)
@@ -119,7 +119,7 @@ def test_plugin_manifest():
 
 
 def test_check_fallback_phrase():
-    assert "Codex 사용 불가, Claude로 검증" in body("check")
+    assert "외부 검사 사용 불가, 내부 검증으로 대체" in body("check")
 
 
 def test_build_statuses():
@@ -151,7 +151,7 @@ def test_experiment_tsv_header():
 
 
 def test_research_fallback_phrase():
-    assert "DeepSeek 사용 불가, Claude로 조사" in body("research")
+    assert "외부 검색 사용 불가, 내부 조사로 대체" in body("research")
 
 
 def test_design_viewports():
@@ -160,7 +160,7 @@ def test_design_viewports():
 
 
 def test_design_landing_delegates():
-    assert "design-taste-frontend" in body("design")
+    assert "references/landing.md" in body("design") and "taste-skill:" not in body("design")
 
 
 def test_unslop_calls_humanize():
@@ -195,7 +195,7 @@ def test_ext_calls_have_bash_timeout():
 
 def test_review_uses_skill_relative_ext():
     b = body("review")
-    assert "`ext.py codex`" in b and "Codex 사용 불가, Claude로 검증" in b
+    assert "`ext.py checker`" in b and "외부 검사 사용 불가, 내부 검증으로 대체" in b
 
 
 def test_scratch_inside_git_dir():
@@ -216,3 +216,18 @@ def test_review_one_reviewer_by_default():
 def test_check_independent_only_when_big_or_risky():
     b = body("check")
     assert "크거나 위험할 때만" in b and "검사자: 직접 대조" in b and "git diff --numstat" in b
+
+
+def test_no_vendor_model_or_tool_names_in_skills():
+    for d in SKILLS:
+        if d.name == "setup":
+            continue
+        for f in d.rglob("*.md"):
+            low = f.read_text(encoding="utf-8").lower()
+            for word in ("haiku", "sonnet", "opus", "deepseek", "aside", "codex", "taste-skill", "playwright"):
+                assert word not in low, f"{f}: {word}"
+
+
+def test_setup_keeps_config_outside_repo():
+    b = body("setup")
+    assert "~/.config/jipda/config.json" in b and "agent-browser" in b
