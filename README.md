@@ -33,13 +33,13 @@ python3 scripts/always.py remove    # remove (text outside the block is untouche
 
 | Skill | What it does |
 |---|---|
-| `shape` | Turns a vague idea into a spec with done conditions, through questions |
+| `shape` | Turns a vague idea into a spec: a first draft, then planning and strategy tools you choose |
 | `plan` | Splits a spec into task units, riskiest first |
 | `build` | Implements a plan. Small plans directly; only large or risky tasks go to subagents |
 | `revise` | Applies change requests to existing work (behavior, structure, design), several at once, without heavy process |
 | `check` | Verifies done conditions by running them, then closes the work. Independent checks only for large or risky changes |
 | `review` | Expert-perspective review. One reviewer by default, several only for hard-to-reverse decisions (quant, web, data research) |
-| `research` | Research plan → wide scan → choose direction → deep read → one sourced file |
+| `research` | Research plan → wide scan → choose direction → deep read → one sourced file. `--competitive` for competitors and references |
 | `experiment` | Raises one metric through repeated experiments, logging and keeping or reverting each attempt |
 | `handoff` | Pause, resume, record decisions |
 | `guard` | Turns on or off a hook that asks before dangerous commands (off by default) |

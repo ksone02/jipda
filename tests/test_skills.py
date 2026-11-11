@@ -250,3 +250,20 @@ def test_revise_stays_light():
     b = body("revise")
     assert all(s in b for s in ("expected / actual now", "Ask about ambiguous items only", "search for what uses", "Run the full test command once", "one fact the change is safe because of", "unproven"))
     assert "subagent" not in b.lower()
+
+
+def test_shape_toolkit_chosen_with_user():
+    b = body("shape")
+    assert "Show a draft first" in b and "The user picks" in b and "at most 3 tools" in b
+    refs = ROOT / "skills/shape/references"
+    for name in ("toolkit", "framing", "strategy", "product", "market", "creative", "decide"):
+        assert (refs / f"{name}.md").exists(), name
+    t = (refs / "toolkit.md").read_text(encoding="utf-8")
+    for target in re.findall(r"\]\(([^)]+)\)", t):
+        assert (refs / target).exists(), target
+
+
+def test_research_competitive_mode():
+    assert "--competitive" in body("research")
+    t = (ROOT / "skills/research/references/competitive.md").read_text(encoding="utf-8")
+    assert "Choose the analysis with the user" in t and "public information only" in t
