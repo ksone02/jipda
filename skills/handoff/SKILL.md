@@ -1,37 +1,39 @@
 ---
 name: handoff
-description: 일을 안전하게 멈추고(pause), 다음 세션에서 이어 가고(resume), 사용자가 정한 결정을 기록해요(decide). "여기까지 정리해 줘", "이어서 하자", "이 결정 기록해 줘"라고 할 때 써요. 세션 중간의 일반 진행 보고에는 쓰지 않아요.
+description: Pauses work safely, resumes it in a later session, and records user decisions. Use for "wrap up here", "let's continue", "record this decision", "여기까지 정리해 줘", "이어서 하자", "이 결정 기록해 줘". Do not use for ordinary progress reports mid-session.
 ---
 
 # handoff
 
-## 목적
-컨텍스트가 차거나 세션을 바꿀 때 하던 일과 결정이 사라지지 않게 해요. 이어 갈 때는 이전 세션의 "됐다"를 다시 확인해요.
+Reply and write documents in the user's language.
 
-## 입력
-- `pause`, `resume`, `decide <결정 내용>` 중 하나.
+## Purpose
+Keep work and decisions from vanishing when context fills up or sessions change. On resume, reconfirm the previous session's "done".
 
-## 산출물
-- 재개 메모 `docs/progress/HANDOFF.md`. 절은 이 순서예요: `## 목적`, `## 하던 일`, `## 확인된 것`, `## 현재 상태`, `## 다음 할 일`, `## 주요 파일`, `## 정한 결정`.
-- 결정 기록 `docs/decisions.md`. 줄 형식 `- YYYY-MM-DD | 결정 | 이유 | 대안`. 팀 공유 결정 문서가 있으면 그 파일에 써요.
+## Input
+- One of `pause`, `resume`, `decide <decision>`.
 
-## 실행 순서
+## Output
+- Resume note `docs/progress/HANDOFF.md`. Sections in this order: `## Goal`, `## In progress`, `## Verified`, `## Current state`, `## Next`, `## Key files`, `## Decisions`.
+- Decision log `docs/decisions.md`. Line format `- YYYY-MM-DD | decision | reason | alternatives`. If a team decision document exists, write there.
+
+## Steps
 **pause**
-1. 지금 하던 작은 단계를 끝내거나 되돌려요. 새 일은 시작하지 않고, 맡겨 둔 작업(백그라운드 명령, 돌고 있는 에이전트)은 멈춰요.
-2. 되돌리기 어려운 일(푸시, PR)은 하지 않아요.
-3. 고친 파일을 남겨요. 기본은 `wip:` 커밋 하나. 프로젝트 `CLAUDE.md`에 "커밋 금지/커밋하지 마" 같은 문구가 있으면 대신 `git diff > docs/progress/wip.patch`.
-4. 재개 메모를 써요. "확인된 것"에는 실제로 돌린 명령과 결과만 적어요.
+1. Finish or revert the current small step. Do not start new work; stop delegated work (background commands, running agents).
+2. Do nothing hard to reverse (push, PR).
+3. Preserve changed files. Default is one `wip:` commit. If the project's `CLAUDE.md` forbids commits, use `git diff > docs/progress/wip.patch` instead.
+4. Write the resume note. Under "Verified", list only commands actually run and their results.
 
 **resume**
-1. 재개 메모와 진행 기록(`docs/progress/`)을 읽어요.
-2. `git log`, `git status`, `git diff`로 실제 상태를 맞춰 봐요. 메모와 다르면 git을 믿어요.
-3. 메모가 "확인된 것"이라고 한 것을 실제 결과물로 다시 확인해요(시험 다시 돌리기).
-4. 이어 갈 지점과 남은 일을 한 줄로 말하고 이어 가요.
+1. Read the resume note and progress logs (`docs/progress/`).
+2. Compare against reality with `git log`, `git status`, `git diff`. If they differ from the note, trust git.
+3. Reconfirm what the note calls verified against real output (rerun tests).
+4. State where you are continuing and what remains in one line, then continue.
 
 **decide**
-1. 사용자가 정한 결정 하나를 결정 기록에 한 줄로 남겨요. 이유와 고려했던 대안도 같이.
+1. Record one user decision as one line in the decision log, with the reason and alternatives considered.
 
-## 하지 않는 것
-- 사용자가 정하지 않은 것을 결정으로 기록하기.
-- 확인하지 않은 일을 "확인된 것"에 쓰기.
-- 멈추려고 푸시하거나 브랜치를 지우기.
+## Do not
+- Record as a decision anything the user did not decide.
+- Write unverified work under "Verified".
+- Push or delete branches in order to stop.

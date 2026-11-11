@@ -24,7 +24,7 @@ def test_always_block_markers():
 
 def test_review_layers_sections():
     t = text("review-layers")
-    for head in ("## 1층 하드", "## 2층 권장", "## 3층 자유"):
+    for head in ("## Tier 1: hard", "## Tier 2: recommended", "## Tier 3: free"):
         assert head in t
 
 
@@ -36,8 +36,8 @@ def test_ui_numbered():
 
 def test_models_fallback_phrases():
     t = text("models")
-    assert "외부 검사 사용 불가, 내부 검증으로 대체" in t
-    assert "외부 검색 사용 불가, 내부 조사로 대체" in t
+    assert "External checker unavailable, verified internally" in t
+    assert "External searcher unavailable, researched internally" in t
 
 
 def test_no_duplicate_rule_lines():

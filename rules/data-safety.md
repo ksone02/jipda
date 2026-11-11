@@ -1,9 +1,9 @@
-# 외부 전송 규칙
+# External send rules
 
-외부 도구를 켠 경우, 질문, 코드, 명세, 공개 문서만 보내요.
+If external tools are enabled, send only questions, code, specs, and public documents.
 
-- 보내는 파일은 반드시 `scripts/safe_files.py`(또는 그걸 쓰는 `scripts/ext.py`)를 거쳐요. 빠지는 것: `data/`·`raw/`·`output(s)/`·`results/` 아래 전부, `.env*`, 데이터 확장자(csv, parquet, xlsx 등), 1MB 넘는 파일, 바이너리, 심볼릭 링크, 키처럼 보이는 문자열이 든 파일.
-- 외부 도구는 걸러 낸 파일의 사본만 든 임시 폴더에서 돌아요. 저장소의 나머지 파일은 보이지 않아요.
-- 프로젝트 `CLAUDE.md`·`AGENTS.md`나 메모리에 "외부 AI 금지", "업로드 금지" 같은 문구가 있으면 외부 모델을 아예 쓰지 않고 Claude로 넘어가요.
-- 검색 질문에는 데이터 값(행, 원본 수치, 개인 정보)을 넣지 않아요. 개념과 방법만 물어요.
-- 뺀 파일이 있으면 결과에 한 줄로 적어요. 매번 사용자에게 묻지 않아요.
+- Files sent must go through `scripts/safe_files.py` (or `scripts/ext.py`, which uses it). Excluded: everything under `data/`, `raw/`, `output(s)/`, `results/`, `.env*`, data extensions (csv, parquet, xlsx, etc.), files over 1MB, binaries, symlinks, files containing key-like strings.
+- External tools run in a temp folder holding only copies of the filtered files. The rest of the repository is invisible to them.
+- If the project's `CLAUDE.md`, `AGENTS.md`, or memory says "no external AI" or "no upload", do not use external models at all and go internal.
+- Do not put data values (rows, raw figures, personal information) in search queries. Ask only about concepts and methods.
+- If files were excluded, say so in one line in the result. Do not ask the user each time.

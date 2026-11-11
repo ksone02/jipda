@@ -1,39 +1,41 @@
 ---
 name: diagnose
-description: 원인을 모르는 버그와 성능 저하를 진단해요. 고치기 전에 이 버그에서만 실패하는 확인 장치부터 만들어요. "에러 나", "왜 안 되지", "갑자기 느려졌어"처럼 원인을 찾아야 할 때 써요. 원인이 뻔한 오타나 한 줄 수정에는 쓰지 않아요.
+description: Diagnoses bugs and performance regressions with unknown causes. Builds a check that fails only on this bug before fixing anything. Use when a cause must be found ("there's an error", "why isn't this working", "it got slow", "에러 나", "왜 안 되지", "갑자기 느려졌어"). Do not use for obvious typos or one-line fixes.
 ---
 
 # diagnose
 
-## 목적
-추측으로 여러 번 고치다 시간을 버리는 일을 막아요. 빨갛게 실패하는 확인 장치가 생기면 원인은 거의 찾은 거예요.
+Reply and write documents in the user's language.
 
-## 입력
-- 증상(에러 문구, 재현 방법, 언제부터인지).
+## Purpose
+Stop burning time on repeated guess-and-fix. Once you have a check that fails red, the cause is almost found.
 
-## 산출물
-- 확인 장치(실패하는 시험이나 스크립트), 원인 한 문단(파일:줄 근거), 최소 수정, 수정 뒤 장치가 통과한 결과.
+## Input
+- The symptom (error text, how to reproduce, since when).
 
-## 실행 순서
-1. **확인 장치부터 만들어요.** 이 버그에서만 실패해야 해요. 쉬운 것부터 시도해요.
-   1. 그 지점을 부르는 실패하는 시험
-   2. 실행 중인 서버에 보내는 curl 스크립트
-   3. 고정 입력으로 CLI를 돌려 정상 출력과 비교
-   4. 화면을 조작하는 브라우저 스크립트
-   5. 실제 요청·이벤트 기록을 저장해 다시 흘려보내기
-   6. 시스템 일부만 띄운 임시 장치
-   7. 무작위 입력 1,000개로 가끔 틀리는 경우 찾기
-   8. 잘 되던 커밋과 안 되는 커밋 사이 `git bisect run`
-   9. 옛 버전과 새 버전에 같은 입력을 넣어 비교
-   10. 사람이 눌러야만 하면, 누를 순서를 안내하는 스크립트
-2. **장치를 다듬어요.** 더 빠르게(필요 없는 준비 빼기), 더 날카롭게(증상 자체를 확인), 더 결정적으로(시간·시드 고정).
-3. **가설을 세워요.** 증상이 처음 잘못된 지점까지 거슬러 올라가요([techniques.md](references/techniques.md)의 원인 역추적).
-4. **최소 수정 하나만 해요.** 장치가 통과하고 기존 시험이 다 통과해야 고친 거예요.
-5. **같은 전제로 두 번 실패하면** 그 전제를 적고 직접 검증해요([core.md](../../rules/core.md)).
-6. 장치를 시험으로 남기고 보고해요.
+## Output
+- A check (failing test or script), one paragraph on the cause (file:line evidence), a minimal fix, and the check passing after the fix.
 
-## 하지 않는 것
-- 관련 없는 정리나 리팩터링.
-- 장치 없이 고치고 "고쳐진 것 같다"고 하기.
-- 증상만 가리는 가드를 원인 수정이라고 부르기.
-- 비밀값을 출력에 그대로 남기기(`<REDACTED>`로 바꿔요).
+## Steps
+1. **Build the check first.** It must fail only on this bug. Try the easy ones first.
+   1. A failing test calling that spot
+   2. A curl script against the running server
+   3. Run the CLI with fixed input and diff against good output
+   4. A browser script driving the screen
+   5. Save real requests or events and replay them
+   6. A temporary rig running part of the system
+   7. 1,000 random inputs to catch intermittent errors
+   8. `git bisect run` between a good and a bad commit
+   9. Same input to old and new versions, compared
+   10. If only a human can trigger it, a script guiding the clicks
+2. **Refine the check.** Faster (drop needless setup), sharper (check the symptom itself), more deterministic (fix time and seeds).
+3. **Form a hypothesis.** Trace back to where the symptom first goes wrong ([techniques.md](references/techniques.md), root-cause tracing).
+4. **Make one minimal fix.** It is fixed only when the check and all existing tests pass.
+5. **After two failures on the same premise,** write the premise down and verify it directly ([core.md](../../rules/core.md)).
+6. Keep the check as a test and report.
+
+## Do not
+- Do unrelated cleanup or refactoring.
+- Fix without a check and say "seems fixed".
+- Call a guard that hides the symptom a root-cause fix.
+- Leave secrets in output (replace with `<REDACTED>`).

@@ -1,48 +1,50 @@
 ---
 name: docs
-description: 코드를 읽고 사실을 확인해 저장소 문서를 쓰거나, 문서가 코드와 어긋난 곳을 찾아 고쳐요. "문서화해 줘", "README 써 줘", "문서 최신화해 줘"라고 할 때 써요. claude.ai 문서나 노션을 콕 집어 말하면 쓰지 않아요.
+description: Reads the code to confirm facts, then writes repository docs or fixes where docs drift from code. Use for "document this", "write a README", "update the docs", "문서화해 줘", "README 써 줘", "문서 최신화해 줘". Do not use when the user names claude.ai docs or Notion.
 ---
 
 # docs
 
-## 목적
-읽는 사람이 바로 쓸 수 있고 코드와 어긋나지 않는 문서를 저장소에 남겨요. 쓰기와 점검(`--audit`) 두 가지로 돌아요.
+Reply and write documents in the user's language, or match the repository's existing documentation language.
 
-## 입력
-- 쓰기: 기능, 모듈, 또는 프로젝트. 없으면 무엇을 문서로 남길지 한 번 물어요.
-- 점검: `--audit`와 기준 브랜치. 없으면 저장소의 기본 브랜치와 비교해요.
+## Purpose
+Leave docs in the repo that readers can use right away and that do not drift from code. Runs in two modes: write and audit (`--audit`).
 
-## 산출물
-- 쓰기: 기존 문서 수정 또는 `docs/`의 Markdown 파일. 기존 문서 폴더나 형식이 있으면 그걸 따라요.
-- 점검: 고친 목록, 물어볼 목록, 빠진 문서 목록.
+## Input
+- Write: a feature, module, or project. If absent, ask once what to document.
+- Audit: `--audit` and a base branch. If absent, compare with the default branch.
 
-## 실행 순서
+## Output
+- Write: edits to existing docs or Markdown files in `docs/`. Follow existing folders and formats.
+- Audit: fixed list, question list, missing-docs list.
 
-### 쓰기
-1. **전체를 먼저 읽어요.** README, CLAUDE.md, 설정 파일, 대상 구현 전체, 테스트, 대상을 쓰는 코드까지 읽어요. 시그니처만 보고 쓰지 않아요.
-2. **문서 종류를 골라요.** 대상에 필요한 것만 써요. 5개가 넘으면 목록을 먼저 확인받아요.
-   - 참조: 명령, 옵션, 기본값, 제약을 빠짐없이. 항상 코드에서 옮겨요. 어휘의 기준이 되니 먼저 써요.
-   - 방법: 특정 일을 하는 단계, 준비물, 확인법, 흔한 실패.
-   - 설명: 왜 이렇게 만들었는지. 문제부터 쓰고 포기한 것을 밝혀요. 이유를 찾을 수 없으면 지어내지 말고 비워 둬요.
-   - 튜토리얼: 처음 쓰는 사람이 따라 하면 돌아가는 예제 하나.
-3. **쓰고, 글은 규칙대로 다듬어요.** [writing-ko.md](../../rules/writing-ko.md)나 [writing-en.md](../../rules/writing-en.md)를 따라요.
-4. **돌려 보고 끝내요.** 문서의 명령과 예제를 실제로 실행해 결과를 맞춰요. 실행할 수 없는 건 그 자리에 `실행 안 해 봄`이라고 적어요. 경로와 링크가 있는지도 확인해요.
+## Steps
 
-### 점검 (`--audit`)
-1. **바뀐 것을 모아요.** `git diff <기준>...HEAD`에서 새로 생기거나 이름이 바뀌거나 사라진 명령, 옵션, 환경 변수, API, 스킬을 뽑아요.
-2. **문서와 대조해요.** 표로 적어요.
+### Write
+1. **Read everything first.** README, CLAUDE.md, config files, the full implementation, tests, and code using the target. Do not write from signatures alone.
+2. **Pick doc types.** Write only what the target needs. Confirm the list first if there are more than 5.
+   - Reference: every command, option, default, and constraint. Always taken from code. Write this first, since it sets the vocabulary.
+   - How-to: steps, prerequisites, verification, and common failures for one job.
+   - Explanation: why it is built this way. Start from the problem and state what was given up. If the reason cannot be found, leave it blank rather than inventing one.
+   - Tutorial: one example a newcomer can follow to something working.
+3. **Write, then edit by the rules.** Follow [writing-ko.md](../../rules/writing-ko.md) or [writing-en.md](../../rules/writing-en.md).
+4. **Run it before finishing.** Actually run the commands and examples and match the results. Mark anything you cannot run with `not run` in place. Check that paths and links exist.
+
+### Audit (`--audit`)
+1. **Collect what changed.** From `git diff <base>...HEAD`, extract new, renamed, or removed commands, options, env vars, APIs, and skills.
+2. **Compare with docs.** Table it.
 
    ```
-   항목 | 코드 위치(파일:줄) | 문서 위치 | 상태(맞음·틀림·없음)
+   Item | Code location (file:line) | Doc location | Status (ok/wrong/missing)
    ```
-3. **사실 오류는 바로 고쳐요.** 경로, 명령, 숫자, 옵션 이름, 깨진 링크처럼 코드로 답이 정해지는 것만요.
-4. **나머지는 번호를 붙여 한 번에 물어요.** 설명 방향, 내용 삭제, 큰 재작성이에요. 답이 없으면 고치지 않아요.
-5. **빠진 문서는 목록으로만 보고해요.** 새로 쓰지 않아요. 필요하면 쓰기 모드를 한 줄로 안내해요.
+3. **Fix factual errors right away.** Only things code settles: paths, commands, numbers, option names, broken links.
+4. **Number the rest and ask together.** Explanation direction, content removal, large rewrites. Without an answer, do not change them.
+5. **Report missing docs as a list only.** Do not write them. Name write mode in one line if needed.
 
-## 하지 않는 것
-- 커밋, 푸시, 버전 올리기.
-- 변경 기록(CHANGELOG)의 기존 내용 지우거나 새로 쓰기.
-- 결정 기록(`handoff decide`)이나 명세·계획 검토(`review`).
-- 코드에서 확인하지 못한 동작이나 이유를 있는 것처럼 쓰기.
-- 안 돌려 본 예제를 돌려 본 것처럼 두기.
-- 키, 개인 정보, 원본 데이터 값을 문서에 옮기기.
+## Do not
+- Commit, push, or bump versions.
+- Delete or rewrite existing CHANGELOG entries.
+- Do decision records (`handoff decide`) or spec and plan review (`review`).
+- Present behavior or reasons you could not confirm in code as fact.
+- Leave unrun examples looking run.
+- Copy keys, personal information, or raw data values into docs.

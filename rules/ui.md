@@ -1,28 +1,28 @@
-# UI 규칙
+# UI rules
 
-## 1층 (어기면 완료 아님, 직접 고침)
-- **UI-1** 왼쪽에 색 테두리를 두른 강조 카드(border-left + 옅은 배경)를 쓰지 않아요.
-- **UI-2** 반짝이(sparkle) 아이콘, 이모지 아이콘, 장식용 그라데이션을 쓰지 않아요.
-- **UI-3** 화면에 내부 이름(모델명, 데이터 출처 약어, "엔진" 같은 구현 용어)을 드러내지 않아요.
-- **UI-4** 지어낸 수치, 후기, 로고 벽을 넣지 않아요. 없는 자료는 비워 둬요.
-- **UI-5** 모든 버튼·링크·입력에 키보드 포커스 표시가 바로 보여요.
-- **UI-6** 1440, 1366, 390 폭 어디서도 가로 스크롤이 생기지 않아요.
-- **UI-7** 색과 글꼴은 `:root` 토큰으로만 정해요. 화면 코드에 색 값을 직접 쓰지 않아요.
-- **UI-8** 본문 글자는 11px 미만이 없고, 본문 대비는 4.5:1 이상이에요.
+## Tier 1 (a violation means not done; fix directly)
+- **UI-1** No accent cards with a colored left border (border-left + faint background).
+- **UI-2** No sparkle icons, emoji icons, or decorative gradients.
+- **UI-3** Do not expose internal names on screen (model names, data source abbreviations, implementation terms like "engine").
+- **UI-4** No invented figures, testimonials, or logo walls. Leave missing material empty.
+- **UI-5** Every button, link, and input shows keyboard focus immediately.
+- **UI-6** No horizontal scroll at 1440, 1366, or 390 widths.
+- **UI-7** Colors and fonts come only from `:root` tokens. No raw color values in UI code.
+- **UI-8** No body text under 11px; body contrast at least 4.5:1.
 
-## 2층 (모아서 한 번에 물음)
-- **UI-R1** 대비: 큰 글자 3:1 이상, 색 배경 위 보조 글자는 회색 대신 그 색에서 뽑아요.
-- **UI-R2** 그림자: 오프셋과 흐림이 있어요. 오프셋 없는 색 번짐은 장식이에요.
-- **UI-R3** 간격: 묶음 안은 좁게, 묶음 사이는 넓게. 제목 위 여백이 아래보다 커요.
-- **UI-R4** 글자: 본문 한 줄 65~75자, 크기·굵기 단계가 분명해요.
-- **UI-R5** 상태: 마우스 올림, 비활성, 로딩, 에러, 빈 화면이 다 있어요.
-- **UI-R6** 브라우저 기본 요소: 선택 영역, 스크롤바, 포커스 링, 표 숫자(tabular)를 테마에 맞춰요.
-- **UI-R7** 문구: 버튼은 눌렀을 때 일어나는 일, 에러는 원인과 다음 행동을 말해요(`writing-ko.md`).
-- **UI-R8** 요구사항: 명세의 요구가 화면에서 몇 초 안에 찾아져요.
+## Tier 2 (asked together)
+- **UI-R1** Contrast: large text at least 3:1; secondary text on colored backgrounds is drawn from that color, not gray.
+- **UI-R2** Shadows have offset and blur. Colored glow with no offset is decoration.
+- **UI-R3** Spacing: tight within groups, wide between. More space above a heading than below.
+- **UI-R4** Type: 65-75 characters per body line, clear size and weight steps.
+- **UI-R5** States: hover, disabled, loading, error, and empty all exist.
+- **UI-R6** Browser defaults: selection, scrollbars, focus ring, and tabular numbers match the theme.
+- **UI-R7** Copy: buttons say what happens; errors give cause and next step.
+- **UI-R8** Requirements: each spec requirement can be found on screen within seconds.
 
-## 빼기만 하지 않기
-장식을 뺀 자리는 실질로 채워요. 큰 글자, 넓은 색 면, 실제 내용, 실제 자료. 장식만 빼면 화면이 빈약해 보여요.
+## Do not only subtract
+Fill the space left by removed decoration with substance: large type, broad color fields, real content, real data. Removing decoration alone makes a screen look thin.
 
-## 화면 종류
-- 대시보드·도구(기본): 훑어보기 쉬움과 일관성, 실제 사용 장면이 표현보다 우선이에요.
-- 랜딩·소개: `design --landing`이 [landing.md](../skills/design/references/landing.md)를 따라요.
+## Screen types
+- Dashboards and tools (default): scanning, consistency, and real usage come before expression.
+- Landing and intro: `design --landing` follows [landing.md](../skills/design/references/landing.md).

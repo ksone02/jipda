@@ -1,15 +1,15 @@
-# 조사 계획 형식
+# Research plan format
 
 ```
-결정: <이 조사로 무엇을 정하나>
-이미 아는 것: <2~3줄>
-결정을 바꿀 발견: <이게 나오면 A, 저게 나오면 B>
-각도:
-1. <기본 질문>
-2. <동의어·다른 이름>
-3. <옆 분야에서 같은 문제>
-4. <영어/한국어 반대쪽 언어>
-5. <반대 입장·실패 사례>
-6. <원문 출처 종류: 논문, 공식 문서, 저장소>
-멈추는 조건: <새 출처에서 새 내용이 안 나올 때 / 결정에 충분할 때>
+Decision: <what this research decides>
+Already known: <2-3 lines>
+Findings that change the decision: <if this, A; if that, B>
+Angles:
+1. <the basic question>
+2. <synonyms and other names>
+3. <the same problem in an adjacent field>
+4. <the other language>
+5. <opposing views and failures>
+6. <primary source types: papers, official docs, repositories>
+Stop when: <new sources add nothing / enough for the decision>
 ```

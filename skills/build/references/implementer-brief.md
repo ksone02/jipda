@@ -1,26 +1,26 @@
-# 구현자 작업 설명서 형식
+# Implementer brief format
 
-파일 하나로 만들어 경로를 넘겨요(`.git/jipda/brief-T<n>.md`, `.git` 안이라 커밋되지 않아요).
+Write one file and pass its path (`.git/jipda/brief-T<n>.md`; inside `.git` so it is never committed).
 
 ```
-# T<n>: <작업 이름>
-계획: <계획 경로>  명세: <명세 경로>
-전체 제약: <계획의 전체 제약 그대로 복사>
+# T<n>: <task name>
+Plan: <plan path>  Spec: <spec path>
+Global constraints: <copied verbatim from the plan>
 
-## 할 일
-<계획의 해당 작업 전문>
+## Task
+<the plan's full task text>
 
-## 다른 작업과 주고받는 것
-<앞 작업이 만든 이름·형식, 이 작업이 만들어야 하는 이름·형식>
+## Exchanged with other tasks
+<names and formats earlier tasks made; names and formats this task must make>
 
-## 규칙
-- 시험을 먼저 쓰고 실패를 확인한 뒤 구현해요.
-- 계획에 없는 파일을 나누거나 기능을 더하지 않아요. 필요해 보이면 `걱정 있음`으로 보고해요.
-- 끝나면 시험 명령과 결과를 붙여요.
+## Rules
+- Write the test first and see it fail before implementing.
+- Do not split files or add features outside the plan. If it seems needed, report `concerned`.
+- When finished, attach the test command and its result.
 
-## 보고 형식
-상태: 완료 | 걱정 있음 | 막힘 | 맥락 필요
-바꾼 파일:
-시험 명령과 결과:
-걱정·막힌 곳(있으면):
+## Report format
+Status: done | concerned | blocked | needs context
+Files changed:
+Test command and result:
+Concerns or blockers (if any):
 ```

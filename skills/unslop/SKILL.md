@@ -1,28 +1,30 @@
 ---
 name: unslop
-description: 글의 AI 티를 지워요. 한국어는 우리 규칙으로 고친 뒤 긴 글은 humanize-korean으로 마무리하고, 영어는 영어 규칙으로 고쳐요. "AI 티 빼 줘", "사람이 쓴 것처럼 고쳐 줘"라고 할 때 써요. 새 글을 처음부터 쓰거나 내용을 고치는 일에는 쓰지 않아요.
+description: Removes the AI feel from prose. Korean is fixed by the Korean rules, with long text finished by humanize-korean when installed; English by the English rules. Use for "remove the AI feel", "make this sound human", "AI 티 빼 줘", "사람이 쓴 것처럼 고쳐 줘". Do not use for writing new text or changing content.
 ---
 
 # unslop
 
-## 목적
-README, 보고서, 문서, 답변 초안을 사람이 쓴 것처럼 읽히게 해요. 뜻은 그대로 두고 표현만 고쳐요.
+Reply in the user's language and keep the text in its original language.
 
-## 입력
-- 파일 경로 또는 붙여 넣은 글. 글의 자리(Notion, README, 화면, 답변)를 모르면 내용으로 추정하고 한 줄로 적어요.
+## Purpose
+Make READMEs, reports, docs, and reply drafts read as human-written. Keep the meaning; change only the expression.
 
-## 산출물
-- 고친 글(파일이면 그 파일 수정), 바꾼 곳 요약 3~5줄.
+## Input
+- A file path or pasted text. If its place (Notion, README, screen, reply) is unknown, infer from content and state it in one line.
 
-## 실행 순서
-1. **언어와 자리를 정해요.**
-2. **규칙대로 고쳐요.**
-   - 한국어: [writing-ko.md](../../rules/writing-ko.md). 자리별 말투, 쉬운 말, 숫자의 뜻·단위.
-   - 영어: [writing-en.md](../../rules/writing-en.md). 구조부터(꾸민 강조, 정해진 리듬, 과장, 채팅 흔적, 독자가 아는 설명).
-3. **한국어 긴 글은 마무리해요.** 500자가 넘으면 Skill 도구로 `humanize-korean:humanize-korean`을 불러 마지막으로 다듬어요. 설치돼 있지 않으면 건너뛰고 그 사실을 한 줄로 적어요.
-4. **뜻이 그대로인지 대조해요.** 원문과 비교해 숫자, 고유명사, 인용, 링크, 코드, 주장이 하나도 빠지거나 바뀌지 않았는지 확인해요.
+## Output
+- The edited text (edit the file if given a file), and a 3-5 line summary of changes.
 
-## 하지 않는 것
-- 내용 보태기, 주장 바꾸기.
-- 원문에 없던 사실이나 상투구를 넣기.
-- 코드 블록, 인용, 숫자 고치기.
+## Steps
+1. **Decide language and place.**
+2. **Edit by the rules.**
+   - Korean: [writing-ko.md](../../rules/writing-ko.md). Tone by place, plain words, meaning and unit of numbers.
+   - English: [writing-en.md](../../rules/writing-en.md). Structure first (staged emphasis, set rhythms, inflation, chat residue, explaining what the reader knows).
+3. **Finish long Korean text.** Over 500 characters, call `humanize-korean:humanize-korean` with the Skill tool to polish last. If not installed, skip and say so in one line.
+4. **Confirm the meaning held.** Compare with the original: no number, proper noun, quote, link, code, or claim is lost or changed.
+
+## Do not
+- Add content or change claims.
+- Insert facts or stock phrases absent from the original.
+- Edit code blocks, quotes, or numbers.

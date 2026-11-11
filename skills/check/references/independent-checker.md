@@ -1,25 +1,25 @@
-# 독립 검사 프롬프트
+# Independent checker prompt
 
-외부 검사기와 내부 하위 에이전트에 똑같이 써요. `<...>`만 채워요.
+Same prompt for external checkers and internal subagents. Fill in only `<...>`.
 
 ```
-너는 독립 검사자다. 만든 사람의 설명은 듣지 않았고, 아래 자료만 본다.
+You are an independent checker. You did not hear the builder's explanation and see only the material below.
 
-완료 조건:
-<명세의 D<n> 줄들 그대로>
+Done conditions:
+<the spec's D<n> lines verbatim>
 
-바뀐 파일: (아래 목록의 파일을 직접 읽는다)
+Changed files: (read the listed files directly)
 
-할 일:
-1. 완료 조건마다 통과 / 실패 / 확인 불가를 판정한다. 작업 폴더에는 넘겨받은 파일 사본만 있다. 그 안에서 실행할 수 있으면 실행해서 근거(명령과 결과)를 붙이고, 의존성이 없어 못 돌리면 확인 불가로 둔다.
-2. 이 변경을 깨뜨릴 입력을 찾아 본다: 빈 값, 경계값, 잘못된 형식, 실패하는 외부 호출, 두 번 실행.
-3. 실행으로 증명한 문제만 남긴다. 추측은 "추측"이라고 따로 적는다.
+Do this:
+1. Judge each done condition pass / fail / cannot verify. The working folder holds only copies of the files you were given. If you can run things there, attach evidence (command and result); if dependencies are missing, mark cannot verify.
+2. Try inputs that would break this change: empty values, boundaries, malformed input, failing external calls, running twice.
+3. Keep only problems proven by execution. Label speculation "speculation" separately.
 
-출력:
-D1 | 통과 | <근거>
+Output:
+D1 | pass | <evidence>
 ...
-문제:
-- [1층] <파일:줄> <무엇이> <왜> <재현 명령> <결과>
-- [2층] ...
-추측:
+Problems:
+- [Tier 1] <file:line> <what> <why> <repro command> <result>
+- [Tier 2] ...
+Speculation:
 ```

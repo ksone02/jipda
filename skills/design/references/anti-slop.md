@@ -1,34 +1,34 @@
-# AI 티 나는 디자인 빼기
+# Removing the AI look
 
-모든 요소는 자리를 얻어야 해요. 넣을 수 있다고 넣지 않아요. 아래는 기본 선택일 때의 금지예요. 사용자가 요청했거나 브랜드에 이유가 있으면 써도 돼요.
+Every element must earn its place. Do not add something just because you can. These are bans on default choices; a user request or brand reason allows them.
 
-## 색
-- 무채색 70, 보조색 20, 강조색 10 정도로 나눠요. 강조색은 핵심 행동에만 써요.
-- 비슷한 색조의 아이콘, 박스, 카드, 테두리를 겹치지 않아요. 눈을 가늘게 떴을 때 한 덩어리로 보이면 실패예요.
-- 배경 차이로 나뉘면 테두리를 더하지 않아요.
+## Color
+- Aim for about 70 neutral, 20 secondary, 10 accent. Use the accent only for key actions.
+- Do not stack similar hues across icons, boxes, cards, and borders. If it looks like one blob when you squint, it failed.
+- If backgrounds already separate areas, add no border.
 
-## 아이콘과 이모지
-- 색 입힌 둥근 네모나 원 안에 아이콘을 넣지 않아요(아바타, 앱 아이콘은 예외).
-- 아이콘은 버튼, 내비게이션 같은 행동에 써요. 빼도 정보가 안 줄면 뺀 거예요.
-- 이모지를 제목, 카드, 기능 목록의 시각 요소로 쓰지 않아요.
-- 아이콘 묶음은 하나만 써요.
+## Icons and emoji
+- Do not put icons in tinted rounded squares or circles (avatars and app icons excepted).
+- Use icons for actions such as buttons and navigation. If removing one loses no information, it should go.
+- Do not use emoji as visual elements in headings, cards, or feature lists.
+- Use one icon set.
 
-## 글자
-- 기본은 깔끔한 산세리프예요. 히어로 제목에 Instrument Serif, Playfair Display, DM Serif Display를 습관처럼 쓰지 않아요.
-- 크기, 굵기, 색으로 위계를 만들어요.
+## Type
+- Default to a clean sans-serif. Do not habitually set hero headlines in Instrument Serif, Playfair Display, or DM Serif Display.
+- Build hierarchy with size, weight, and color.
 
-## 효과
-- 유리 효과(`backdrop-filter: blur`, 반투명 + 얇은 밝은 테두리)는 기본으로 쓰지 않아요.
-- 글자, 버튼에 그라데이션을 기본으로 넣지 않아요. 쓰더라도 이유가 있는 한 곳만이에요.
-- 버튼 색으로 번지는 그림자를 쓰지 않아요. 그림자는 옅은 무채색으로 높이만 나타내요.
+## Effects
+- No glass effect (`backdrop-filter: blur`, translucent with a thin light border) by default.
+- No gradients on text or buttons by default. If used, once and for a reason.
+- No shadows glowing in the button's color. Shadows are faint neutrals that only express elevation.
 
-## 구조
-- 카드 안에 카드를 넣지 않아요. 경계마다 "이 경계가 무엇을 이해시키나"에 답할 수 있어야 해요.
-- 둥근 모서리와 `border-left` 색 막대를 같이 쓰지 않아요.
-- 요청 없는 오른쪽 아래 떠 있는 채팅 버튼을 넣지 않아요.
-- 첫눈에 어디를 먼저 봐야 할지 알 수 있어야 해요.
+## Structure
+- No cards in cards. Every boundary must answer "what does this help the user understand?"
+- Do not combine rounded corners with a `border-left` color bar.
+- No unrequested floating chat button in the bottom right.
+- It must be obvious at a glance where to look first.
 
-## 움직임
-- 내용에 등장 애니메이션을 기본으로 넣지 않아요.
-- 움직임은 150~300ms로 짧게, 눌림이나 상태 변화 같은 의미가 있을 때만 써요.
-- 위로 뜨면서 커지는 식으로 변형을 겹치지 않아요.
+## Motion
+- No entrance animation on content by default.
+- Keep motion short (150-300ms) and only when it means something, such as press feedback or a state change.
+- Do not combine transforms such as rising and scaling together.

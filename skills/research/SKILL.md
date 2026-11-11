@@ -1,34 +1,36 @@
 ---
 name: research
-description: 조사 계획을 먼저 확인받고, 넓게 훑은 뒤 고른 방향만 원문까지 깊게 파서 출처 붙은 파일 하나로 내요. 결정에 근거가 필요하거나 레퍼런스 사이트를 살펴봐야 할 때, 사용자가 말하지 않아도 써요. "조사해 줘", "비교해 줘", "논문 찾아 줘"도 여기에 해당해요. 공식 문서 한 번 찾으면 답이 나오는 사실 확인에는 쓰지 않아요.
+description: Confirms a research plan first, scans widely, then digs into primary sources only for the chosen directions and delivers one sourced file. Use without being asked when a decision needs evidence or reference sites need studying ("research this", "compare these", "find papers", "조사해 줘", "비교해 줘", "논문 찾아 줘"). Do not use for a fact one official doc lookup answers.
 ---
 
 # research
 
-## 목적
-얕은 조사, 한 단어에 매몰된 조사, 토큰 낭비를 막아요. 조사는 결정을 내리기 위한 것이라 결정부터 적어요.
+Reply and write documents in the user's language.
 
-## 입력
-- 조사 질문, 이 조사로 내릴 결정(모르면 물어요, 한 번만).
+## Purpose
+Prevent shallow research, tunnel vision on one term, and wasted tokens. Research exists to make a decision, so write the decision first.
 
-## 산출물
-- `docs/research/<YYYY-MM-DD>-<주제>.md`
-  - `## 결정`: 이 조사로 내릴 결정
-  - `## 찾은 것`: 주장마다 출처 링크
-  - `## 확실한 것 / 추정`
-  - `## 함의`: 결정에 주는 영향
-- 채팅에는 요약 5줄 안팎만.
+## Input
+- The research question and the decision it serves (ask once if unknown).
 
-## 실행 순서
-1. **조사 계획을 써서 확인받아요**([brief-template.md](references/brief-template.md)). 결정, 이미 아는 것, 결정을 바꿀 발견, 각도 4~6개(동의어, 옆 분야, 한국어·영어, 반대 입장, 원문 출처 종류). 1분 안에 읽을 분량이에요.
-2. **넓게 훑어요.** 각도마다 프롬프트 파일을 만들어요. 외부 검색기를 설정했으면 `ext.py searcher`로 함께 돌리고(부르는 법은 [models.md](../../rules/models.md)의 "외부 모델 부르기"), `STATUS: off`면 3번으로 가요. 결과는 출처가 붙은 지도: 주요 갈래, 대표 출처, 빈 곳.
-3. **외부 검색기가 없거나 안 되면 내부로 해요.** 같은 각도를 가벼운 모델 하위 에이전트([searcher-prompt.md](references/searcher-prompt.md))에 맡겨요. `unavailable`이나 `banned`면 결과 첫 줄에 `외부 검색 사용 불가, 내부 조사로 대체 (<이유>)`를 써요([models.md](../../rules/models.md)).
-4. **방향을 고르게 해요.** 지도를 보여 주고 사용자가 파고들 갈래를 골라요.
-5. **깊게 봐요.** 2차 요약글이 아니라 원문: 논문 본문과 인용 추적, 공식 문서, 소스 코드, 저장소. 깊게 보기는 보통 모델 하위 에이전트나 메인이 해요. 새 출처를 봐도 새 내용이 안 나오면 멈춰요.
-6. **결과 파일을 써요.** 메인 대화에는 요약만.
+## Output
+- `docs/research/<YYYY-MM-DD>-<topic>.md`
+  - `## Decision`: the decision this research serves
+  - `## Findings`: a source link for every claim
+  - `## Certain / estimated`
+  - `## Implications`: effect on the decision
+- In chat, a summary of about 5 lines only.
 
-## 하지 않는 것
-- 실험 돌리기, 코드 고치기(실험은 `experiment`).
-- 검색 질문에 데이터 값이나 개인 정보 넣기([data-safety.md](../../rules/data-safety.md)).
-- 읽지 않은 링크를 출처로 쓰기.
-- 조사 계획 확인 없이 바로 깊게 들어가기.
+## Steps
+1. **Write a research plan and get confirmation** ([brief-template.md](references/brief-template.md)). Decision, what is already known, findings that would change the decision, 4-6 angles (synonyms, adjacent fields, other languages, opposing views, primary source types). Readable in a minute.
+2. **Scan widely.** Write a prompt file per angle. If an external searcher is configured, run them together with `ext.py searcher` (see "Calling external models" in [models.md](../../rules/models.md)); on `STATUS: off`, go to step 3. The result is a sourced map: main branches, representative sources, gaps.
+3. **If the external searcher is absent or fails, go internal.** Give the same angles to light model subagents ([searcher-prompt.md](references/searcher-prompt.md)). On `unavailable` or `banned`, write `External searcher unavailable, researched internally (<reason>)` as the first line of the result ([models.md](../../rules/models.md)).
+4. **Let the user choose direction.** Show the map; the user picks branches to pursue.
+5. **Go deep.** Primary sources, not summaries: paper bodies and citation chains, official docs, source code, repositories. A standard model subagent or the main session does this. Stop when new sources add nothing new.
+6. **Write the result file.** Only a summary goes to the main conversation.
+
+## Do not
+- Run experiments or change code (experiments are `experiment`).
+- Put data values or personal information in search queries ([data-safety.md](../../rules/data-safety.md)).
+- Cite links you did not read.
+- Go deep without a confirmed research plan.

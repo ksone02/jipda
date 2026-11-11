@@ -74,10 +74,10 @@ def _record(data: dict, size: str, shot: Path, viewports: list, fail: list) -> N
     data.update(size=size, screenshot=str(shot))
     viewports.append(data)
     if data["overflow_x"]:
-        fail.append(f"가로 넘침 @{size}")
+        fail.append(f"horizontal overflow @{size}")
     if data["min_font_px"] is not None and data["min_font_px"] < MIN_FONT_PX:
-        fail.append(f"글자 {MIN_FONT_PX}px 미만 @{size}")
-    fail.extend(f"대비 부족 {c['selector']} @{size}" for c in data["low_contrast"] if c["ratio"] < MIN_CONTRAST)
+        fail.append(f"text under {MIN_FONT_PX}px @{size}")
+    fail.extend(f"low contrast {c['selector']} @{size}" for c in data["low_contrast"] if c["ratio"] < MIN_CONTRAST)
 
 
 def _report(out: Path, viewports: list, fail: list) -> dict:

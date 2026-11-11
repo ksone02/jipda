@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-REQUIRED_SECTIONS = ["목적", "입력", "산출물", "실행 순서", "하지 않는 것"]
+REQUIRED_SECTIONS = ["Purpose", "Input", "Output", "Steps", "Do not"]
 MAX_WORDS = 1500
 EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs", "setup"]
 
@@ -84,24 +84,25 @@ def test_links_resolve(d):
 def test_subagent_model_named(d):
     _, text = read(d)
     for para in re.split(r"\n\s*\n", text):
-        if "하위 에이전트" in para:
-            assert re.search(r"가벼운|보통|강한|rules/models\.md", para), para[:80]
+        if "subagent" in para.lower():
+            assert re.search(r"light|standard|strong|rules/models\.md", para), para[:80]
 
 
 @pytest.mark.parametrize("d", SKILLS, ids=ids)
 def test_description_says_when_not_to_trigger(d):
-    assert "쓰지 않아요" in read(d)[0]["description"]
+    assert "Do not use" in read(d)[0]["description"]
 
 
 @pytest.mark.parametrize("name", ["build", "review"])
 def test_costly_skills_confirm_first(name):
-    head = body(name).split("## 실행 순서")[1].split("1. ")[0]
-    assert "확인" in head
+    head = body(name).split("## Steps")[1].split("1. ")[0]
+    assert "confirmation" in head
 
 
 @pytest.mark.parametrize("name", ["plan", "build", "design", "check", "research"])
 def test_flow_skills_trigger_on_the_work_not_the_words(name):
-    assert "사용자가 말하지 않아도" in read(ROOT / "skills" / name)[0]["description"]
+    d = read(ROOT / "skills" / name)[0]["description"]
+    assert "even if the user did not ask" in d or "without being asked" in d
 
 
 def test_expected_skills_present():
@@ -119,16 +120,16 @@ def test_plugin_manifest():
 
 
 def test_check_fallback_phrase():
-    assert "외부 검사 사용 불가, 내부 검증으로 대체" in body("check")
+    assert "External checker unavailable, verified internally" in body("check")
 
 
 def test_build_statuses():
     b = body("build")
-    assert all(s in b for s in ("완료", "걱정 있음", "막힘", "맥락 필요"))
+    assert all(s in b for s in ("done", "concerned", "blocked", "needs context"))
 
 
 def test_build_retry_cap():
-    assert "3회" in body("build")
+    assert "3 fix rounds" in body("build")
 
 
 def test_shape_done_format():
@@ -141,7 +142,7 @@ def test_roles_format():
     for r in roles:
         t = r.read_text(encoding="utf-8")
         heads = len(re.findall(r"^## ", t, re.M))
-        assert heads >= 3 and t.count("꼭 보는 항목:") == heads, r.name
+        assert heads >= 3 and t.count("Must check:") == heads, r.name
 
 
 def test_experiment_tsv_header():
@@ -151,12 +152,12 @@ def test_experiment_tsv_header():
 
 
 def test_research_fallback_phrase():
-    assert "외부 검색 사용 불가, 내부 조사로 대체" in body("research")
+    assert "External searcher unavailable, researched internally" in body("research")
 
 
 def test_design_viewports():
     b = body("design")
-    assert all(s in b for s in ("1440x900", "1366x768", "390x844", "최대 3회"))
+    assert all(s in b for s in ("1440x900", "1366x768", "390x844", "at most 3 times"))
 
 
 def test_design_landing_delegates():
@@ -168,17 +169,17 @@ def test_unslop_calls_humanize():
 
 
 def test_copy_table_header():
-    assert "화면 | 위치(파일:줄) | 원문 | 제안 | 바뀐 점" in body("copy")
+    assert "Screen | Location (file:line) | Original | Proposed | What changed" in body("copy")
 
 
 def test_docs_modes_and_verification():
     b = body("docs")
-    assert all(s in b for s in ("--audit", "참조", "방법", "설명", "튜토리얼", "실행 안 해 봄", "writing-ko.md"))
+    assert all(s in b for s in ("--audit", "Reference", "How-to", "Explanation", "Tutorial", "not run", "writing-ko.md"))
 
 
 def test_handoff_sections():
     b = body("handoff")
-    for s in ("## 목적", "## 하던 일", "## 확인된 것", "## 현재 상태", "## 다음 할 일", "## 주요 파일", "## 정한 결정"):
+    for s in ("## Goal", "## In progress", "## Verified", "## Current state", "## Next", "## Key files", "## Decisions"):
         assert s in b or s.replace("## ", "") in b
 
 
@@ -190,12 +191,12 @@ def test_ext_calls_have_bash_timeout():
     models = (ROOT / "rules/models.md").read_text(encoding="utf-8")
     assert "--timeout 540" in models and "600000" in models
     for name in ("check", "research", "review"):
-        assert "외부 모델 부르기" in body(name), name
+        assert "Calling external models" in body(name), name
 
 
 def test_review_uses_skill_relative_ext():
     b = body("review")
-    assert "`ext.py checker`" in b and "외부 검사 사용 불가, 내부 검증으로 대체" in b
+    assert "`ext.py checker`" in b and "External checker unavailable, verified internally" in b
 
 
 def test_scratch_inside_git_dir():
@@ -205,17 +206,17 @@ def test_scratch_inside_git_dir():
 
 def test_build_direct_by_default():
     b = body("build")
-    assert "기본은 메인이 직접" in b and "서로 독립인 작업" in b and "review-all.diff" in b
-    assert "끝에 반드시 한 번 검토" in b and "`check`로 미루지 않아요" in b and "실제 돈이나 운영 데이터" in b
+    assert "main session doing it directly" in b and "independent tasks" in b and "review-all.diff" in b
+    assert "always gets one final review" in b and "never defer it to `check`" in b and "real money or production data" in b
 
 
 def test_review_one_reviewer_by_default():
-    assert "검토자는 기본 한 명" in body("review")
+    assert "one reviewer by default" in body("review")
 
 
 def test_check_independent_only_when_big_or_risky():
     b = body("check")
-    assert "크거나 위험할 때만" in b and "검사자: 직접 대조" in b and "git diff --numstat" in b
+    assert "only when large or risky" in b and "Checker: direct comparison" in b and "git diff --numstat" in b
 
 
 def test_no_vendor_model_or_tool_names_in_skills():
@@ -231,3 +232,15 @@ def test_no_vendor_model_or_tool_names_in_skills():
 def test_setup_keeps_config_outside_repo():
     b = body("setup")
     assert "~/.config/jipda/config.json" in b and "agent-browser" in b
+
+
+@pytest.mark.parametrize("d", SKILLS, ids=ids)
+def test_replies_in_users_language(d):
+    assert "user's language" in read(d)[1]
+
+
+@pytest.mark.parametrize("d", SKILLS, ids=ids)
+def test_body_is_english(d):
+    allowed = {"unslop", "copy"}  # 한국어 규칙 파일의 절 이름을 가리키는 스킬
+    if d.name not in allowed:
+        assert not re.search(r"[가-힣]", read(d)[1]), d.name

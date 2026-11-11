@@ -1,43 +1,45 @@
 ---
 name: setup
-description: jipda의 선택 기능을 켜고 꺼요. 외부 검사기·검색기, 브라우저 도구, 모델 등급, 상시 원칙을 묻고 사용자 설정 파일에 저장해요. "jipda 세팅해 줘", "외부 모델 연결해 줘"라고 할 때만 써요. 스킬 사용법 질문이나 프로젝트 설정 이야기에는 쓰지 않아요.
+description: Turns jipda's optional features on or off. Asks about external checkers and searchers, browser tools, model tiers, and standing principles, then saves them to the user's config file. Use only for "set up jipda", "connect external models", "jipda 세팅해 줘", "외부 모델 연결해 줘". Do not use for skill usage questions or project settings.
 ---
 
 # setup
 
-## 목적
-아무것도 설정하지 않아도 jipda는 돌아가요. 이 스킬은 쓰고 싶은 사람만 외부 도구와 모델을 연결하게 해 줘요. 설정은 저장소가 아니라 사용자 컴퓨터에 남아서 플러그인을 업데이트해도 유지돼요.
+Reply in the user's language.
 
-## 입력
-- 없음. 이 컴퓨터에 설치된 도구를 직접 찾아요.
+## Purpose
+jipda runs with no setup at all. This skill lets those who want it connect external tools and models. Settings stay on the user's machine, not in the repository, and survive plugin updates.
 
-## 산출물
-- `~/.config/jipda/config.json` (`JIPDA_CONFIG`로 바꿀 수 있어요).
-- 선택하면 `~/.claude/CLAUDE.md`의 상시 원칙 블록.
+## Input
+- None. Detect tools installed on this machine.
 
-## 실행 순서
-1. **지금 상태를 봐요.** `python3 <이 스킬 폴더>/../../scripts/ext.py status`와 `command -v codex aside agent-browser`를 돌려요. 설정 파일이 있으면 읽어서 바꾸지 않은 값은 그대로 둬요.
-2. **하나씩 물어요.** 설치된 것을 먼저 보기로 보여 주고, 모두 "안 씀"을 고를 수 있어요.
-   - 외부 검사기: `check`와 `review`가 독립 검사에 써요.
-   - 외부 검색기: `research`가 넓게 훑을 때 써요.
-   - 브라우저 도구: `agent-browser`(권장, Apache-2.0, 여러 운영체제), ego lite(macOS 앱, 앱 소스 비공개), 안 씀. 화면 측정 스크립트는 agent-browser나 playwright가 있어야 돌아요.
-   - 모델 등급: 기본값 유지 또는 `light`, `standard`, `strong` 이름 지정.
-   - 상시 원칙 설치 여부.
-3. **외부 도구를 켜면 알려요.** 코드와 프롬프트가 그 도구로 나간다는 것과 [data-safety.md](../../rules/data-safety.md)의 거르기 규칙을 한 줄로 말해요.
-4. **설정을 써요.** 고른 것만 JSON으로 저장해요. `{workdir}`는 허용된 파일 사본만 든 임시 폴더, `{output}`은 답을 쓸 파일, `{prompt}`는 프롬프트예요. `{prompt}`가 없으면 표준 입력으로 줘요.
+## Output
+- `~/.config/jipda/config.json` (override with `JIPDA_CONFIG`).
+- If chosen, the standing principles block in `~/.claude/CLAUDE.md`.
+
+## Steps
+1. **See the current state.** Run `python3 <this skill folder>/../../scripts/ext.py status` and `command -v codex aside agent-browser`. If a config exists, read it and keep values you do not change.
+2. **Ask one at a time.** Offer installed tools first; "none" is always available.
+   - External checker: used by `check` and `review` for independent checks.
+   - External searcher: used by `research` for wide scans.
+   - Browser tool: `agent-browser` (recommended, Apache-2.0, multi-platform), ego lite (macOS app, closed-source app), or none. The screen-measuring script needs agent-browser or playwright.
+   - Model tiers: keep defaults or name `light`, `standard`, `strong`.
+   - Whether to install the standing principles.
+3. **Warn when enabling an external tool.** Say in one line that code and prompts go to that tool, and name the filtering rules in [data-safety.md](../../rules/data-safety.md).
+4. **Write the config.** Save only what was chosen, as JSON. `{workdir}` is a temp folder holding only allowed file copies, `{output}` is the file for the answer, `{prompt}` is the prompt. Without `{prompt}`, the prompt goes to stdin.
    ```json
    {
      "checker": {"cmd": ["codex", "exec", "--skip-git-repo-check", "-s", "read-only", "-C", "{workdir}", "-o", "{output}", "-"]},
-     "searcher": {"cmd": ["aside", "-m", "<모델 이름>", "{prompt}"]},
+     "searcher": {"cmd": ["aside", "-m", "<model name>", "{prompt}"]},
      "browser": "agent-browser",
      "models": {"light": "haiku", "standard": "sonnet", "strong": "opus"}
    }
    ```
-5. **상시 원칙을 골랐으면** `python3 <이 스킬 폴더>/../../scripts/always.py install`을 돌려요.
-6. **확인해요.** `ext.py status`를 다시 돌려 결과를 보여 줘요.
+5. **If standing principles were chosen,** run `python3 <this skill folder>/../../scripts/always.py install`.
+6. **Confirm.** Run `ext.py status` again and show the result.
 
-## 하지 않는 것
-- 사용자가 고르지 않은 도구 켜기.
-- 묻지 않고 도구 설치하기. 설치가 필요하면 명령을 알려 줘요.
-- API 키나 토큰을 설정 파일에 쓰기.
-- 저장소 안에 개인 설정 쓰기.
+## Do not
+- Enable tools the user did not pick.
+- Install tools without asking. If installation is needed, give the command.
+- Put API keys or tokens in the config file.
+- Write personal settings inside the repository.

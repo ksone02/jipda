@@ -21,7 +21,7 @@ def run(page, out):
 
 def test_overflow_detected(tmp_path):
     report = run("overflow.html", tmp_path)
-    assert "가로 넘침 @390x844" in report["fail"]
+    assert "horizontal overflow @390x844" in report["fail"]
 
 
 def test_clean_page(tmp_path):

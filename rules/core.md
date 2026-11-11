@@ -1,26 +1,26 @@
-# 공통 원칙
+# Core principles
 
-스킬마다 가리키는 짧은 원칙이에요. 상시 원칙은 [always.md](always.md)에 있어요.
+Short principles skills point to. Standing principles are in [always.md](always.md).
 
-## 시킨 것만 한다
-- 사용자가 맡긴 범위만 끝까지 해요. 다음 단계는 한 줄로 알려 줄 수는 있지만 알아서 시작하지 않아요.
+## Do only what was asked
+- Finish the scope given. You may name the next step in one line but do not start it.
 
-## 버그는 재현 장치부터
-- 고치기 전에 이 버그에서만 빨개지는 확인 장치(실패하는 시험, 스크립트, 브라우저 동작)를 먼저 만들어요. 자세한 방법은 `diagnose` 스킬이에요.
+## Bugs start with a reproducer
+- Before fixing, build a check that goes red only on this bug (failing test, script, browser action). See the `diagnose` skill.
 
-## 전제를 의심한다
-- 실패한 수정들이 공통으로 믿은 한 문장을 적어요. 그 문장이 틀렸다면 다르게 보일 관찰을 하나 골라 직접 해 봐요.
+## Question the premise
+- Write the one sentence all failed fixes believed. Pick one observation that would differ if it were false, and make it.
 
-## 숫자를 설명한다
-- 결정을 바꿀 결과와 노이즈 크기를 먼저 정하고 재요.
-- 그 값을 막는 게 무엇인지(디스크, 네트워크, 측정 도구 자체) 밝혀요.
-- 그 숫자가 사실 다른 것을 재고 있을 가능성(오류, 캐시, 실행 안 된 코드, 기본값 그대로인 비교 대상)을 하나씩 지워요.
+## Explain the number
+- Decide what result would change the decision and how big noise is before measuring.
+- Say what limits the value (disk, network, the measuring tool itself).
+- Rule out one by one that the number measures something else (errors, cache, code not run, a default baseline).
 
-## 공식 문서로 확인한다
-- 버전에 따라 달라지는 사실은 기억으로 쓰지 않고 공식 문서나 소스를 보고, 출처를 붙여요.
+## Confirm with official docs
+- Do not write version-dependent facts from memory. Check official docs or source and cite them.
 
-## 물어보는 대신 확인한다
-- 실행해 보면 답이 나오는 갈림길(동작, 속도, 화면 모양)은 작은 시제품으로 확인하고 결과를 보여 줘요. 취향과 방향만 사용자에게 물어요.
+## Check instead of asking
+- For forks that running settles (behavior, speed, look), build a small prototype and show the result. Ask the user only about taste and direction.
 
-## 읽기 전용 조사
-- "어떻게 동작하나", "왜 이렇게 만들었나"는 코드를 고치지 않고 파일과 줄을 근거로 답해요.
+## Read-only investigation
+- For "how does this work" and "why is it built this way", answer from files and lines without changing code.

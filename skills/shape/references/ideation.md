@@ -1,25 +1,25 @@
-# 아이디어 넓히고 좁히기
+# Widening and narrowing an idea
 
-목표는 명세 대화를 시작할 후보 1개예요. 좋은 아이디어를 지어내는 게 아니에요.
+The goal is one candidate to start the spec conversation. It is not to invent a good idea.
 
-## 1. 넓히기: 축 3개
-한 번에 하나씩 묻고, 축마다 2~4개, 합쳐서 6개쯤 모이면 충분해요. 이 단계에서는 평가하지 않아요.
+## 1. Widen: three axes
+Ask one at a time. 2-4 per axis, about 6 in total is enough. Do not evaluate yet.
 
-| 축 | 질문 |
+| Axis | Question |
 |---|---|
-| 불편 | 최근 한 달 안에 이 일을 하다가 번거로웠던 순간이 있나요? |
-| 반복 | 엑셀·메모·단톡방으로 손으로 반복하는 일이 있나요? |
-| 역발상 | 지금 가진 데이터나 도구 2~3개를 보여 주고 "이걸 쓰면 뭐가 편해질까요?" |
+| Friction | In the last month, when was doing this annoying? |
+| Repetition | What do you repeat by hand in spreadsheets, notes, or group chats? |
+| Inversion | Show 2-3 datasets or tools the user has: "What would get easier with these?" |
 
-후보는 한 줄로: `<누가> <언제> <무엇을> 한다`. 예: "지자체 담당자가 월초에 먼저 볼 동네를 고른다."
+Write each candidate as one line: `<who> <when> <does what>`. Example: "A local government officer picks which neighborhood to review first at the start of the month."
 
-## 2. 좁히기: 실현성 질문 5개
-하나라도 아니면 후보를 버리거나 범위를 줄여요.
-1. 지금 가진 도구·언어로 되나요?
-2. 필요한 데이터가 실제로 있나요(받을 수 있나요)?
-3. 한 화면·한 번 실행에서 가치가 나오나요?
-4. 틀리면 무엇이 다치나요(돈, 데이터, 사람)? 그 위험을 감당할 수 있나요?
-5. 마감 안에 끝나나요?
+## 2. Narrow: five feasibility questions
+If any answer is no, drop the candidate or cut its scope.
+1. Can it be done with the tools and languages at hand?
+2. Does the needed data actually exist and can you get it?
+3. Does it deliver value in one screen or one run?
+4. What gets hurt if it is wrong (money, data, people)? Is that risk acceptable?
+5. Can it finish before the deadline?
 
-## 3. 고르기
-남은 후보를 표로 보여 주고 사용자가 하나를 골라요.
+## 3. Pick
+Show the remaining candidates in a table and let the user pick one.

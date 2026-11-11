@@ -1,45 +1,45 @@
-# 랜딩·소개 페이지
+# Landing and intro pages
 
-[anti-slop.md](anti-slop.md)를 함께 지켜요.
+Also follow [anti-slop.md](anti-slop.md).
 
-## 종류부터 정해요
-계획 첫 줄에 무엇을 파는 페이지인지 적어요. 소프트웨어, 물건, 사람이 일해 주는 서비스, 사람이 찾아오는 장소 중 하나예요.
-- 소프트웨어: 실제 제품 화면을 보여 줘요.
-- 물건: 물건을 크게, 섹션마다 다른 장면으로 보여 줘요.
-- 서비스: 사람, 작업 결과, 진행 방식을 보여 줘요.
-- 장소: 사진과 글자로 분위기를 보여 주고 위치와 시간을 쉽게 찾게 해요.
-- 그래픽 효과, 3D는 기술 제품에만 써요. 동네 가게에는 사진이 맞아요.
+## Decide the kind first
+Write on the plan's first line what the page sells: software, a physical product, a service people hire, or a place people visit.
+- Software: show the real product UI.
+- Physical product: show it large, with a different scene per section.
+- Service: show people, work results, and how it proceeds.
+- Place: show photographs and type, and make location and hours easy to find.
+- Graphic effects and 3D are for technical products only. A local shop gets photographs.
 
-## 첫 화면
-- 무엇을, 누구에게, 어디서 파는지와 확인 가능한 사실 하나를 말해요.
-- 히어로만 첫 화면을 채우고 주요 버튼은 화면 안에 있어요. 버튼은 많아야 2개예요.
-- 다음 섹션 제목이 끝에 걸쳐 보이지 않아요.
+## First screen
+- Say what is sold, to whom or where, plus one verifiable fact.
+- The hero alone fills the first screen, with its main button inside it. At most 2 buttons.
+- The next section's heading does not peek in at the bottom.
 
-## 섹션
-- 한 섹션은 한 화면(1440x900 기준 1~2화면)이에요. 비어 보이는 절반을 남기지 않아요.
-- 왼쪽, 오른쪽 내용 가장자리를 같은 선에 맞춰요.
-- 버튼 쌍, 카드, 둥글기 단계, 링크 모양은 한 벌만 써요.
+## Sections
+- One section is one screen (1-2 screens at 1440x900). Do not leave half of one empty.
+- Keep left and right content edges on the same lines.
+- Use one set of button pair, card, radius scale, and link style.
 
-## 그림
-- 실제 사진과 실제 제품 화면을 우선해요. 어느 폭에서든 빈 영역이 없어야 해요.
-- 그림을 설명하는 캡션을 달지 않아요. 저작권 표시는 바닥글 한 줄에 모아요.
-- 임시 사진을 쓰면 보고에 적어요. 다른 회사 이름이나 로고가 보이면 안 돼요.
+## Pictures
+- Prefer real photographs and real product UI. No empty areas at any width.
+- No captions explaining a picture. Put credits in one footer line.
+- If you use a stand-in photo, say so in the report. Another company's name or logo must not show.
 
-## 움직임
-- 버튼, 링크, 카드는 포인터에 반응해요. 히어로는 처음 한 번만 등장해요.
-- 스크롤에 따라 카드가 하나씩 나타나지 않아요. 글자 패럴랙스와 스크롤 가로채기도 쓰지 않아요.
-- 5초 넘게 움직이면 멈춤 버튼을 줘요. 움직임 줄이기 설정에서는 멈추고, 숨는 내용이 없어야 해요.
+## Motion
+- Buttons, links, and cards respond to the pointer. The hero enters once on load.
+- No cards appearing one by one on scroll, no text parallax, no scroll hijacking.
+- Anything moving past 5 seconds gets a pause button. Under reduced motion everything rests and nothing stays hidden.
 
-## 문구
-- 제목은 무언가의 이름을 말하고, 버튼은 동사와 목적어로 써요.
-- 같은 사실은 한 가지 표현으로만 써요.
+## Copy
+- Headings name things; buttons use a verb and an object.
+- State each fact in one wording only.
 
-## 휴대폰
-- 390폭은 한 열이고, 320폭까지 넘치거나 겹치지 않아요.
-- 누르는 대상은 높이 44px 이상이에요.
+## Phones
+- One column at 390, no overflow or overlap down to 320.
+- Tap targets are at least 44px tall.
 
-## 하지 않는 것
-- 지어낸 후기, 고객, 수치.
-- 진짜 로고를 흉내 내어 그리기.
-- 페이지 디자인에 보라색 계열을 기본으로 쓰기.
-- 참고 사이트의 코드, 문구, 그림 베끼기.
+## Do not
+- Invent reviews, customers, or figures.
+- Draw look-alikes of real logos.
+- Default the page's design to violet or lavender.
+- Copy a reference site's code, copy, or pictures.

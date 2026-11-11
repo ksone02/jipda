@@ -1,46 +1,46 @@
-# 모델 등급과 외부 도구
+# Model tiers and external tools
 
-스킬은 모델 이름 대신 등급으로 말해요: **가벼운 모델**, **보통 모델**, **강한 모델**.
+Skills speak in tiers, not model names: **light model**, **standard model**, **strong model**.
 
-## 일 나누기
+## Division of work
 
-| 일 | 1순위 | 없거나 안 되면 |
+| Work | First choice | If absent or failing |
 |---|---|---|
-| 넓게 검색, 원문 읽기 | 설정한 외부 검색기 | 가벼운 모델 하위 에이전트 |
-| 대조 검사, 실행 검증, 반박 | 설정한 외부 검사기 | 하위 에이전트, 독립성 조건 |
-| 전문가 역할 검토 | 보통 모델(큰 설계 판단은 강한 모델) | — |
-| 구체화, 설계, 종합 | 메인 세션 | — |
-| 반복 구현 | 아래 등급표 | — |
+| Wide search, reading sources | Configured external searcher | Light model subagent |
+| Comparison checks, execution checks, rebuttal | Configured external checker | Subagent under the independence conditions |
+| Expert role review | Standard model (strong model for big design calls) | — |
+| Shaping, design, synthesis | Main session | — |
+| Repeated implementation | Tier table below | — |
 
-## 외부 모델 부르기
-외부 도구는 기본으로 꺼져 있어요. 켜려면 `/jipda:setup`을 써요.
-- 명령: `python3 <플러그인 폴더>/scripts/ext.py <checker|searcher> --root <저장소> --timeout 540 --prompt-file <프롬프트> [파일...]`. 플러그인 폴더는 스킬 폴더의 두 단계 위예요.
-- Bash 도구는 `timeout: 600000`으로 불러요. 스크립트가 먼저 끝나야 `STATUS:` 줄이 남아요.
-- 서로 독립인 호출은 함께 돌려도 돼요.
-- `STATUS: off`면 설정하지 않은 거예요. 문구 없이 내부 방식으로 해요.
-- `STATUS: unavailable`이나 `banned`면 내부 방식으로 하고, 아래 대체 문구를 결과 첫 줄에 써요.
+## Calling external models
+External tools are off by default. Enable them with `/jipda:setup`.
+- Command: `python3 <plugin folder>/scripts/ext.py <checker|searcher> --root <repo> --timeout 540 --prompt-file <prompt> [files...]`. The plugin folder is two levels above the skill folder.
+- Call the Bash tool with `timeout: 600000`. The script must finish first for the `STATUS:` line to survive.
+- Independent calls may run together.
+- `STATUS: off` means not configured. Go internal with no phrase.
+- On `STATUS: unavailable` or `banned`, go internal and write the fallback phrase below as the result's first line.
 
-## 등급표
-가장 싼 모델은 여러 단계 작업에서 턴을 2~3배 써서 총비용이 더 클 수 있어요.
-- **가벼운 모델**: 계획에 쓸 코드가 다 들어 있는 옮겨 적기와 시험, 한 파일 기계적 수정, 검색.
-- **보통 모델**: 설명만 보고 구현, 여러 파일, 모든 검토자의 최소 등급.
-- **강한 모델**: 설계 판단, 수정이 3회 넘게 막혀 올리는 경우.
+## Tier table
+The cheapest model can use 2-3x the turns on multi-step work, so total cost may be higher.
+- **Light model**: transcription and tests when the plan has all the code, one-file mechanical edits, search.
+- **Standard model**: implementing from a description, multiple files, minimum tier for every reviewer.
+- **Strong model**: design judgment, or escalation after more than 3 stuck fix rounds.
 
-## 실제 모델 고르기
-1. `ext.py status`의 `models`(`light`, `standard`, `strong`)에 값이 있으면 그 이름을 써요.
-2. 없으면 Claude Code에서는 가벼운 모델 = `haiku`, 보통 모델 = `sonnet`, 강한 모델 = `opus`예요.
-3. 하위 에이전트의 모델을 고를 수 없는 환경이면 세션 모델을 그대로 써요.
-- 고를 수 있으면 Agent 도구의 `model`을 꼭 적어요. 빠뜨리면 비싼 세션 모델을 물려받아요.
+## Picking the actual model
+1. If `models` (`light`, `standard`, `strong`) in `ext.py status` has a value, use that name.
+2. Otherwise in Claude Code: light model = `haiku`, standard model = `sonnet`, strong model = `opus`.
+3. Where subagent models cannot be chosen, use the session model.
+- When you can choose, always set the Agent tool's `model`. Omit it and the subagent inherits the expensive session model.
 
-## 내부로 검증할 때의 독립성 조건
-- 메인 대화를 물려받지 않은 새 하위 에이전트.
-- 완료 조건과 결과물만 주고, 만든 쪽의 생각 과정은 주지 않아요.
-- 만든 모델과 다른 등급(만든 쪽이 보통 모델이면 강한 모델).
+## Independence conditions for internal verification
+- A new subagent that does not inherit the main conversation.
+- Give only done conditions and outputs, not the builder's reasoning.
+- A different tier from the builder (strong model if the builder was standard).
 
-## 대체했을 때 결과 첫 줄
-- `외부 검사 사용 불가, 내부 검증으로 대체`
-- `외부 검색 사용 불가, 내부 조사로 대체`
-- 이유(설치 안 됨, 사용량 한도, 시간 초과, 외부 AI 금지 프로젝트)를 괄호로 붙여요.
+## Fallback first lines
+- `External checker unavailable, verified internally`
+- `External searcher unavailable, researched internally`
+- Add the reason in parentheses (not installed, usage limit, timeout, project bans external AI).
 
-## 브라우저
-화면을 직접 조작해 확인할 때는 `ext.py status`의 `browser`로 정한 도구를 먼저 쓰고, 없으면 쓸 수 있는 브라우저 도구를 써요.
+## Browser
+To drive a screen directly, prefer the tool set as `browser` in `ext.py status`; otherwise use any available browser tool.

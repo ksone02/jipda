@@ -1,37 +1,39 @@
 ---
 name: plan
-description: 명세를 위험한 것부터 배치한 작업 단위로 나눠 계획을 써요. 명세는 있는데 계획 문서가 없는 기능을 구현하기 전에, 사용자가 말하지 않아도 먼저 써요. "구현 들어가", "계획 세워 줘"도 여기에 해당해요. 파일 몇 개를 고치면 끝나는 작은 일에는 쓰지 않아요.
+description: Splits a spec into task units with the riskiest first. Use before implementing a feature that has a spec but no plan, even if the user did not ask ("start implementing", "write a plan", "구현 들어가", "계획 세워 줘"). Do not use for small work that a few file edits will finish.
 ---
 
 # plan
 
-## 목적
-명세를 구현자가 혼자서도 따라 할 수 있는 작업 단위로 바꿔요. 구현을 빠뜨리는 실수를 계획 단계에서 막아요.
+Reply and write documents in the user's language.
 
-## 입력
-- 명세 경로. 없으면 `docs/specs/`에서 가장 최근 파일.
-- 저장소.
+## Purpose
+Turn a spec into task units an implementer can follow alone, so missing work is caught at planning time.
 
-## 산출물
-- `docs/plans/<YYYY-MM-DD>-<주제>.md`
-  - 머리: 목표 한 줄, 접근 2~3줄, 명세 경로, 전체 제약(명세의 값 그대로)
-  - 파일 구조: 만들고 고칠 파일과 각자의 책임
-  - 작업 `T<n>`: 파일, 주고받는 이름·형식, 연결된 완료 조건 `D<n>`, 단계(시험 → 실패 확인 → 구현 → 통과 확인 → 커밋)
+## Input
+- Spec path. If absent, the most recent file in `docs/specs/`.
+- The repository.
 
-## 실행 순서
-0. `shape`를 거치지 않았으면 기존 코드부터 훑어요(관련 파일, 부르는 곳, 관례, 시험 명령).
-1. 파일 구조를 먼저 정해요. 파일 하나에 책임 하나, 같이 바뀌는 파일은 같이 둬요.
-2. 작업을 나눠요. 한 작업 = 따로 시험하고 따로 검토할 만한 가장 작은 단위. 위험하거나 모르는 것부터 앞에 둬요.
-3. 작업마다 다음 작업이 기대는 이름과 형식(함수 이름, 인자, 반환, 파일 경로)을 적어요.
-4. 스스로 점검해요. 문제는 그 자리에서 고쳐요.
-   - 명세 항목마다 대응 작업이 있나?
-   - 앞뒤 작업의 이름·형식이 같은가?
-   - 계획이 명세보다 몇 배 길지 않은가(코드를 옮겨 적은 건 계획이 아니에요)?
-   - 영향받는 파일(문서, 다국어, 관련 함수, 시험)을 다 포함했나?
-5. 명세가 말하지 않지만 사람이 실제로 부딪칠 입력·실패 5개를 "검토 초점"으로 적고, 각각 시험을 맡은 작업에 넣어요.
-6. 다음 단계 한 줄: 전문가 검토가 필요하면 `review`, 아니면 `build`.
+## Output
+- `docs/plans/<YYYY-MM-DD>-<topic>.md`
+  - Header: one-line goal, 2-3 line approach, spec path, global constraints (spec values verbatim)
+  - File structure: files to create or change and what each is responsible for
+  - Tasks `T<n>`: files, names and formats exchanged, linked done conditions `D<n>`, steps (test → see it fail → implement → see it pass → commit)
 
-## 하지 않는 것
-- 구현. 함수 본문 쓰기(서명·시험·값만 적어요).
-- "적절히 처리", "예외 처리 추가", "나중에 정함"처럼 아무것도 정하지 않는 줄.
-- 다른 작업에서 정의하지 않은 이름 쓰기.
+## Steps
+0. If `shape` was skipped, scan the existing code first (relevant files, callers, conventions, test commands).
+1. Decide file structure first. One responsibility per file; files that change together live together.
+2. Split tasks. One task is the smallest unit worth testing and reviewing separately. Put risky or unknown work first.
+3. For each task, write the names and formats later tasks rely on (function names, arguments, returns, file paths).
+4. Self-check and fix on the spot.
+   - Does every spec item have a task?
+   - Do names and formats match across tasks?
+   - Is the plan not many times longer than the spec (copied code is not a plan)?
+   - Does it include affected files (docs, translations, related functions, tests)?
+5. List 5 inputs or failures real people will hit that the spec does not mention as "review focus", and assign each to a task's tests.
+6. One line for the next step: `review` if expert review is needed, otherwise `build`.
+
+## Do not
+- Implement. No function bodies (signatures, tests, and values only).
+- Write lines that decide nothing: "handle appropriately", "add error handling", "decide later".
+- Use names no task defines.

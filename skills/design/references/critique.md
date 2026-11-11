@@ -1,14 +1,14 @@
-# 스크린샷 비평 순서
+# Screenshot critique order
 
-스크린샷만 보고 판단해요. 순서대로 보고, 각 항목에 문제가 있으면 한 줄로 적어요.
+Judge from screenshots only. Go in order and write one line for each problem.
 
-1. 3초 안에 이 화면이 무엇을 하는 화면인지 알 수 있나?
-2. 가장 중요한 정보가 가장 먼저 보이나? 시선이 흩어지지 않나?
-3. 잘리거나 겹치거나 넘친 요소가 있나(세 폭 모두)?
-4. 간격이 일정한가? 묶음 안은 좁고 묶음 사이는 넓은가?
-5. 글자 크기·굵기 단계가 분명한가? 너무 작은 글자가 있나?
-6. AI 티: 왼쪽 색 테두리 카드, 반짝이·이모지 아이콘, 의미 없는 그라데이션, 같은 카드 반복.
-7. 빈약함: 장식을 뺀 자리가 비어 보이지 않나? 실제 내용이 충분한가?
-8. 문구: 버튼이 결과를 말하나, 내부 용어가 보이나?
+1. Can you tell what this screen does within 3 seconds?
+2. Is the most important information seen first? Is attention scattered?
+3. Are elements clipped, overlapping, or overflowing (all three widths)?
+4. Is spacing consistent? Tight within groups, wide between them?
+5. Are size and weight steps clear? Is any text too small?
+6. AI tells: left-border color cards, sparkle or emoji icons, meaningless gradients, repeated identical cards.
+7. Thinness: does the space left by removed decoration look empty? Is there enough real content?
+8. Copy: do buttons say their result, are internal terms visible?
 
-가장 큰 문제 3개를 골라 고치고 다시 재요.
+Fix the 3 biggest problems and measure again.

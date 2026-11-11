@@ -21,6 +21,7 @@
 | copy | page.html 화면 문구 다듬어줘 |
 | unslop | README AI 티 좀 빼줘 |
 | docs | 이 프로젝트 문서화해줘 |
+| setup | jipda 세팅해줘 |
 
 이어지는 대화(첫 말 다음에 같은 세션으로 둘째 말을 보내요):
 
