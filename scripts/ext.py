@@ -74,7 +74,7 @@ def _run(cmd: list[str], stdin: str | None, cwd: Path, timeout: int, out_file: P
         last = out_file.read_text(encoding="utf-8", errors="replace")
         text = last if last.strip() else text
     if p.returncode != 0:
-        return Result("unavailable", text, f"exit {p.returncode}: {p.stderr.strip()[:200]}", secs)
+        return Result("unavailable", text, f"exit {p.returncode}: {p.stderr.strip()[-300:]}", secs)  # 앞은 배너라 원인은 뒤에 있다
     m = LIMIT_RE.search(p.stderr) or (LIMIT_RE.search(text) if len(text.strip()) < SHORT_OUTPUT else None)
     if m:
         return Result("unavailable", text, f"limit: {m.group(0)}", secs)
