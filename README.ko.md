@@ -70,8 +70,6 @@ uv run pytest                                # 스크립트와 스킬 형식 시
 claude --plugin-dir . plugin details jipda   # 스킬 목록과 토큰 비용
 ```
 
-행동 시험은 [evals/](evals/README.md)에 있어요.
-
 ## 라이선스
 
 MIT. 참고한 저장소와 저작권은 [NOTICE.md](NOTICE.md)에 있어요. `skills/design/references/`의 `anti-slop.md`와 `design-tokens.md`는 CC BY 4.0이에요.

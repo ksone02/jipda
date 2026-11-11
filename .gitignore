@@ -3,5 +3,3 @@ __pycache__/
 .pytest_cache/
 .measure/
 .jipda/
-evals/results/*
-!evals/results/.gitkeep

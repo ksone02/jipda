@@ -73,8 +73,6 @@ uv run pytest                                # scripts and skill format; also sc
 claude --plugin-dir . plugin details jipda   # skill list and token cost
 ```
 
-Behavior evals are in [evals/](evals/README.md) (Korean).
-
 ## License
 
 MIT. Sources and copyrights are in [NOTICE.md](NOTICE.md). `anti-slop.md` and `design-tokens.md` in `skills/design/references/` are CC BY 4.0.
