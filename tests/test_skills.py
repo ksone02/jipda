@@ -248,5 +248,5 @@ def test_body_is_english(d):
 
 def test_revise_stays_light():
     b = body("revise")
-    assert all(s in b for s in ("expected / actual now", "Ask about ambiguous items only", "search for what uses", "Run the full test command once"))
+    assert all(s in b for s in ("expected / actual now", "Ask about ambiguous items only", "search for what uses", "Run the full test command once", "one fact the change is safe because of", "unproven"))
     assert "subagent" not in b.lower()
