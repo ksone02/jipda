@@ -23,6 +23,7 @@ Remove "seems better" from research that raises one number, such as alpha search
 1. **Write the goal.** Metric definition, target, current value (baseline), noise size (spread of 3 runs of the same setup). Do not loosen the target later.
 2. **Build and freeze the harness.**
    - Run a change known to work and one known not to, proving the harness detects the difference.
+   - Rule out that the number measures something else: errors, cache, code that did not run, a default baseline.
    - Add leakage and overfitting checks: future information, selecting and reporting on the evaluation window, chance given attempts, out-of-sample windows.
    - After proof, do not change the harness. If you must, do it in a separate commit and remeasure the baseline.
 3. **Open the log.** Read it before each attempt.

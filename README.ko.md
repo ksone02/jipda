@@ -8,8 +8,6 @@
 - 피드백은 두 종류예요. 싼 대조 검사는 자주, 비싼 전문가 검토는 기획 직후와 설계 직후에만 해요.
 - 외부 도구 없이 Claude Code만으로 돌아가요. 외부 검사기, 검색기는 `/jipda:setup`으로 원할 때만 켜요.
 
-설계 문서: [docs/specs/2026-11-01-skillset-design.md](docs/specs/2026-11-01-skillset-design.md)
-
 ## 설치
 
 ```text

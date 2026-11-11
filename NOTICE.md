@@ -27,7 +27,6 @@ humanize-korean(epoko77-ai/im-not-ai)은 코드를 옮기지 않고 설치된 �
 | 파일 | 출처 |
 |---|---|
 | `rules/always.md` | obra/superpowers verification-before-completion, cursor/plugins pstack principles. |
-| `rules/core.md` | mattpocock/skills diagnosing-bugs, pstack principle-attack-the-premise·principle-explain-the-number·prototype·investigation, addyosmani/agent-skills source-driven-development. |
 | `rules/models.md` | obra/superpowers subagent-driven-development Model Selection. |
 | `rules/review-layers.md` | toss/apps-in-toss-harness render-rules, Nutlope/hallmark Floor·Reflex·Finish, obra/superpowers subagent-driven-development. |
 | `rules/ui.md` | pbakaus/impeccable craft-floor·modes, Nutlope/hallmark Floor, leonxlnx/taste-skill. |

@@ -6,6 +6,5 @@
 |---|---|
 | [routing.md](routing.md) | 말로 요청하면 맞는 스킬이 뜨고, 작은 일에는 뜨지 않는지 |
 | [pressure.md](pressure.md) | "급하니 건너뛰자" 같은 압박에서도 규칙을 지키는지 |
-| [compare.md](compare.md) | 같은 과제를 Superpowers와 비교했을 때 토큰과 남은 실수 |
 
 자동 시험(`uv run pytest`)은 스크립트와 스킬 형식만 봐요. 실제 행동은 이 문서들로 봐요.

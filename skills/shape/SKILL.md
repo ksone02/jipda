@@ -38,4 +38,4 @@ Turn an idea into one spec that says what gets built, what does not, and when it
 - Invoke the next skill yourself. Only name it in one line.
 - Bundle several questions in one message.
 - Record as `[decision]` anything the user did not say.
-- Ask the user what running something would answer. Prototype and show the result instead ([core.md](../../rules/core.md)).
+- Ask the user what running something would answer. Prototype and show the result instead. Ask the user only about taste and direction.

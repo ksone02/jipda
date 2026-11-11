@@ -31,7 +31,7 @@ Stop burning time on repeated guess-and-fix. Once you have a check that fails re
 2. **Refine the check.** Faster (drop needless setup), sharper (check the symptom itself), more deterministic (fix time and seeds).
 3. **Form a hypothesis.** Trace back to where the symptom first goes wrong ([techniques.md](references/techniques.md), root-cause tracing).
 4. **Make one minimal fix.** It is fixed only when the check and all existing tests pass.
-5. **After two failures on the same premise,** write the premise down and verify it directly ([core.md](../../rules/core.md)).
+5. **After two failures on the same premise,** write down the one sentence all the failed fixes believed, pick one observation that would differ if it were false, and make it.
 6. Keep the check as a test and report.
 
 ## Do not

@@ -9,8 +9,6 @@ A Claude Code skill set for people who both build software and do research. The 
 - Runs on Claude Code alone. External checkers and searchers are opt-in through `/jipda:setup`.
 - Instructions are in English. Replies and documents follow your language.
 
-Design document (Korean): [docs/specs/2026-11-01-skillset-design.md](docs/specs/2026-11-01-skillset-design.md)
-
 ## Install
 
 ```text

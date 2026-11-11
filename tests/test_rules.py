@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RULES = ROOT / "rules"
-FILES = ["always", "core", "review-layers", "models", "data-safety", "ui", "writing-ko", "writing-en"]
+FILES = ["always", "review-layers", "models", "data-safety", "ui", "writing-ko", "writing-en"]
 
 
 def text(name: str) -> str:
