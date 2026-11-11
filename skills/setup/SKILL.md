@@ -23,6 +23,7 @@ jipda runs with no setup at all. This skill lets those who want it connect exter
    - External checker: used by `check` and `review` for independent checks.
    - External searcher: used by `research` for wide scans.
    - Browser tool: `agent-browser` (recommended, Apache-2.0, multi-platform), ego lite (macOS app, closed-source app), or none. The screen-measuring script needs agent-browser or playwright.
+   - Landing kit: `taste-skill` (optional, about 39MB of scripts, components, and photos for landing pages). Without it `design --landing` uses jipda's built-in rules. To install, give the user `/plugin marketplace add Leonxlnx/taste-skill` then `/plugin install taste-skill@taste-skill`.
    - Model tiers: keep defaults or name `light`, `standard`, `strong`.
    - Whether to install the standing principles.
 3. **Warn when enabling an external tool.** Say in one line that code and prompts go to that tool, and name the filtering rules in [data-safety.md](../../rules/data-safety.md).

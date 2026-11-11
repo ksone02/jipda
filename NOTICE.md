@@ -14,7 +14,7 @@
 | pbakaus/impeccable | 저장소 LICENSE 기준(저작권자 이름 미표기) | Apache-2.0 |
 | leonxlnx/taste-skill | Copyright (c) 2026 Leonxlnx | MIT |
 | Nutlope/hallmark | Copyright (c) 2026 Hallmark contributors | MIT |
-| yuwen-lu/unslop-ui | Copyright (c) 2026 Yuwen Lu | MIT |
+| heydamir/unslop | Damir Sokolovsky | CC BY 4.0 |
 | blader/humanizer | Copyright (c) 2025 Siqi Chen | MIT |
 | github/spec-kit | Copyright (c) GitHub, Inc. | MIT |
 | garrytan/gstack | Copyright (c) 2026 Garry Tan | MIT |
@@ -51,5 +51,5 @@ humanize-korean(epoko77-ai/im-not-ai)은 코드를 옮기지 않고 설치된 �
 | `skills/shape/SKILL.md` | mattpocock/skills grill-me, obra/superpowers brainstorming, toss/apps-in-toss-harness plan, pstack in-your-own-words. |
 | `skills/shape/references/ideation.md` | toss/apps-in-toss-harness plan/references/ideation.md (BSD-3). |
 | `skills/unslop/SKILL.md` | blader/humanizer (MIT), epoko77-ai/im-not-ai(humanize-korean) 호출, toss/apps-in-toss-harness ux-writing. |
-| `skills/design/references/anti-slop.md` | yuwen-lu/unslop-ui (MIT)를 줄여 옮겼어요. |
+| `skills/design/references/anti-slop.md`, `skills/design/references/design-tokens.md` | heydamir/unslop (CC BY 4.0). 절차를 줄이고 jipda design 흐름에 맞게 합쳤어요. |
 | `skills/design/references/landing.md` | leonxlnx/taste-skill 2.5.1 (MIT)의 규칙을 키트 없이 쓸 수 있게 줄여 옮겼어요. |

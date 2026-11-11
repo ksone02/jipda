@@ -161,7 +161,7 @@ def test_design_viewports():
 
 
 def test_design_landing_delegates():
-    assert "references/landing.md" in body("design") and "taste-skill:" not in body("design")
+    assert "references/landing.md" in body("design") and "taste-skill:design-taste-frontend" in body("design")
 
 
 def test_unslop_calls_humanize():
@@ -225,7 +225,7 @@ def test_no_vendor_model_or_tool_names_in_skills():
             continue
         for f in d.rglob("*.md"):
             low = f.read_text(encoding="utf-8").lower()
-            for word in ("haiku", "sonnet", "opus", "deepseek", "aside", "codex", "taste-skill", "playwright"):
+            for word in ("haiku", "sonnet", "opus", "deepseek", "aside", "codex", "playwright"):
                 assert word not in low, f"{f}: {word}"
 
 

@@ -57,6 +57,7 @@ python3 scripts/always.py remove    # 빼기 (블록 바깥은 그대로)
 | 외부 검사기(예: `codex`) | `check`, `review` | 내부 하위 에이전트가 독립 조건을 지켜 검사해요 |
 | 외부 검색기(예: `aside`) | `research` | 내부 하위 에이전트가 검색해요 |
 | `agent-browser` 또는 playwright | `design`, `check`의 화면 측정 | 쓸 수 있는 브라우저 도구로 같은 항목을 재요 |
+| taste-skill(랜딩 키트, 약 39MB) | `design --landing` | jipda 내장 랜딩 규칙을 써요 |
 | humanize-korean | `unslop` | 그 단계를 건너뛰고 알려 줘요 |
 
 외부로 보내는 파일은 [scripts/safe_files.py](scripts/safe_files.py)가 걸러요. 데이터 폴더, `.env`, 데이터 파일, 큰 파일, 키가 든 파일은 빠져요. 프로젝트 `CLAUDE.md`에 "외부 AI 금지" 같은 문구가 있으면 외부 모델을 쓰지 않아요.
