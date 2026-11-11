@@ -1,6 +1,6 @@
 # Planning toolkit
 
-Find what blocks the idea, offer the fitting tools, and let the user pick. Read only the chosen tool's file.
+Find what blocks the idea and pick the fitting tools yourself. Read only the chosen tool's file.
 
 | What is blocking | Tool | File |
 |---|---|---|

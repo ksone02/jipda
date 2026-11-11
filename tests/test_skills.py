@@ -254,7 +254,7 @@ def test_revise_stays_light():
 
 def test_shape_toolkit_chosen_with_user():
     b = body("shape")
-    assert "Show a draft first" in b and "The user picks" in b and "at most 3 tools" in b
+    assert "Show a draft first" in b and "Pick the tools yourself" in b and "at most 3 tools" in b and "Ask the user which tool" in b
     refs = ROOT / "skills/shape/references"
     for name in ("toolkit", "framing", "strategy", "product", "market", "creative", "decide"):
         assert (refs / f"{name}.md").exists(), name
@@ -266,4 +266,4 @@ def test_shape_toolkit_chosen_with_user():
 def test_research_competitive_mode():
     assert "--competitive" in body("research")
     t = (ROOT / "skills/research/references/competitive.md").read_text(encoding="utf-8")
-    assert "Choose the analysis with the user" in t and "public information only" in t
+    assert "Pick the analysis yourself" in t and "public information only" in t
