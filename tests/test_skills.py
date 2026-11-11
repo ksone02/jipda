@@ -9,7 +9,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_SECTIONS = ["Purpose", "Input", "Output", "Steps", "Do not"]
 MAX_WORDS = 1500
-EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs", "setup", "revise"]
+EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs", "setup", "revise", "spec"]
 
 
 def skill_dirs() -> list[Path]:
@@ -250,6 +250,27 @@ def test_revise_stays_light():
     b = body("revise")
     assert all(s in b for s in ("expected / actual now", "Ask about ambiguous items only", "search for what uses", "Run the full test command once", "one fact the change is safe because of", "unproven"))
     assert "subagent" not in b.lower()
+
+
+def test_spec_is_source_of_truth_and_linked():
+    b = body("spec")
+    assert all(s in b for s in ("source of truth", "When a rule changes", "Never reuse or renumber", "`unchecked`"))
+    f = (ROOT / "skills/spec/references/formats.md").read_text(encoding="utf-8")
+    assert "ID | Feature | Type | Condition | Action | Message | Source | Verify" in f
+    assert "ID | Link | Situation | Expected | Result | Evidence | Note" in f
+    assert "`spec`" in body("shape")
+    assert "features.md" in body("plan") and "features.md" in body("check") and "features.md" in body("revise")
+    assert "qa.md" in body("build") and "qa.md" in body("check")
+
+
+def test_stages_connect_the_flow():
+    assert "Stop at the end of each stage" in body("build") and "uses `design`" in body("build")
+    assert "smallest P0 version" in body("plan") and "demand test" in body("plan")
+    assert "current stage" in body("check") and "screen-capture command" in body("check")
+    assert "Small new feature" in body("revise") and "purely visual" in body("revise")
+    assert "every listed state" in body("design")
+    assert "qa.md" in body("diagnose")
+    assert "Small change → `revise`" in body("shape") and "where its documents should go" in body("shape")
 
 
 def test_shape_toolkit_chosen_with_user():

@@ -11,7 +11,7 @@ State must-haves first; an option missing one is out.
 1. Assume it has already failed. Write the plausible reasons.
 2. Turn those into assumptions.
 3. Rank by how likely to be wrong and how much it would hurt.
-4. For the top one, name the cheapest test.
+4. Name the cheapest test for the top technical risk and for the top demand risk, separately. A demand test uses no product: run it by hand with messages, paper, or a sign-up page. State the result that would kill the idea.
 
 ## One-page form
 Start with the conclusion, then key reasons, then evidence. Skip evidence the reasons already justify.

@@ -32,10 +32,11 @@ Stop burning time on repeated guess-and-fix. Once you have a check that fails re
 3. **Form a hypothesis.** Trace back to where the symptom first goes wrong ([techniques.md](references/techniques.md), root-cause tracing).
 4. **Make one minimal fix.** It is fixed only when the check and all existing tests pass.
 5. **After two failures on the same premise,** write down the one sentence all the failed fixes believed, pick one observation that would differ if it were false, and make it.
-6. Keep the check as a test and report.
+6. Keep the check as a test and report. If the project has `qa.md`, add a row for this bug, linked to the rule it broke or `-`, with the test as evidence.
 
 ## Do not
 - Do unrelated cleanup or refactoring.
+- Mix this fix with anything else in a commit ([commits.md](../../rules/commits.md)).
 - Fix without a check and say "seems fixed".
 - Call a guard that hides the symptom a root-cause fix.
 - Leave secrets in output (replace with `<REDACTED>`).
