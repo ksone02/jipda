@@ -254,7 +254,7 @@ def test_revise_stays_light():
 
 def test_shape_toolkit_chosen_with_user():
     b = body("shape")
-    assert "Show a draft first" in b and "Pick the tools yourself" in b and "could change a decision" in b and "Ask the user which tool" in b
+    assert "Look outward first" in b and "Today they use" in b and "Show a draft first" in b and "Pick the tools yourself" in b and "could change a decision" in b and "Ask the user which tool" in b
     refs = ROOT / "skills/shape/references"
     for name in ("toolkit", "framing", "strategy", "product", "market", "creative", "decide"):
         assert (refs / f"{name}.md").exists(), name

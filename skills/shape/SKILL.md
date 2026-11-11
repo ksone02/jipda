@@ -23,12 +23,20 @@ Turn an idea into one spec that says what gets built, what does not, and when it
 
 ## Steps
 0. **Scan an existing repo first.** Relevant files, callers, naming and folder conventions, test and lint commands. Put this in at most 5 lines at the top of the spec.
-1. **Show a draft first.** Before asking anything, write your best guess in 3-5 lines: who it is for, when they need it, the problem, the likely answer. Mark it as a guess and ask what is wrong. Reacting to a draft is easier than answering an empty question.
-2. **Pick the tools yourself.** Read [toolkit.md](references/toolkit.md), name what is blocking the idea, and pick only tools that could change a decision. Keep each to one table or list. Stop when the next tool would not change anything. Order them: understand the problem, generate options, choose, then stress-test. Say the plan in one line and start; the user can redirect it. If the idea is already clear, skip to step 4.
-3. **Run each chosen tool.** Read only that tool's file, fill it from what you know and what the user says, and show one table or list. Ask what is wrong before the next tool. Mark assumptions. Need outside facts or competitors? Name `research --competitive` in one line. A tool that changed no decision is dropped from the spec.
-4. **Ask about edge cases.** Empty values, boundaries, no permission, network or external service failure, doing it twice.
-5. **Write the spec** in the [one-page form](references/decide.md), then give every done condition a verification method. A condition with no way to verify is not a condition.
-6. **Call the size in one line** (the user can change it).
+1. **Look outward first.** Before writing the draft, search for every named technology, company, or product the user mentioned, and for 3-5 real alternatives people use today. If a name returns nothing, change the wording (maker, language, related project, date) and check official docs, package registries, GitHub, release notes, and recent news before saying it was not found. Go deeper with `research --competitive` when the decision needs it. Skip only for purely internal tools with no alternatives.
+2. **Show a draft first, in this form.** Mark each line as found or guessed, and link what was found.
+   - **For:** one specific kind of person
+   - **When:** the situation that triggers the need
+   - **Today they use:** the real alternatives found, including doing nothing
+   - **Gap:** what those do not do, with evidence
+   - **Our answer:** one sentence naming the difference from the closest alternative
+   - **Must be true:** the riskiest assumption
+   Ask what is wrong. Reacting to a draft is easier than answering an empty question.
+3. **Pick the tools yourself.** Read [toolkit.md](references/toolkit.md), name what is blocking the idea, and pick only tools that could change a decision. Keep each to one table or list. Stop when the next tool would not change anything. Order them: understand the problem, generate options, choose, then stress-test. Say the plan in one line and start; the user can redirect it. If the idea is already clear, skip to step 5.
+4. **Run each chosen tool.** Read only that tool's file, fill it from what you know and what the user says, and show one table or list. Ask what is wrong before the next tool. Mark assumptions. A tool that changed no decision is dropped from the spec.
+5. **Ask about edge cases.** Empty values, boundaries, no permission, network or external service failure, doing it twice.
+6. **Write the spec** in the [one-page form](references/decide.md), then give every done condition a verification method. A condition with no way to verify is not a condition.
+7. **Call the size in one line** (the user can change it).
    - One file, obvious fix → fix it, then `check`
    - Small change → `build` → `check`
    - Project → `review` → `plan` → `review` → `build` → `check`
