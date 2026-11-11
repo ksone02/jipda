@@ -9,7 +9,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_SECTIONS = ["Purpose", "Input", "Output", "Steps", "Do not"]
 MAX_WORDS = 1500
-EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs", "setup"]
+EXPECTED_SKILLS: list[str] = ["shape", "plan", "build", "check", "review", "research", "experiment", "handoff", "guard", "diagnose", "design", "copy", "unslop", "docs", "setup", "revise"]
 
 
 def skill_dirs() -> list[Path]:
@@ -244,3 +244,9 @@ def test_body_is_english(d):
     allowed = {"unslop", "copy"}  # 한국어 규칙 파일의 절 이름을 가리키는 스킬
     if d.name not in allowed:
         assert not re.search(r"[가-힣]", read(d)[1]), d.name
+
+
+def test_revise_stays_light():
+    b = body("revise")
+    assert all(s in b for s in ("expected / actual now", "Ask about ambiguous items only", "search for what uses", "Run the full test command once"))
+    assert "subagent" not in b.lower()

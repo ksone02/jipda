@@ -1,6 +1,6 @@
 # Standing principles
 
-`scripts/always.py install` puts the block below in `~/.claude/CLAUDE.md`. These hold even when no skill is invoked. Keep the block to 6 lines (to keep the everyday cost small).
+`scripts/always.py install` puts the block below in `~/.claude/CLAUDE.md`. These hold even when no skill is invoked. Keep the block to 7 lines (to keep the everyday cost small).
 
 <!-- jipda:always:start -->
 - Before saying done, passing, or fixed, run the verifying command right then and show the result.
@@ -9,6 +9,7 @@
 - When reporting a number, state what it measures, its unit, and how it was calculated.
 - Mark each claim as measured, estimated, or guessed, and do not cite links or sources you did not read this time.
 - Get confirmation before hard-to-reverse actions such as deploying, pushing, sending messages, or deleting (external model calls follow the data-safety rules).
+- Before changing existing work (behavior, structure, or design), use the matching skill first.
 <!-- jipda:always:end -->
 
 ## Excuses that do not count

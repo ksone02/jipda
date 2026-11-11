@@ -22,7 +22,7 @@ Then, optionally, run `/jipda:setup` to choose external tools, a browser tool, m
 
 ### Standing principles (optional, recommended)
 
-Puts 6 lines in `~/.claude/CLAUDE.md` that hold even when no skill runs. Read [rules/always.md](rules/always.md) first.
+Puts 7 lines in `~/.claude/CLAUDE.md` that hold even when no skill runs. Read [rules/always.md](rules/always.md) first.
 
 ```sh
 python3 scripts/always.py install   # add (running it twice keeps one copy)
@@ -36,6 +36,7 @@ python3 scripts/always.py remove    # remove (text outside the block is untouche
 | `shape` | Turns a vague idea into a spec with done conditions, through questions |
 | `plan` | Splits a spec into task units, riskiest first |
 | `build` | Implements a plan. Small plans directly; only large or risky tasks go to subagents |
+| `revise` | Applies change requests to existing work (behavior, structure, design), several at once, without heavy process |
 | `check` | Verifies done conditions by running them, then closes the work. Independent checks only for large or risky changes |
 | `review` | Expert-perspective review. One reviewer by default, several only for hard-to-reverse decisions (quant, web, data research) |
 | `research` | Research plan → wide scan → choose direction → deep read → one sourced file |
