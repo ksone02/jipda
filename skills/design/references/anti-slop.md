@@ -8,7 +8,7 @@ Vibecoded UI fails in predictable ways. Fix the craft and keep the product: feat
    - Heavy slop (many signs across color, type, icons, copy): run the full passes.
    - Light slop (mostly designed, a few signs left): fix only what the audit found and keep the existing brand, palette, type, and layout.
    - No slop: say so and suggest at most 2-3 small refinements. Never change a good screen just to make it different.
-3. **Set the direction.** Write short lines before editing, from what the product does and who it is for, never from trends: **Product** (what it does, for whom), **Character** (2-3 concrete words; not clean, modern, sleek, minimal, premium), **World** (the place or material the product belongs to, which sets the neutral tint, accent, and visual). Show the audit and direction and wait for the user's answer before a heavy rework.
+3. **Set the direction.** Write short lines before editing, from what the product does and who it is for, never from trends: **Product** (what it does, for whom), **Character** (2-3 concrete words; not clean, modern, sleek, minimal, premium), **World** (the place or material the product belongs to, which sets the neutral tint, accent, and visual), **Moments** (one or two places that get rich color, material, and detail, chosen from what the product shows), **Signature** (one small detail only this product would have, used consistently). Show the audit and direction and wait for the user's answer before a heavy rework.
 4. **Fix in order, one pass across the whole screen at a time:** spacing, color, icons, copy, type, layout, details, visuals, motion. Exact values are in [design-tokens.md](design-tokens.md).
 5. **Check.** Render again and compare with the audit list.
 
