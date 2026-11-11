@@ -14,24 +14,24 @@
 | pbakaus/impeccable | 저장소 LICENSE 기준(저작권자 이름 미표기) | Apache-2.0 |
 | leonxlnx/taste-skill | Copyright (c) 2026 Leonxlnx | MIT |
 | Nutlope/hallmark | Copyright (c) 2026 Hallmark contributors | MIT |
+| heydamir/unslop | Damir Sokolovsky | CC BY 4.0 |
 | blader/humanizer | Copyright (c) 2025 Siqi Chen | MIT |
 | github/spec-kit | Copyright (c) GitHub, Inc. | MIT |
 | garrytan/gstack | Copyright (c) 2026 Garry Tan | MIT |
 | EveryInc/compound-engineering-plugin | Copyright (c) 2025 Every | MIT |
 
-taste-skill과 humanize-korean(epoko77-ai/im-not-ai)은 코드를 옮기지 않고 설치된 것을 불러 써요.
+humanize-korean(epoko77-ai/im-not-ai)은 코드를 옮기지 않고 설치된 것을 불러 써요.
 
 ## 파일별 출처
 
 | 파일 | 출처 |
 |---|---|
 | `rules/always.md` | obra/superpowers verification-before-completion, cursor/plugins pstack principles. |
-| `rules/core.md` | mattpocock/skills diagnosing-bugs, pstack principle-attack-the-premise·principle-explain-the-number·prototype·investigation, addyosmani/agent-skills source-driven-development. |
 | `rules/models.md` | obra/superpowers subagent-driven-development Model Selection. |
 | `rules/review-layers.md` | toss/apps-in-toss-harness render-rules, Nutlope/hallmark Floor·Reflex·Finish, obra/superpowers subagent-driven-development. |
-| `rules/ui.md` | pbakaus/impeccable craft-floor·modes, Nutlope/hallmark Floor, leonxlnx/taste-skill, 사용자 메모리. |
+| `rules/ui.md` | pbakaus/impeccable craft-floor·modes, Nutlope/hallmark Floor, leonxlnx/taste-skill. |
 | `rules/writing-en.md` | blader/humanizer (MIT), based on Wikipedia "Signs of AI writing". |
-| `rules/writing-ko.md` | toss/apps-in-toss-harness ux-writing, 사용자 메모리. |
+| `rules/writing-ko.md` | toss/apps-in-toss-harness ux-writing. |
 | `skills/build/SKILL.md` | obra/superpowers subagent-driven-development (MIT). |
 | `skills/check/SKILL.md` | obra/superpowers verification-before-completion·receiving-code-review, pstack prove-it-works·interrogate, github/spec-kit analyze., obra/superpowers finishing-a-development-branch. |
 | `skills/copy/SKILL.md` | toss/apps-in-toss-harness ux-writing (BSD-3). |
@@ -50,3 +50,5 @@ taste-skill과 humanize-korean(epoko77-ai/im-not-ai)은 코드를 옮기지 않�
 | `skills/shape/SKILL.md` | mattpocock/skills grill-me, obra/superpowers brainstorming, toss/apps-in-toss-harness plan, pstack in-your-own-words. |
 | `skills/shape/references/ideation.md` | toss/apps-in-toss-harness plan/references/ideation.md (BSD-3). |
 | `skills/unslop/SKILL.md` | blader/humanizer (MIT), epoko77-ai/im-not-ai(humanize-korean) 호출, toss/apps-in-toss-harness ux-writing. |
+| `skills/design/references/anti-slop.md`, `skills/design/references/design-tokens.md` | heydamir/unslop (CC BY 4.0). 절차를 줄이고 jipda design 흐름에 맞게 합쳤어요. |
+| `skills/design/references/landing.md` | leonxlnx/taste-skill 2.5.1 (MIT)의 규칙을 키트 없이 쓸 수 있게 줄여 옮겼어요. |

@@ -1,10 +1,10 @@
-# 대시보드·도구 화면 (Operate)
+# Dashboard and tool screens (Operate)
 
-사용자가 일을 끝내는 화면이에요. 표현보다 훑어보기, 일관성, 실제 사용 장면이 먼저예요.
+These are screens where users finish work. Scanning, consistency, and real usage come before expression.
 
-- **첫 화면에서 할 일 하나가 보여요.** 가장 중요한 숫자나 목록이 가장 크고 먼저 보여요.
-- **숫자는 비교할 수 있게.** 표의 숫자는 오른쪽 정렬, 같은 자릿수 글꼴(tabular), 단위는 머리줄에.
-- **상태를 빠짐없이.** 로딩(뼈대), 빈 화면(무엇을 하면 채워지는지), 에러(원인과 다음 행동), 비활성(왜 안 되는지).
-- **밀도는 높게, 소음은 낮게.** 카드 안의 카드, 아이콘만 다른 같은 크기 카드 줄, 테두리 남발을 피해요. 묶음은 여백으로 나눠요.
-- **실제 화면 크기로.** 1366×768 노트북에서 핵심 영역이 스크롤 없이 보이는지가 가장 흔한 실패예요.
-- **조작은 예상대로.** 필터는 차트 위 한 줄에, 선택 상태는 색만이 아니라 모양·글자로도 표시해요.
+- **One thing to do on the first screen.** The most important number or list is largest and seen first.
+- **Comparable numbers.** Right-align table numbers, use tabular figures, put units in the header.
+- **Every state.** Loading (skeleton), empty (what fills it), error (cause and next step), disabled (why).
+- **High density, low noise.** Avoid cards in cards, rows of same-size cards differing only by icon, and excess borders. Separate groups with whitespace.
+- **Real screen sizes.** The most common failure is core content not fitting a 1366×768 laptop without scrolling.
+- **Predictable controls.** Filters in one row above the chart; show selection by shape or text, not color alone.

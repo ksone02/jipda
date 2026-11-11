@@ -1,16 +1,16 @@
-# 검색 담당 프롬프트 (DeepSeek, Claude 대체 공통)
+# Searcher prompt (shared by external searchers and internal subagents)
 
 ```
-아래 각도 하나만 조사한다.
-각도: <각도>
-배경 결정: <결정>
+Research only the one angle below.
+Angle: <angle>
+Background decision: <decision>
 
-- 원문 출처(논문, 공식 문서, 저장소)를 우선한다. 요약 블로그는 원문을 찾는 실마리로만 쓴다.
-- 찾은 주장마다 출처 링크를 붙인다. 열어 보지 않은 링크는 쓰지 않는다.
-- 결과 형식:
-  ## 갈래
-  - <갈래 이름>: <한 줄> — [출처](url)
-  ## 아직 빈 곳
-  - <못 찾은 것>
-- 20줄을 넘기지 않는다.
+- Prefer primary sources (papers, official docs, repositories). Use summary blogs only as leads to the originals.
+- Attach a source link to every claim. Do not cite links you did not open.
+- Result format:
+  ## Branches
+  - <branch name>: <one line> — [source](url)
+  ## Still missing
+  - <what you could not find>
+- Do not exceed 20 lines.
 ```

@@ -1,4 +1,9 @@
-"""외부 모델(Codex, DeepSeek via aside) 호출. 실패해도 예외 대신 상태를 돌려준다."""
+"""설정한 외부 도구(검사기, 검색기)를 부른다. 설정이 없으면 off, 실패해도 예외 대신 상태를 돌려준다.
+
+설정 파일: ~/.config/jipda/config.json (JIPDA_CONFIG로 바꿀 수 있음)
+  {"checker": {"cmd": ["도구", "{workdir}", "{output}"]}, "searcher": {"cmd": ["도구", "{prompt}"]}}
+cmd에 {prompt}가 없으면 프롬프트를 표준 입력으로 준다. {workdir}는 허용된 파일 사본만 든 임시 폴더, {output}은 도구가 답을 쓸 파일이다.
+"""
 
 import argparse
 import json
@@ -14,7 +19,6 @@ from pathlib import Path
 
 import safe_files
 
-ROOT = Path(__file__).resolve().parents[1]
 LIMIT_RE = re.compile(r"rate limit|usage limit|quota|\b429\b", re.I)
 SHORT_OUTPUT = 300  # 한도 문구는 stderr나 짧은 출력에서만 찾는다(정상 결과 안의 단어 오판 방지)
 DEFAULT_TIMEOUT = 540  # Claude Code Bash 도구 최대 600초보다 짧게
@@ -22,14 +26,26 @@ DEFAULT_TIMEOUT = 540  # Claude Code Bash 도구 최대 600초보다 짧게
 
 @dataclass
 class Result:
-    status: str  # "ok" | "unavailable" | "banned"
+    status: str  # "ok" | "off" | "unavailable" | "banned"
     text: str
     reason: str
     seconds: float
 
 
+def config_path() -> Path:
+    return Path(os.environ.get("JIPDA_CONFIG", Path.home() / ".config" / "jipda" / "config.json"))
+
+
+def load_config() -> dict:
+    try:
+        data = json.loads(config_path().read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    return data if isinstance(data, dict) else {}
+
+
 def _log(tool: str, r: Result, skipped: list[str]) -> None:
-    path = Path(os.environ.get("JIPDA_LOG", ROOT / "evals" / "results" / "ext-calls.jsonl"))
+    path = Path(os.environ.get("JIPDA_LOG", config_path().parent / "ext-calls.jsonl"))
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
         row = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "tool": tool, "status": r.status, "reason": r.reason,
@@ -84,18 +100,23 @@ def _banned(root: Path) -> bool:
     return safe_files.external_banned(root, texts)
 
 
-def ask_codex(prompt: str, files: list[Path], root: Path, timeout: int = DEFAULT_TIMEOUT) -> Result:
+def ask(role: str, prompt: str, files: list[Path], root: Path, timeout: int = DEFAULT_TIMEOUT) -> Result:
+    spec = load_config().get(role) or {}
+    argv = spec.get("cmd") if isinstance(spec, dict) else None
     decisions = safe_files.select(files, root)
     skipped = [d.path for d in decisions if not d.allowed]
+    if not argv:
+        r = Result("off", "", f"{role} not configured", 0.0)
+        _log(role, r, skipped)
+        return r
     if _banned(root):
         r = Result("banned", "", "external AI banned in project", 0.0)
-        _log("codex", r, skipped)
+        _log(role, r, skipped)
         return r
     allowed = [d.path for d in decisions if d.allowed]
     full = prompt + ("\n\n파일:\n" + "\n".join(f"- {a}" for a in allowed) if allowed else "")
-    binary = os.environ.get("JIPDA_CODEX", "codex")
     with tempfile.TemporaryDirectory() as td:
-        # 저장소 전체가 아니라 허용된 파일 사본만 보이게 한다(-C 로 사본 폴더에서 실행)
+        # 저장소 전체가 아니라 허용된 파일 사본만 보이게 한다
         work = Path(td) / "work"
         work.mkdir()
         for rel in allowed:
@@ -103,37 +124,35 @@ def ask_codex(prompt: str, files: list[Path], root: Path, timeout: int = DEFAULT
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(root / rel, dst)
         out = Path(td) / "last.txt"
-        cmd = [binary, "exec", "--skip-git-repo-check", "-s", "read-only", "-C", str(work), "-o", str(out), "-"]
-        r = _run(cmd, full, work, timeout, out)
-    _log("codex", r, skipped)
+        cmd = [str(a).replace("{workdir}", str(work)).replace("{output}", str(out)).replace("{prompt}", full) for a in argv]
+        stdin = None if any("{prompt}" in str(a) for a in argv) else full
+        r = _run(cmd, stdin, work, timeout, out if any("{output}" in str(a) for a in argv) else None)
+    _log(role, r, skipped)
     return r
 
 
-def ask_deepseek(prompt: str, root: Path, model: str = "deepseek/deepseek-v4-pro", timeout: int = DEFAULT_TIMEOUT) -> Result:
-    if _banned(root):
-        r = Result("banned", "", "external AI banned in project", 0.0)
-        _log("deepseek", r, [])
-        return r
-    binary = os.environ.get("JIPDA_ASIDE", "aside")
-    r = _run([binary, "-m", model, prompt], None, root, timeout)
-    _log("deepseek", r, [])
-    return r
+def status() -> dict:
+    c = load_config()
+    return {"config": str(config_path()), "checker": bool((c.get("checker") or {}).get("cmd")),
+            "searcher": bool((c.get("searcher") or {}).get("cmd")), "models": c.get("models") or {}, "browser": c.get("browser")}
 
 
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("tool", choices=["codex", "deepseek"])
+    ap.add_argument("tool", choices=["checker", "searcher", "status"])
     ap.add_argument("--root", type=Path, default=Path.cwd())
-    ap.add_argument("--prompt-file", type=Path, required=True)
+    ap.add_argument("--prompt-file", type=Path)
     ap.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT)
     ap.add_argument("files", nargs="*", type=Path)
     args = ap.parse_args(argv)
+    if args.tool == "status":
+        print(json.dumps(status(), ensure_ascii=False))
+        return 0
+    if args.prompt_file is None:
+        ap.error("--prompt-file is required")
     prompt = args.prompt_file.read_text(encoding="utf-8")
-    if args.tool == "codex":
-        files = [f if f.is_absolute() else args.root / f for f in args.files]
-        r = ask_codex(prompt, files, args.root, args.timeout)
-    else:
-        r = ask_deepseek(prompt, args.root, timeout=args.timeout)
+    files = [f if f.is_absolute() else args.root / f for f in args.files]
+    r = ask(args.tool, prompt, files, args.root, args.timeout)
     print(f"STATUS: {r.status}" + (f" ({r.reason})" if r.reason else ""))
     print(r.text)
     return 0

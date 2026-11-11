@@ -1,39 +1,41 @@
 ---
 name: shape
-description: 아직 흐릿한 아이디어를 질문으로 구체화해 완료 조건이 있는 명세로 만들어요. "이런 거 만들고 싶은데", "아이디어 구체화해 줘"처럼 뭘 만들지 아직 정해지지 않았을 때 써요. 할 일이 이미 분명한 수정에는 쓰지 않아요.
+description: Turns a vague idea into a spec with done conditions through questions. Use when what to build is not decided yet ("I want to build something like...", "help me flesh out this idea", "이런 거 만들고 싶은데", "아이디어 구체화해 줘"). Do not use for changes that are already clear.
 ---
 
 # shape
 
-## 목적
-머릿속 아이디어를 "무엇을 만들고, 무엇을 안 만들고, 언제 끝났다고 보는지"가 적힌 명세 한 장으로 바꿔요. AI가 기획을 다르게 해석하거나 예외를 놓치는 실수를 만들기 전에 잡는 단계예요.
+Reply and write documents in the user's language.
 
-## 입력
-- 사용자의 아이디어(한 줄이어도 돼요).
-- 있는 저장소라면 그 저장소.
+## Purpose
+Turn an idea into one spec that says what gets built, what does not, and when it counts as done. This catches misread requirements and missed edge cases before they become code.
 
-## 산출물
-- `docs/specs/<YYYY-MM-DD>-<주제>.md`
-  - 목적, 하지 않을 것, 실패로 볼 것
-  - 완료 조건 목록. 줄 형식은 `D<n>. <조건> — <확인 방법>`. 예: `D3. 1366×768에서 브리핑 패널이 끝까지 스크롤된다 — 브라우저로 확인`
-  - 사용자 결정 `[결정]`과 에이전트 판단 `[판단]` 구분
-- 마지막 줄에 크기 판정과 다음 단계 한 줄.
+## Input
+- The user's idea (one line is enough).
+- The repository, if one exists.
 
-## 실행 순서
-0. **있는 저장소면 먼저 훑어요.** 관련 파일, 이 코드를 부르는 곳, 이름 짓기·폴더 관례, 시험·린트 명령. 명세 맨 앞에 5줄 안으로 적어요. 프로젝트 `CLAUDE.md`에 시험·린트 명령 요약이 없으면 추가를 한 줄로 제안해요.
-1. 질문은 한 번에 하나. 열린 질문부터 하고, 막혀 하면 짧은 보기를 줘요.
-2. 아이디어가 막연하면 [ideation.md](references/ideation.md) 절차로 넓혔다가 하나로 좁혀요. 후보를 혼자 지어내지 않아요.
-3. 한 부분을 이해할 때마다 200~300자로 되읽어 주고 틀린 곳을 물어요. 추측은 "제 추측"이라고 표시해요.
-4. 예외 상황을 먼저 물어요: 빈 값, 경계값, 권한 없음, 네트워크·외부 서비스 실패, 동시에 두 번.
-5. 명세를 쓰고 완료 조건마다 확인 방법을 붙여요. 확인 방법이 없는 조건은 조건이 아니에요.
-6. 크기를 판정해 한 줄로 말해요(사용자가 바꿀 수 있어요).
-   - 한 파일, 뻔한 수정 → 바로 고치고 `check`
-   - 작은 변경 → `build` → `check`
-   - 프로젝트 → `review` → `plan` → `review` → `build` → `check`
+## Output
+- `docs/specs/<YYYY-MM-DD>-<topic>.md`
+  - Goal, non-goals, what counts as failure
+  - Done conditions, one per line: `D<n>. <condition> — <how verified>`. Example: `D3. The briefing panel scrolls to the end at 1366×768 — browser check`
+  - Separate user decisions `[decision]` from agent judgment `[judgment]`
+- Last line: a size call and one line naming the next step.
 
-## 하지 않는 것
-- 코드 작성, 설계, 작업 쪼개기(그건 `plan`).
-- 다음 스킬을 직접 부르기. 한 줄로 알려 주기만 해요.
-- 여러 질문을 한 메시지에 몰아서 묻기.
-- 사용자가 말하지 않은 것을 `[결정]`으로 적기.
-- 실행해 보면 알 수 있는 것을 사용자에게 묻기([core.md](../../rules/core.md)의 "물어보는 대신 확인한다").
+## Steps
+0. **Scan an existing repo first.** Relevant files, callers, naming and folder conventions, test and lint commands. Put this in at most 5 lines at the top of the spec. If the project's `CLAUDE.md` lacks test and lint commands, suggest adding them in one line.
+1. Ask one question at a time. Start open; offer short options if the user gets stuck.
+2. If the idea is vague, widen then narrow with [ideation.md](references/ideation.md). Do not invent candidates alone.
+3. After understanding each part, read it back in 2-3 sentences and ask what is wrong. Mark guesses as guesses.
+4. Ask about edge cases early: empty values, boundaries, no permission, network or external service failure, doing it twice.
+5. Write the spec and give every done condition a verification method. A condition with no way to verify is not a condition.
+6. Call the size in one line (the user can change it).
+   - One file, obvious fix → fix it, then `check`
+   - Small change → `build` → `check`
+   - Project → `review` → `plan` → `review` → `build` → `check`
+
+## Do not
+- Write code, design, or split work into tasks (that is `plan`).
+- Invoke the next skill yourself. Only name it in one line.
+- Bundle several questions in one message.
+- Record as `[decision]` anything the user did not say.
+- Ask the user what running something would answer. Prototype and show the result instead. Ask the user only about taste and direction.

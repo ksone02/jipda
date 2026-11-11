@@ -1,37 +1,40 @@
 ---
 name: experiment
-description: 지표 하나를 반복 실험으로 올려요. 측정 장치를 먼저 고정하고, 변경마다 재고, 남기거나 되돌리고, 모두 기록해요. "이 지표 올려 줘", "실험 돌려 줘"라고 할 때 써요. 분석이나 백테스트를 한 번 돌리는 일에는 쓰지 않아요.
+description: Raises one metric through repeated experiments. Fixes the measuring harness first, measures every change, keeps or reverts it, and logs everything. Use for "improve this metric", "run experiments", "이 지표 올려 줘", "실험 돌려 줘". Do not use for a single analysis or backtest run.
 ---
 
 # experiment
 
-## 목적
-퀀트 알파 탐색, 모델 성능 개선처럼 숫자 하나를 올리는 연구에서 "좋아진 것 같다"를 없애요. 누수와 과최적화로 가짜 개선을 남기지 않아요.
+Reply and write documents in the user's language.
 
-## 입력
-- 지표, 목표값, 실험 대상 저장소.
+## Purpose
+Remove "seems better" from research that raises one number, such as alpha search or model performance tuning. Do not keep fake improvements from leakage or overfitting.
 
-## 산출물
-- 측정 장치(스크립트)와 그 민감도 증명.
-- 시도 기록 `docs/experiments/<주제>/decision.tsv`(형식은 [decision-log.md](references/decision-log.md)).
-- 남긴 변경마다 커밋 하나.
-- 보고: 기준값 → 최종값(차이와 단위), 시도 수(남김/되돌림), 남긴 변경 한 줄씩, 다음에 해 볼 것.
+## Input
+- Metric, target value, repository under experiment.
 
-## 실행 순서
-1. **목표를 적어요.** 지표 정의, 목표값, 지금 값(기준값), 노이즈 크기(같은 설정을 3번 돌린 차이). 목표 기준은 나중에 느슨하게 바꾸지 않아요.
-2. **측정 장치를 만들고 고정해요.**
-   - 효과가 있다고 알려진 변경과 없다고 알려진 변경으로 돌려 봐서, 장치가 차이를 잡아내는지 증명해요.
-   - 누수·과최적화 점검을 넣어요: 미래 정보 사용, 평가 구간으로 고르고 평가 구간으로 보고하기, 시도 수 대비 우연, 표본 밖 구간.
-   - 증명이 끝나면 장치는 바꾸지 않아요. 바꿔야 하면 별도 커밋으로 하고 기준값부터 다시 재요.
-3. **기록을 열어요.** 시도 전마다 기록을 읽어요.
-4. **한 번에 변경 하나.** 가설은 구체적인 이유를 달아요("X를 빼면 Y 때문에 Z가 준다"). 시도는 하위 에이전트(설명만 있으면 sonnet, 코드가 정해져 있으면 haiku, [models.md](../../rules/models.md))에 맡기고 메인은 감독과 기록만 해요.
-5. **재고 판정해요.** 고정 장치로 전·후를 재고 회귀 시험을 돌려요. 노이즈를 넘고 시험이 통과할 때만 남기고 커밋해요(바꾼 파일만 `git add`). 아니면 완전히 되돌려요. 남기든 되돌리든 기록에 한 줄.
-6. **첫 정체에서 멈추지 않아요.** 여러 번 연속 실패하면 방향을 바꾸거나, 근소하게 실패한 것들을 합쳐 보거나, 원본 코드를 다시 읽어요. 싼 시도가 남았으면 그만두지 않아요.
-7. 목표에 닿거나 남은 시도가 비용만큼 가치가 없을 때 멈추고 보고해요.
+## Output
+- A measuring harness (script) and proof of its sensitivity.
+- Attempt log `docs/experiments/<topic>/decision.tsv` (format in [decision-log.md](references/decision-log.md)).
+- One commit per kept change.
+- Report: baseline → final (difference and unit), attempts (kept/reverted), one line per kept change, what to try next.
 
-## 하지 않는 것
-- 문헌 조사(그건 `research`).
-- 여러 변경을 한 번에 쌓고 재기.
-- 코드만 보고 "좋아졌다"고 판정하기.
-- 목표 기준을 낮춰서 통과시키기.
-- 대회·외부 데이터를 외부 모델에 보내기([data-safety.md](../../rules/data-safety.md)).
+## Steps
+1. **Write the goal.** Metric definition, target, current value (baseline), noise size (spread of 3 runs of the same setup). Do not loosen the target later.
+2. **Build and freeze the harness.**
+   - Run a change known to work and one known not to, proving the harness detects the difference.
+   - Rule out that the number measures something else: errors, cache, code that did not run, a default baseline.
+   - Add leakage and overfitting checks: future information, selecting and reporting on the evaluation window, chance given attempts, out-of-sample windows.
+   - After proof, do not change the harness. If you must, do it in a separate commit and remeasure the baseline.
+3. **Open the log.** Read it before each attempt.
+4. **One change at a time.** Give the hypothesis a concrete reason ("removing X reduces Z because of Y"). Delegate attempts to a subagent (standard model if only described, light model if the code is fixed, [models.md](../../rules/models.md)); the main session supervises and logs.
+5. **Measure and decide.** Measure before and after with the frozen harness and run regression tests. Keep and commit only when it beats noise and tests pass (`git add` only changed files). Otherwise revert fully. Log one line either way.
+6. **Do not stop at the first plateau.** After several failures in a row, change direction, combine near misses, or reread the source. Do not quit while cheap attempts remain.
+7. Stop and report when the target is reached or remaining attempts are not worth their cost.
+
+## Do not
+- Survey literature (that is `research`).
+- Stack several changes before measuring.
+- Declare improvement from reading code alone.
+- Lower the target to pass.
+- Send competition or external data to external models ([data-safety.md](../../rules/data-safety.md)).

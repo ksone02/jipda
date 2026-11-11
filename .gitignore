@@ -1,8 +1,5 @@
 .venv/
 __pycache__/
 .pytest_cache/
-.superpowers/
 .measure/
 .jipda/
-evals/results/*
-!evals/results/.gitkeep

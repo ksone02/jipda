@@ -1,17 +1,22 @@
 """페이지를 세 폭으로 열어 가로 넘침, 잘린 요소, 작은 글자, 대비 부족을 재고 스크린샷을 남긴다.
 
-실행: uv run --with playwright==1.49.1 python scripts/measure.py <url-or-path> [--out .measure]
+실행: python3 scripts/measure.py <url-or-path> [--out .measure]
+agent-browser가 있으면 그것으로, 없으면 설치된 playwright로 잰다.
 """
 
 import argparse
 import json
+import os
+import shutil
+import subprocess
 import sys
 from pathlib import Path
 
 VIEWPORTS = [(1440, 900), (1366, 768), (390, 844)]
 MIN_FONT_PX = 11
 MIN_CONTRAST = 4.5
-INSTALL_HINT = "playwright not installed: run 'uv run --with playwright==1.49.1 playwright install chromium'"
+INSTALL_HINT = "no browser tool: run 'npm install -g agent-browser && agent-browser install' (or install playwright)"
+CHROME_PATHS = ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "/usr/bin/google-chrome", "/usr/bin/chromium"]
 
 PROBE_JS = r"""
 () => {
@@ -65,6 +70,22 @@ def _launch(p):
         return p.chromium.launch()
 
 
+def _record(data: dict, size: str, shot: Path, viewports: list, fail: list) -> None:
+    data.update(size=size, screenshot=str(shot))
+    viewports.append(data)
+    if data["overflow_x"]:
+        fail.append(f"horizontal overflow @{size}")
+    if data["min_font_px"] is not None and data["min_font_px"] < MIN_FONT_PX:
+        fail.append(f"text under {MIN_FONT_PX}px @{size}")
+    fail.extend(f"low contrast {c['selector']} @{size}" for c in data["low_contrast"] if c["ratio"] < MIN_CONTRAST)
+
+
+def _report(out: Path, viewports: list, fail: list) -> dict:
+    report = {"viewports": viewports, "fail": fail}
+    (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
+    return report
+
+
 def measure(target: str, out: Path, sync_playwright) -> dict:
     out.mkdir(parents=True, exist_ok=True)
     viewports, fail = [], []
@@ -78,17 +99,45 @@ def measure(target: str, out: Path, sync_playwright) -> dict:
             shot = out / f"shot-{size}.png"
             page.screenshot(path=str(shot), full_page=True)
             page.close()
-            data.update(size=size, screenshot=str(shot))
-            viewports.append(data)
-            if data["overflow_x"]:
-                fail.append(f"가로 넘침 @{size}")
-            if data["min_font_px"] is not None and data["min_font_px"] < MIN_FONT_PX:
-                fail.append(f"글자 {MIN_FONT_PX}px 미만 @{size}")
-            fail.extend(f"대비 부족 {c['selector']} @{size}" for c in data["low_contrast"] if c["ratio"] < MIN_CONTRAST)
+            _record(data, size, shot, viewports, fail)
         browser.close()
-    report = {"viewports": viewports, "fail": fail}
-    (out / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
-    return report
+    return _report(out, viewports, fail)
+
+
+def agent_browser() -> str | None:
+    return os.environ.get("JIPDA_AGENT_BROWSER") or shutil.which("agent-browser")
+
+
+def measure_agent_browser(target: str, out: Path, binary: str) -> dict:
+    out.mkdir(parents=True, exist_ok=True)
+    env = dict(os.environ)
+    if "AGENT_BROWSER_EXECUTABLE_PATH" not in env:  # 설치된 Chrome이 있으면 브라우저를 내려받지 않는다
+        found = next((c for c in CHROME_PATHS if Path(c).exists()), None)
+        if found:
+            env["AGENT_BROWSER_EXECUTABLE_PATH"] = found
+    session = f"jipda-measure-{os.getpid()}"
+
+    def ab(*args: str) -> str:
+        p = subprocess.run([binary, "--session", session, *args], capture_output=True, text=True, timeout=120, env=env)
+        if p.returncode != 0:
+            raise RuntimeError(f"agent-browser {args[0]} failed: {(p.stderr or p.stdout).strip()[:300]}")
+        return p.stdout.strip()
+
+    viewports, fail = [], []
+    try:
+        for w, h in VIEWPORTS:
+            size = f"{w}x{h}"
+            ab("set", "viewport", str(w), str(h))
+            ab("open", _url(target))
+            ab("wait", "--load", "networkidle")
+            raw = json.loads(ab("eval", f"JSON.stringify(({PROBE_JS})())"))
+            data = json.loads(raw) if isinstance(raw, str) else raw
+            shot = out / f"shot-{size}.png"
+            ab("screenshot", str(shot), "--full")
+            _record(data, size, shot, viewports, fail)
+    finally:
+        subprocess.run([binary, "--session", session, "close"], capture_output=True, text=True, timeout=60, env=env)
+    return _report(out, viewports, fail)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -96,11 +145,16 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("target")
     ap.add_argument("--out", type=Path, default=Path(".measure"))
     args = ap.parse_args(argv)
-    sp = load_playwright()
-    if sp is None:
-        print(INSTALL_HINT, file=sys.stderr)
-        return 3
-    print(json.dumps(measure(args.target, args.out, sp), ensure_ascii=False, indent=2))
+    binary = agent_browser()
+    if binary:
+        report = measure_agent_browser(args.target, args.out, binary)
+    else:
+        sp = load_playwright()
+        if sp is None:
+            print(INSTALL_HINT, file=sys.stderr)
+            return 3
+        report = measure(args.target, args.out, sp)
+    print(json.dumps(report, ensure_ascii=False, indent=2))
     return 0
 
 

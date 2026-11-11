@@ -1,16 +1,16 @@
-# 진행 기록 형식
+# Progress log format
 
-`docs/progress/<YYYY-MM-DD>-<주제>.md`
+`docs/progress/<YYYY-MM-DD>-<topic>.md`
 
 ```
-# 진행 기록 — 계획: <계획 경로>
-T1 | 진행 중 | a1b2c3d | -
-T1 | 검토 1회 | a1b2c3d | 1층 2, 2층 1
+# Progress log — plan: <plan path>
+T1 | in progress | a1b2c3d | -
+T1 | review round 1 | a1b2c3d | Tier 1: 2, Tier 2: 1
 T1: complete (a1b2c3d..e4f5a6b, review clean)
 T2: complete (e4f5a6b..c7d8e9f, 1 parked)
-보류: T2 <지적> — <이유>
-판단: T3 <계획과 다르게 한 것> — <왜> — <틀리면 비용>
+Parked: T2 <finding> — <reason>
+Decision: T3 <what differed from the plan> — <why> — <cost if wrong>
 ```
 
-- 작업마다 기록은 커밋과 같은 메시지 안에서 남겨요(따로 미루지 않아요).
-- `판단:` 줄은 계획과 다르게 한 모든 결정이에요. 끝날 때 사용자에게 모아서 보여 줘요.
+- Log each task in the same commit as the task (do not defer it).
+- `Decision:` lines are every choice that differs from the plan. Show them together at the end.

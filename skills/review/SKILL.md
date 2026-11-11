@@ -1,34 +1,36 @@
 ---
 name: review
-description: 분야 전문가 역할로 기획이나 설계를 검토하고 지적을 3층으로 나눠요. "전문가 검토해 줘", "전문가 피드백 돌려 줘"라고 분명히 요청할 때만 써요. "이거 봐 줘" 같은 가벼운 질문이나 문서를 다 쓴 직후 알아서 시작하는 데는 쓰지 않아요.
+description: Reviews a plan or design from a domain expert's perspective and sorts findings into three tiers. Use only on an explicit request for expert review ("get expert feedback on this", "전문가 검토해 줘", "전문가 피드백 돌려 줘"). Do not use for casual "take a look" questions or automatically right after writing a document.
 ---
 
 # review
 
-## 목적
-그 분야 전문가여야 떠올릴 수 있는 지적을 받아요. 비싼 검토라서 기획 직후와 설계 직후, 만들기 전 두 자리에서만 써요. 개발 뒤에는 결과가 기대와 다를 때만 다시 불러요.
+Reply and write documents in the user's language.
 
-## 입력
-- 역할 이름(선택): `quant`, `web`, `data-research` 또는 새 분야 이름.
-- 대상: 명세나 계획 경로. 없으면 `docs/plans/` → `docs/specs/` 순으로 가장 최근 파일.
+## Purpose
+Get findings only a domain expert would think of. This is expensive, so use it in two places before building: right after planning and right after design. After development, use it only when results differ from expectations.
 
-## 산출물
-- 보고(채팅): 첫 줄에 고른 역할, 1층 지적과 고친 내용, 2층 질문 목록(번호, 근거, 비용).
-- 고친 명세나 계획.
+## Input
+- Role name (optional): `quant`, `web`, `data-research`, or a new domain.
+- Target: spec or plan path. If absent, the most recent file in `docs/plans/`, then `docs/specs/`.
 
-## 실행 순서
-사용자가 슬래시로 부르지 않았으면 먼저 "전문가 검토를 N명으로 해요"라고 한 줄로 알리고 확인받아요.
+## Output
+- Report (chat): first line names the chosen role, then Tier 1 findings and fixes, then Tier 2 questions (number, evidence, cost).
+- The corrected spec or plan.
 
-1. **역할을 골라요.** 이름을 받았으면 [roles/](references/roles/) 아래 그 파일. 없으면 대상을 보고 골라 보고 첫 줄에 적어요(사용자가 바로 바꿀 수 있게). 맞는 파일이 없으면 그 자리에서 역할 3개와 꼭 보는 항목을 만들어 쓰고, 끝에 저장할지 한 줄로 물어요.
-2. **검토자는 기본 한 명이에요.** 하위 에이전트 하나(sonnet)에게 고른 파일의 역할 절을 전부 한 번에 줘요. 프롬프트는 [reviewer-prompt.md](references/reviewer-prompt.md)이고, 역할 이름에는 분야 이름을 넣어요. 되돌리기 어려운 구조 결정이거나, 실제 돈·사용자 데이터가 걸렸거나, 사용자가 여러 명을 요청했을 때만 역할마다 하나씩 한 라운드에 병렬로 띄워요. 되돌리기 어려운 구조 결정이면 모델은 opus예요([models.md](../../rules/models.md)). 필요하면 같은 프롬프트와 대상 경로를 `ext.py codex`에 넘겨 Codex 한 명을 더해요(부르는 법은 [models.md](../../rules/models.md)의 "외부 모델 부르기"). Codex가 안 되면 그 몫은 빼고, 보고에 `Codex 사용 불가, Claude로 검증 (<이유>)` 한 줄을 적어요(역할 검토자는 이미 Claude예요).
-3. **지적을 모아 걸러요.** 근거 없는 지적, 3층(취향) 지적은 버려요. 겹치는 지적은 합쳐요.
-4. **지적이 맞는지 확인해요.** 코드·자료·계산으로 확인하고, 틀린 지적은 근거와 함께 버려요.
-5. **3층으로 처리해요**([review-layers.md](../../rules/review-layers.md)). 1층은 대상 문서를 바로 고치고, 2층은 한 메시지로 묻고, 답이 없으면 고치지 않아요.
-6. 다음 단계 한 줄(명세 검토 뒤면 `plan`, 계획 검토 뒤면 `build`).
+## Steps
+If the user did not invoke this with a slash, first say "Running expert review with N reviewers" in one line and get confirmation.
 
-## 하지 않는 것
-- 구현 코드 고치기(문서만 고쳐요).
-- 매 단계마다 검토하기.
-- 역할 프롬프트에 "이건 지적하지 마"처럼 미리 판단 넣기.
-- 2층 지적을 하나씩 따로 묻기.
-- 확인하지 않은 지적을 사실처럼 반영하기.
+1. **Pick the role.** With a name, use that file under [roles/](references/roles/). Otherwise pick from the target and state it in the first line (the user can change it). With no matching file, write 3 roles with must-check items on the spot and ask at the end whether to save them.
+2. **Use one reviewer by default.** Give one subagent (standard model) all role sections of the chosen file at once. The prompt is [reviewer-prompt.md](references/reviewer-prompt.md), with the domain name as the role name. Start one reviewer per role in parallel only for hard-to-reverse structural decisions, decisions involving real money or user data, or when the user asks for several. Use the strong model for hard-to-reverse structural decisions ([models.md](../../rules/models.md)). If an external checker is configured and useful, add one more by passing the same prompt and target path to `ext.py checker` (see "Calling external models" in [models.md](../../rules/models.md)). On `STATUS: off`, skip it; on `unavailable` or `banned`, skip it and add the line `External checker unavailable, verified internally (<reason>)` to the report.
+3. **Collect and filter.** Discard findings without evidence and Tier 3 (taste). Merge duplicates.
+4. **Verify findings.** Confirm with code, data, or calculation. Discard wrong ones with evidence.
+5. **Handle by tier** ([review-layers.md](../../rules/review-layers.md)). Fix Tier 1 in the target document; ask Tier 2 in one message; without an answer, do not change them.
+6. One line for the next step (`plan` after spec review, `build` after plan review).
+
+## Do not
+- Change implementation code (documents only).
+- Review at every step.
+- Pre-judge in role prompts ("don't flag this").
+- Ask Tier 2 findings one by one.
+- Apply unverified findings as fact.

@@ -1,22 +1,22 @@
-# 데이터 연구
+# Data research
 
-## 통계 전문가
-꼭 보는 항목:
-- 숫자마다 분모, 단위, 비교 기준이 있나
-- 상관을 인과처럼 말하지 않았나
-- 표본 크기와 불확실성(신뢰구간, 분산)
-- 이상치와 결측 처리 방식
+## Statistician
+Must check:
+- Does every number have a denominator, unit, and comparison base
+- Is correlation stated as causation
+- Sample size and uncertainty (confidence intervals, variance)
+- Outlier and missing-value handling
 
-## 도메인 전문가
-꼭 보는 항목:
-- 지표 정의가 공식 정의와 같은가(출처)
-- 현장에서 말이 되는 해석인가
-- 민감한 주제를 개수가 아니라 상대적 경향으로 말했나
-- 정책·제도 사실이 최신인가
+## Domain expert
+Must check:
+- Do metric definitions match official definitions (with sources)
+- Is the interpretation sensible in the field
+- Are sensitive topics stated as relative tendencies, not counts
+- Are policy and regulatory facts current
 
-## 재현성 검토자
-꼭 보는 항목:
-- 고정 시드, 패키지 버전 고정
-- 데이터 경로와 전처리 단계가 코드로 남았나
-- 다른 사람이 같은 명령으로 같은 결과를 얻나
-- 대회·외부 규칙(데이터 반출 금지 등)을 지켰나
+## Reproducibility reviewer
+Must check:
+- Fixed seeds, pinned package versions
+- Are data paths and preprocessing recorded in code
+- Does someone else get the same result with the same command
+- Are competition or external rules (no data export, etc.) respected

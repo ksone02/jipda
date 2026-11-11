@@ -1,36 +1,38 @@
 ---
 name: check
-description: 완료 조건을 하나씩 대조하고 실행으로 증명한 뒤 작업을 닫아요. 변경이 크거나 위험하면 Codex나 독립된 Claude가 한 번 더 봐요. 명세가 있는 기능이나 단계를 끝내고 완료를 보고하기 전에, 사용자가 말하지 않아도 써요. "다 됐는지 검증해 줘", "마무리해 줘"도 여기에 해당해요. 작은 수정이나 시험 한 번 돌리는 확인에는 쓰지 않아요.
+description: Verifies done conditions one by one by running them, then closes the work. For large or risky changes an independent checker looks too. Use before reporting a feature or phase with a spec as done, even if the user did not ask ("is it all done?", "wrap this up", "다 됐는지 검증해 줘", "마무리해 줘"). Do not use for small fixes or a single test run.
 ---
 
 # check
 
-## 목적
-필요한 구현이 빠졌는지, 논리가 틀렸는지를 의견이 아니라 대조와 실행으로 잡고, 통과하면 작업을 깔끔하게 닫아요. 싸게, 자주 돌리는 검사예요.
+Reply and write documents in the user's language.
 
-## 입력
-- 명세 경로. 없으면 `docs/specs/`에서 가장 최근 파일.
-- 명세가 아예 없으면(작은 작업) 요청에서 완료 조건 3~5개를 직접 만들어 보고 맨 위에 적고 진행해요. 멈추지 않아요.
-- 확인할 범위: 기본은 브랜치의 기준 커밋부터 지금까지.
-- 진행 기록 `docs/progress/`(있으면).
+## Purpose
+Catch missing work and wrong logic by comparison and execution, not opinion, and close the work cleanly once it passes. This is a cheap check meant to run often.
 
-## 산출물
-- 보고(채팅): 첫 줄에 검사자(`검사자: 직접 대조`, Codex 또는 대체 문구), 완료 조건 표(`D<n> | 통과·실패·확인 불가 | 근거`), 3층으로 나눈 지적, 전체 시험·린트 결과 줄.
-- 모두 통과하면 마무리: 계획과 다르게 한 판단(진행 기록의 `판단:` 줄), 보류한 지적(`보류:` 줄), 남은 위험.
+## Input
+- Spec path. If absent, the most recent file in `docs/specs/`.
+- With no spec at all (small work), derive 3-5 done conditions from the request, write them at the top, and continue. Do not stop.
+- Scope: by default, from the branch's base commit to now.
+- Progress log `docs/progress/` (if any).
 
-## 실행 순서
-1. **직접 대조해요.** 완료 조건마다 확인 방법을 그대로 실행하고 결과를 적어요. 이전 결과를 재사용하지 않아요. 확인 불가는 통과가 아니에요.
-2. **화면이 있으면 재요.** `uv run --with playwright==1.49.1 python <이 스킬 폴더>/../../scripts/measure.py <url>` 결과의 `fail`과 스크린샷을 봐요. 1층 위반은 [ui.md](../../rules/ui.md) 기준.
-3. **크거나 위험할 때만 독립 검사를 맡겨요.** `git diff --numstat <기준 커밋> | awk '{f++; n+=$1+$2} END {print f+0, n+0}'`로 센 변경이 파일 5개나 200줄(추가+삭제)을 넘거나, 결제·인증·데이터 삭제·자료 이전을 건드리거나, 사용자가 요청했을 때만이에요. 그 밖에는 4번을 건너뛰고 보고 첫 줄에 `검사자: 직접 대조`라고 적어요. 맡길 때는 [independent-checker.md](references/independent-checker.md) 프롬프트와 바뀐 파일을 `ext.py codex`에 넘겨요. 부르는 법은 [models.md](../../rules/models.md)의 "외부 모델 부르기"예요.
-4. **Codex가 안 되면 Claude로 해요.** 보고 첫 줄에 `Codex 사용 불가, Claude로 검증 (<이유>)`을 쓰고, 같은 프롬프트로 새 하위 에이전트를 띄워요. 모델은 만든 쪽과 다른 등급(만든 쪽이 sonnet이면 opus, 그 밖에는 sonnet)이고, 메인 대화와 만든 쪽의 생각 과정은 주지 않아요([models.md](../../rules/models.md)).
-5. **받은 지적은 맞는지 확인해요.** 지적마다 코드를 보거나 실행해서 맞으면 남기고, 틀리면 근거를 들어 버려요.
-6. **3층으로 처리해요.** 1층은 고치고 다시 1번부터, 2층은 한 번에 묻기([review-layers.md](../../rules/review-layers.md)).
-7. **모두 통과하면 닫아요.** 전체 시험·린트 명령을 돌려 결과 줄을 붙이고, 임시 파일(`.git/jipda/`, `.measure/`)을 지우고, 진행 기록의 `판단:`·`보류:` 줄을 모아 보고해요. 사용자가 정한 결정이 있었으면 `handoff decide`로 남기자고 한 줄로 안내해요.
+## Output
+- Report (chat): first line names the checker (`Checker: direct comparison`, external checker, internal checker, or the fallback phrase), a done-condition table (`D<n> | pass/fail/cannot verify | evidence`), findings in tiers, and the full test and lint result line.
+- When everything passes, the close-out: decisions that differed from the plan (the log's `Decision:` lines), parked findings (`Parked:` lines), remaining risks.
 
-## 하지 않는 것
-- 새 기능 추가, 설계 바꾸기.
-- 사용자에게 매번 외부 전송 허락 묻기(거르기는 스크립트가 해요).
-- 실행하지 않고 "될 것 같다"로 통과 처리하기.
-- Codex나 Claude 검사자의 지적을 확인 없이 그대로 반영하기.
-- 대체했는데 첫 줄 문구를 빼기.
-- 시키지 않은 커밋·푸시·병합·PR·배포. 하지 않았으면 무엇이 남았는지만 알려요.
+## Steps
+1. **Compare it yourself.** Run each done condition's verification method exactly and record the result. Do not reuse earlier results. Cannot verify is not a pass.
+2. **Measure if there is a UI.** Check the `fail` list and screenshots from `python3 <this skill folder>/../../scripts/measure.py <url>`. Exit code 3 means no measuring tool: measure the same items with any available browser tool or mark them cannot verify. Tier 1 violations are defined in [ui.md](../../rules/ui.md).
+3. **Use an independent checker only when large or risky.** Only when the change, counted with `git diff --numstat <base commit> | awk '{f++; n+=$1+$2} END {print f+0, n+0}'`, exceeds 5 files or 200 lines (added+deleted), touches payments, auth, data deletion, or data migration, or the user asks. Otherwise skip step 4 and write `Checker: direct comparison` as the report's first line. When used, pass the [independent-checker.md](references/independent-checker.md) prompt and changed files to `ext.py checker`. See "Calling external models" in [models.md](../../rules/models.md).
+4. **If the external checker is absent or fails, go internal.** On `STATUS: off`, add no phrase; on `unavailable` or `banned`, write `External checker unavailable, verified internally (<reason>)` as the report's first line. Start a new subagent with the same prompt. Use a different tier from the builder (strong model if the builder was standard, otherwise standard model), and do not pass the main conversation or the builder's reasoning ([models.md](../../rules/models.md)).
+5. **Verify every finding.** Read the code or run it. Keep what is right; discard what is wrong, with evidence.
+6. **Handle by tier.** Fix Tier 1 and restart from step 1; ask about Tier 2 together ([review-layers.md](../../rules/review-layers.md)).
+7. **Close when all pass.** Run the full test and lint commands and attach the result line, delete scratch files (`.git/jipda/`, `.measure/`), and report the log's `Decision:` and `Parked:` lines. If the user made decisions, suggest recording them with `handoff decide` in one line.
+
+## Do not
+- Add features or change the design.
+- Ask for permission for each external send (the script does the filtering).
+- Pass something on "should work" without running it.
+- Apply a checker's findings without verifying them.
+- Omit the first-line phrase after a fallback.
+- Commit, push, merge, open a PR, or deploy unasked. If not done, just say what remains.

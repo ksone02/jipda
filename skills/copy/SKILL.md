@@ -1,31 +1,33 @@
 ---
 name: copy
-description: 화면 문구를 전부 모아 원칙대로 점검하고, 수정 전후를 보여 준 뒤 승인한 것만 고쳐요. "화면 문구 다듬어 줘", "에러 메시지 점검해 줘"라고 할 때 써요. 문구 하나를 정해 준 대로 바꾸는 일에는 쓰지 않아요.
+description: Collects all UI text, checks it against writing principles, shows before and after, and changes only what is approved. Use for "polish the UI copy", "review error messages", "화면 문구 다듬어 줘", "에러 메시지 점검해 줘". Do not use for changing one string to given text.
 ---
 
 # copy
 
-## 목적
-버튼, 안내, 에러 문구를 쉽고 정확하게 바꿔요. 레이아웃은 건드리지 않고 문자열만 고쳐요.
+Reply and write documents in the user's language.
 
-## 입력
-- 대상 화면이나 폴더. 없으면 프로젝트의 화면 코드 전체.
+## Purpose
+Make buttons, hints, and error messages simple and accurate. Change strings only, never layout.
 
-## 산출물
-- 제안 표와 승인된 항목의 수정.
+## Input
+- Target screen or folder. If absent, all UI code in the project.
 
-## 실행 순서
-1. **전부 모아요.** 화면 코드와 문구 파일에서 사용자에게 보이는 문자열을 훑어 표로 만들어요.
-2. **원칙별로 점검해요.** [writing-ko.md](../../rules/writing-ko.md)의 "문구 원칙"과 자리별 말투를 하나씩 대조해요. 위반이 없는 원칙은 "통과"로 적어요.
-3. **수정 전후를 제안해요.** 표 형식:
+## Output
+- A proposal table and edits for approved items.
+
+## Steps
+1. **Collect everything.** Scan UI code and string files for user-visible text and table it.
+2. **Check by principle.** For Korean UI, compare against the "문구 원칙" section and tone table in [writing-ko.md](../../rules/writing-ko.md). For other languages apply the same principles: the user is the subject, errors give cause and next step, buttons say what happens, tone is consistent. Mark principles with no violation as "pass".
+3. **Propose before and after.** Table format:
 
    ```
-   화면 | 위치(파일:줄) | 원문 | 제안 | 바뀐 점
+   Screen | Location (file:line) | Original | Proposed | What changed
    ```
-4. **승인받은 것만 고쳐요.** 사용자가 고른 번호만 코드에 반영해요.
-5. 화면 모양도 바꿔야 하면 `design`을 한 줄로 안내해요.
+4. **Change only what is approved.** Apply only the numbers the user picks.
+5. If the screen's look must change too, name `design` in one line.
 
-## 하지 않는 것
-- 레이아웃, 색, 컴포넌트 바꾸기.
-- 승인 전에 고치기.
-- 숫자, 고유명사, 법적 문구의 뜻 바꾸기.
+## Do not
+- Change layout, colors, or components.
+- Edit before approval.
+- Change the meaning of numbers, proper nouns, or legal text.

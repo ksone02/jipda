@@ -3,7 +3,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 RULES = ROOT / "rules"
-FILES = ["always", "core", "review-layers", "models", "data-safety", "ui", "writing-ko", "writing-en"]
+FILES = ["always", "review-layers", "models", "data-safety", "ui", "writing-ko", "writing-en"]
 
 
 def text(name: str) -> str:
@@ -19,12 +19,12 @@ def test_always_block_markers():
     assert t.count("<!-- jipda:always:start -->") == 1
     assert t.count("<!-- jipda:always:end -->") == 1
     inner = t.split("<!-- jipda:always:start -->")[1].split("<!-- jipda:always:end -->")[0]
-    assert len([line for line in inner.splitlines() if line.strip()]) == 7
+    assert len([line for line in inner.splitlines() if line.strip()]) == 6
 
 
 def test_review_layers_sections():
     t = text("review-layers")
-    for head in ("## 1층 하드", "## 2층 권장", "## 3층 자유"):
+    for head in ("## Tier 1: hard", "## Tier 2: recommended", "## Tier 3: free"):
         assert head in t
 
 
@@ -36,8 +36,8 @@ def test_ui_numbered():
 
 def test_models_fallback_phrases():
     t = text("models")
-    assert "Codex 사용 불가, Claude로 검증" in t
-    assert "DeepSeek 사용 불가, Claude로 조사" in t
+    assert "External checker unavailable, verified internally" in t
+    assert "External searcher unavailable, researched internally" in t
 
 
 def test_no_duplicate_rule_lines():

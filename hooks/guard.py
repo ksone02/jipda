@@ -7,13 +7,13 @@ import sys
 from pathlib import Path
 
 RISKY = [
-    (r"git\s+push\b.*\b(main|master)\b", "운영 브랜치로 푸시"),
-    (r"git\s+push\b.*(--force|-f\b)", "강제 푸시"),
+    (r"git\s+push\b.*\b(main|master)\b", "push to a production branch"),
+    (r"git\s+push\b.*(--force|-f\b)", "force push"),
     (r"\brm\s+-[a-zA-Z]*r[a-zA-Z]*f|\brm\s+-[a-zA-Z]*f[a-zA-Z]*r", "rm -rf"),
     (r"git\s+reset\s+--hard", "git reset --hard"),
-    (r"\b(cat|less|head|tail)\b.*\.(env|pem)\b", "비밀키 파일 읽기"),
-    (r"^\s*(ssh|scp)\s", "원격 서버 접속"),
-    (r"vercel\b.*--prod", "운영 배포"),
+    (r"\b(cat|less|head|tail)\b.*\.(env|pem)\b", "read a secret file"),
+    (r"^\s*(ssh|scp)\s", "connect to a remote server"),
+    (r"vercel\b.*--prod", "production deploy"),
     (r"drop\s+table", "DROP TABLE"),
 ]
 

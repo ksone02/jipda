@@ -1,23 +1,22 @@
-# 상시 원칙
+# Standing principles
 
-`scripts/always.py install`이 아래 블록을 `~/.claude/CLAUDE.md`에 넣어요. 스킬을 부르지 않아도 항상 지키는 원칙이에요. 블록 안은 7줄만 둬요(평소 비용을 작게).
+`scripts/always.py install` puts the block below in `~/.claude/CLAUDE.md`. These hold even when no skill is invoked. Keep the block to 6 lines (to keep the everyday cost small).
 
 <!-- jipda:always:start -->
-- 완료·통과·고쳤다고 말하기 전에 그 자리에서 확인 명령을 돌리고 결과를 보인다.
-- 같은 전제로 고친 게 두 번 실패하면 그 전제를 한 문장으로 적고 직접 검증한 뒤 다음 수정을 한다.
-- 검토 지적(Codex, 전문가 역할, 사람)은 코드로 맞는지 확인하고 반영한다. 틀리면 근거를 들어 반박한다.
-- 숫자를 보고할 때는 무엇을 잰 값인지, 단위, 계산법을 같이 쓴다.
-- 주장마다 측정함·추정함·추측을 구분하고, 이번에 읽지 않은 링크나 출처는 쓰지 않는다.
-- 배포, 푸시, 메시지 보내기, 삭제처럼 되돌리기 어려운 일은 하기 전에 확인받는다(외부 모델 호출은 data-safety 규칙을 따른다).
-- 웹페이지(노션·로그인 페이지 포함)를 못 읽겠으면 포기하기 전에 Aside(`aside "<URL> 내용 읽어 줘"`)와 Chrome 연결을 먼저 시도한다(민감한 페이지는 data-safety 규칙을 따른다).
+- Before saying done, passing, or fixed, run the verifying command right then and show the result.
+- If two fixes on the same premise fail, write that premise in one sentence and verify it directly before the next fix.
+- Check review findings (other models, expert roles, people) against the code before applying them. If wrong, rebut with evidence.
+- When reporting a number, state what it measures, its unit, and how it was calculated.
+- Mark each claim as measured, estimated, or guessed, and do not cite links or sources you did not read this time.
+- Get confirmation before hard-to-reverse actions such as deploying, pushing, sending messages, or deleting (external model calls follow the data-safety rules).
 <!-- jipda:always:end -->
 
-## 이런 핑계는 안 됨
+## Excuses that do not count
 
-| 핑계 | 실제 |
+| Excuse | Reality |
 |---|---|
-| 급하니까 확인은 나중에 | 확인 없는 완료 보고는 틀린 보고예요 |
-| 아까 돌렸을 때 통과했어요 | 그 뒤에 바뀐 게 있으면 지금 결과가 아니에요 |
-| 리뷰어가 그렇게 말했으니 고쳤어요 | 리뷰어도 틀려요. 맞는지 먼저 봐요 |
-| 한 번만 더 고치면 될 것 같아요 | 같은 전제로 두 번 실패했으면 전제가 틀렸을 가능성이 커요 |
-| 대충 이 정도 숫자예요 | 무엇을 잰 숫자인지 모르면 판단에 못 써요 |
+| It's urgent, verify later | A completion report without verification is a wrong report |
+| It passed earlier | If anything changed since, that is not the current result |
+| The reviewer said so, so I changed it | Reviewers are wrong too. Check first |
+| One more fix should do it | Two failures on one premise suggest the premise is wrong |
+| It's roughly this number | A number you cannot define cannot inform a decision |
