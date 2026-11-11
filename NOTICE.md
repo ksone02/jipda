@@ -52,3 +52,4 @@ humanize-korean(epoko77-ai/im-not-ai)은 코드를 옮기지 않고 설치된 �
 | `skills/unslop/SKILL.md` | blader/humanizer (MIT), epoko77-ai/im-not-ai(humanize-korean) 호출, toss/apps-in-toss-harness ux-writing. |
 | `skills/design/references/anti-slop.md`, `skills/design/references/design-tokens.md` | heydamir/unslop (CC BY 4.0). 절차를 줄이고 jipda design 흐름에 맞게 합쳤어요. |
 | `skills/design/references/landing.md` | leonxlnx/taste-skill 2.5.1 (MIT)의 규칙을 키트 없이 쓸 수 있게 줄여 옮겼어요. |
+| `skills/revise/SKILL.md` | pstack blast-radius, mattpocock/skills wait-what. |

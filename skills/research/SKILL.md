@@ -1,6 +1,6 @@
 ---
 name: research
-description: Confirms a research plan first, scans widely, then digs into primary sources only for the chosen directions and delivers one sourced file. Use without being asked when a decision needs evidence or reference sites need studying ("research this", "compare these", "find papers", "조사해 줘", "비교해 줘", "논문 찾아 줘"). Do not use for a fact one official doc lookup answers.
+description: Confirms a research plan first, scans widely, then digs into primary sources only for the chosen directions and delivers one sourced file. Use without being asked when a decision needs evidence, or competitors and reference sites need studying ("research this", "compare these", "analyze competitors", "find papers", "조사해 줘", "비교해 줘", "경쟁사 분석해 줘", "레퍼런스 찾아 줘", "논문 찾아 줘"). Do not use for a fact one official doc lookup answers.
 ---
 
 # research
@@ -12,6 +12,7 @@ Prevent shallow research, tunnel vision on one term, and wasted tokens. Research
 
 ## Input
 - The research question and the decision it serves (ask once if unknown).
+- `--competitive`: for competitors, products, strategies, companies, and reference sites. Follow [competitive.md](references/competitive.md) in place of steps 1-5 below, keeping the output file and rules.
 
 ## Output
 - `docs/research/<YYYY-MM-DD>-<topic>.md`

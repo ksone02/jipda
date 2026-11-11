@@ -36,3 +36,32 @@ def test_no_browser_tool_returns_3(monkeypatch, capsys):
     monkeypatch.setattr(measure, "load_playwright", lambda: None)
     assert measure.main([str(FIX / "clean.html")]) == 3
     assert "agent-browser" in capsys.readouterr().err
+
+
+def test_agent_browser_gets_absolute_screenshot_path(monkeypatch, tmp_path):
+    monkeypatch.chdir(tmp_path)
+    shots = []
+
+    def fake_run(cmd, **kwargs):
+        if "screenshot" in cmd:
+            shots.append(cmd[cmd.index("screenshot") + 1])
+        out = json.dumps(json.dumps({"overflow_x": False, "min_font_px": 16, "clipped": [], "low_contrast": []})) if "eval" in cmd else ""
+        return subprocess.CompletedProcess(cmd, 0, out, "")
+
+    monkeypatch.setattr(measure.subprocess, "run", fake_run)
+    measure.measure_agent_browser("x.html", Path(".measure"), "agent-browser")
+    assert len(shots) == 3 and all(Path(s).is_absolute() for s in shots)
+
+
+def test_dark_mode_is_requested_and_labeled(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(cmd, **kwargs):
+        calls.append(cmd)
+        out = json.dumps(json.dumps({"overflow_x": False, "min_font_px": 16, "clipped": [], "low_contrast": []})) if "eval" in cmd else ""
+        return subprocess.CompletedProcess(cmd, 0, out, "")
+
+    monkeypatch.setattr(measure.subprocess, "run", fake_run)
+    report = measure.measure_agent_browser("x.html", tmp_path, "agent-browser", dark=True)
+    assert any(c[-3:] == ["set", "media", "dark"] for c in calls)
+    assert all(v["size"].endswith("-dark") for v in report["viewports"])
